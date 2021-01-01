@@ -29,20 +29,18 @@ export default LoogedCars;
 
 function CardItem(){
     return(
-        <Group
-            w="100%"
-        >
+        <div className="flex flex-row w-full  gap-3 items-center">
         <Image src={car_f} alt={"image"} />
-        <Group justify="space-between" grow>
-            <Stack>
+        <div className={"flex flex-row w-full items-center justify-between"}>
+            <div className="flex flex-col">
                 <p  className={cx([classes.cmake, font_heading.className])}> toyota yaris</p>
                 <p className={cx([classes.license, font_heading.className])}>sw 000 99</p>
-            </Stack>
-            <Stack>
+            </div>
+            <div className="flex flex-col">
                 <p className={cx([classes.time, font_heading.className])}> 03 minute ago </p>
                 <Badge variant="light" color="blue" radius="md">Badge</Badge>
-            </Stack>
-        </Group>
-    </Group>
+            </div>
+        </div>
+    </div>
     )  
 }

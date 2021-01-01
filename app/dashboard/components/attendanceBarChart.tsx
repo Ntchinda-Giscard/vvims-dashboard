@@ -22,8 +22,8 @@ export default function AttendanceOverviewBarChart(){
             data={data} 
             series={[
                 {name: 'SmarthPhones', label: 'smarthphones sales', color: '#C9B7EC'},
-                {name: 'laptops', label: 'laptops sales', color: 'blue.8'},
-                {name: 'Tablets', label: 'tablets sales', color: '#CBF2FF'},
+                {name: 'laptops', label: 'laptops sales', color: 'blue.6'},
+                {name: 'Tablets', label: 'tablets sales', color: '#DCFAF8'},
             ]} 
             dataKey={"month"}
             withLegend

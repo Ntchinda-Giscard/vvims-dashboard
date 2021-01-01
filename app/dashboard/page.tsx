@@ -83,10 +83,13 @@ export default function Home() {
           <Paper withBorder p={18} w="100%">
             <NewEvents />
           </Paper>
-          {/* <LoogedCars /> */}
         </div>
       </div>
-      <RecentVisitoTable />
+
+      <div className="flex w-full flex-col lg:flex-row">
+        <LoogedCars />
+      </div>
+      {/* <RecentVisitoTable /> */}
     </main>
   );
 }
