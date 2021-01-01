@@ -25,7 +25,8 @@
 }
 
 .titleCars{
-    color: #404040;
+    color: black;
+    font-weight: 700;
     font-size: large;
     text-transform: capitalize;
     margin-bottom: 10px;
@@ -195,4 +196,11 @@
     overflow: hidden;
     text-overflow: ellipsis;
     width: 150px;
+}
+
+.taskEventTitle{
+    color: black;
+    font-weight: 700;
+    font-size: large;
+    margin-bottom: 15px;
 }

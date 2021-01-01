@@ -12,7 +12,6 @@ function NewEvents() {
                 <EventButton />
                 <EventButton />
                 <EventButton />
-                <EventButton />
             </div>
     
         </>
