@@ -38,12 +38,12 @@ function CardDashboard() {
       { icon: IconInfoHexagon, title: "Attendance Percentage", desc: "Tracking attendance", value: `${dataPerc?.getAttendancePercentage?.attendancePercentage}%`, color: "rgba(22, 189, 4, 0.29)" },
   ];
     return ( <>
-        <div className="flex flex-col md:flex-row gap-2">
+        <div className="flex flex-col lg:flex-row gap-2">
         {
             data.map((item, index) => (
                 <div key={item?.desc} className={classes.card}>
                     <div style={{marginBottom: 10}} className="flex flex-row justify-between mb-3 items-center">
-                        <ThemeIcon radius="xl" size={50} color= {item?.color}>
+                        <ThemeIcon radius="xl" size={70} color= {item?.color}>
                             <item.icon color="black" stroke={1} style={{ width: '60%', height: '60%' }} />
                         </ThemeIcon>
                         <span className={classes.value}> {item?.value} </span>

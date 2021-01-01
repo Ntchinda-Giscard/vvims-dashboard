@@ -185,17 +185,22 @@
     font-weight: 700;
     color: black;
     font-size: smaller;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100px;
 }
 
 .eventDesc{
     font-weight: 700;
-    color: #B8B9BB;
+    color: #B8B9BA;
     font-size: x-small;
 
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
-    width: 150px;
+    /* text-overflow: ellipsis; */
+    max-width: 200px;
+    box-sizing: border-box;
 }
 
 .taskEventTitle{
@@ -203,4 +208,10 @@
     font-weight: 700;
     font-size: large;
     margin-bottom: 15px;
+}
+
+.eventTime{
+    color: #B8B9BA;
+    font-weight: 400;
+    font-size: xx-small;
 }

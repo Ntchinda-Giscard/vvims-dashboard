@@ -75,11 +75,11 @@ export default function Home() {
 
       {/* </div> */}
       
-      <div className="flex flex-row gap-3">
-        <div className="flex w-3/4">
+      <div className="flex w-full justify-center flex-col lg:flex-row gap-3">
+        <div className="flex w-full lg:w-3/4">
           <GraphSection />
         </div>
-        <div className="flex w-2/4">
+        <div className="flex w-full lg:w-2/4">
           <Paper withBorder p={18} w="100%">
             <NewEvents />
           </Paper>
