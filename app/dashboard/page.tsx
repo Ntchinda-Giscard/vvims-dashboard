@@ -24,6 +24,7 @@ import { GET_ALL_VISITS, GET_PERCENTAGE_DIFF } from "./queries/get_all_visits";
 import { useSelector } from "react-redux";
 import NewEvents from "./components/newEvents";
 import { Paper } from "@mantine/core";
+import RecentAppointment from "./components/recentAppointment";
 
 
 
@@ -87,7 +88,16 @@ export default function Home() {
       </div>
 
       <div className="flex w-full flex-col lg:flex-row">
-        <LoogedCars />
+        <div className="md:w-4/12 w-full">
+          <LoogedCars />
+        </div>
+
+        <div className="md:w-6/12 w-full">
+          <RecentAppointment />
+        </div>
+        <div className="md:w-2/12 w-full">
+
+        </div>
       </div>
       {/* <RecentVisitoTable /> */}
     </main>

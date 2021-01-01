@@ -34,18 +34,18 @@
 
 .cmake{
     color: #C9C9C9;
-    font-size: medium;
+    font-size: small;
     text-transform: capitalize;
 }
 
 .license{
-    font-size: medium;
-    color: #386BF6;
+    font-size: small;
+    color: var(--mantine-color-blue-6);
     text-transform: uppercase;
 }
 
 .time{
-    font-size: smaller;
+    font-size: x-small;
     color: #404040;
     text-transform: lowercase;
 }
@@ -199,7 +199,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 150px;
+    max-width: 100px;
     box-sizing: border-box;
 }
 
@@ -214,4 +214,24 @@
     color: #B8B9BA;
     font-weight: 400;
     font-size: xx-small;
+}
+
+
+.appointeContainer{
+    background-color: #F8FAFB;
+    border-radius: 15px;
+    padding: 5px;
+
+}
+
+.appointeeName{
+    color: black;
+    font-size: x-small;
+    font-weight: 700;
+}
+
+.appointeeReason{
+    color: #B8B9BA;
+    font-size: xx-small;
+    font-weight: 400;
 }

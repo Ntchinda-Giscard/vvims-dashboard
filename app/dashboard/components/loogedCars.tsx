@@ -16,7 +16,11 @@ function LoogedCars() {
         w={"100%"}
     >
         <p className={cx([classes.titleCars])}> Recently Logged In Vehicles </p>
-        <div className={"flex flex-col gap-2"}>
+        <div className={"flex flex-col gap-3"}>
+            <CardItem />
+            <CardItem />
+            <CardItem />
+            <CardItem />
             <CardItem />
         </div>
         
@@ -32,7 +36,7 @@ function CardItem(){
     return(
         <div className="flex flex-row w-full  gap-3 items-center">
         {/* <Image src={car_f} alt={"image"} /> */}
-        <ThemeIcon radius="xl" size={70} color= {"#DCFAF8"}>
+        <ThemeIcon radius="md" size={'xl'} color= {"#DCFAF8"}>
             <IconCar color="black" stroke={1} style={{ width: '60%', height: '60%' }} />
         </ThemeIcon>
         <div className={"flex flex-row w-full items-center justify-between"}>

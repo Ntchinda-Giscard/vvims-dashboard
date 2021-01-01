@@ -26,12 +26,12 @@ function EventButton(){
     return(<>
         <div className="flex flex-row items-center gap-3">
             <EventDateBox />
-            <div className="flex flex-col "> 
+            <div className="flex flex-col w-full "> 
                 <div className={"flex flex-row w-full justify-between"}>
                     <div className={classes.eventTitle}> Board meeting </div>
                     <div className={classes.eventTime}> 12:00 </div>
                 </div>
-                <div className={classes.eventDesc}> Attend all project manageers board meeting to ake them fell cool </div>
+                <div className={`${classes.eventDesc}`}> Attend all project manageers board meeting to ake them fell cool </div>
             </div>
         </div>
     </>);
