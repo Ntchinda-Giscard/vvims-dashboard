@@ -157,3 +157,20 @@
     font-weight: 800;
     text-align: center;
 }
+
+
+
+.dateEvent{
+    background: #E7EBEE;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.dateSpan{
+
+    font-weight: 600;
+    color: black;
+    font-size: smaller;
+}
