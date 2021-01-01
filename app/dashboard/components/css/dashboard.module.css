@@ -139,7 +139,7 @@
 }
 
 .title{
-    font-size: smaller;
+    font-size: small;
     color: black;
     font-weight: 700;
 }
@@ -148,4 +148,12 @@
     font-size: x-small;
     color: gray;
     font-weight: 400;
+}
+
+
+.taskStat{
+    font-size: medium;
+    color: black;
+    font-weight: 800;
+    text-align: center;
 }

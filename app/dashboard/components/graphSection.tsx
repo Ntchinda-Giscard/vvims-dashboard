@@ -6,6 +6,7 @@ import classes from "@/app/dashboard/components/css/dashboard.module.css"
 import cx from "clsx"
 import { useSubscription } from "@apollo/client";
 import { GET_VISITS_STAT } from "../queries/get_all_visits";
+import AttendanceOverviewBarChart from "./attendanceBarChart";
 
 
 
@@ -29,6 +30,7 @@ function GraphSection() {
                     data={[
                         { label: 'Visitors', value: 'vi' },
                         { label: 'Vehicles', value: 've' },
+                        {label: "Attendance", value: 'att'}
                     ]}
                 />
                 <Select
@@ -38,18 +40,8 @@ function GraphSection() {
             </Group>
         </Group>
         {
-            value === 'vi' ?
-            <LineChart
-            h={300}
-            data={dataVisitStat?.get_visits_stat
-                }
-            dataKey="day"
-            series={[
-                { name: 'visits_per_day', color: '#16DBCC' },
-            ]}
-            curveType="natural"
-            withDots={false}
-        />
+            value === 'att' ?
+            <AttendanceOverviewBarChart />
         :
         <LineChart
             h={300}
