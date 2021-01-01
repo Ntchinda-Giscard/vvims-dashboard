@@ -174,3 +174,15 @@
     color: black;
     font-size: smaller;
 }
+
+.eventTitle{
+    font-weight: 700;
+    color: black;
+    font-size: smaller;
+}
+
+.eventDesc{
+    font-weight: 700;
+    color: #B8B9BB;
+    font-size: x-small;
+}
