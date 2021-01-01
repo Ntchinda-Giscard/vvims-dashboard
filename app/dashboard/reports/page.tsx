@@ -58,6 +58,10 @@ export default function Page(){
                         mt="md"
                         label="Generate by date range"
                         onChange={(event) => setChecked(event.currentTarget.checked)}
+                        styles={{
+                                label:{color: "#404040"},
+                            
+                        }}
                     />
                     <div className={'flex flex-col md:flex-row gap-3'}>
                         <DateInput
