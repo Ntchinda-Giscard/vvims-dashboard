@@ -1,8 +1,9 @@
 import car_f from '@/public/assets/cars_f.svg'
 import classes from "@/app/dashboard/components/css/dashboard.module.css"
+import { IconInfoHexagon, IconCar, IconUserShare, IconUsersGroup } from "@tabler/icons-react";
 import cx from "clsx";
 import { Poppins } from "next/font/google";
-import { Paper, Group, Stack, Badge } from '@mantine/core';
+import { Paper, Group, Stack, Badge, ThemeIcon } from '@mantine/core';
 import Image from "next/image";
 
 const font_heading = Poppins({ subsets: ["latin"], weight:["400"] });
@@ -16,7 +17,7 @@ function LoogedCars() {
     >
         <p className={cx([classes.titleCars])}> Recently Logged In Vehicles </p>
         <div className={"flex flex-col gap-2"}>
-        <CardItem />
+            <CardItem />
         </div>
         
     </Paper>
@@ -30,7 +31,10 @@ export default LoogedCars;
 function CardItem(){
     return(
         <div className="flex flex-row w-full  gap-3 items-center">
-        <Image src={car_f} alt={"image"} />
+        {/* <Image src={car_f} alt={"image"} /> */}
+        <ThemeIcon radius="xl" size={70} color= {"#DCFAF8"}>
+            <IconCar color="black" stroke={1} style={{ width: '60%', height: '60%' }} />
+        </ThemeIcon>
         <div className={"flex flex-row w-full items-center justify-between"}>
             <div className="flex flex-col">
                 <p  className={cx([classes.cmake, font_heading.className])}> toyota yaris</p>

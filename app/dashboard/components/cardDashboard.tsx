@@ -4,7 +4,7 @@ import { ReactElement, useEffect } from 'react'
 import classes from "@/app/dashboard/components/css/dashboard.module.css";
 import { Poppins } from "next/font/google";
 import cx from 'clsx'
-import { IconInfoHexagon, IconCalendar, IconUserShare, IconUsersGroup } from "@tabler/icons-react";
+import { IconInfoHexagon, IconCar, IconUserShare, IconUsersGroup } from "@tabler/icons-react";
 import { useQuery } from '@apollo/client';
 import { GET_PERCENT, GET_TOT_LEAVE_EMPLOYEE } from '../query/get_percent';
 
