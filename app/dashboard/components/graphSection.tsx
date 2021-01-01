@@ -20,7 +20,7 @@ function GraphSection() {
     },[dataVisitStat])
     return ( <>
 
-    <Paper withBorder pr={20} pb={15} w={"100%"}>
+    <Paper withBorder pl={18} pr={18} pt={15} w={"100%"}>
         <Group p={10} justify="space-between">
             <p className={cx([classes.titleCars])}> Entry Statistics </p>
             <Group>
@@ -35,7 +35,8 @@ function GraphSection() {
                 />
                 <Select
                     placeholder="Pick value"
-                    data={['This month', 'Today', 'This week']}
+                    data={['Month', 'Today', 'Week']}
+                    w={100}
                 />
             </Group>
         </Group>

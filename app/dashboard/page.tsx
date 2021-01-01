@@ -22,6 +22,8 @@ import bg_b from "@/public/assets/bg_card_b.svg";
 import { useSubscription } from "@apollo/client";
 import { GET_ALL_VISITS, GET_PERCENTAGE_DIFF } from "./queries/get_all_visits";
 import { useSelector } from "react-redux";
+import NewEvents from "./components/newEvents";
+import { Paper } from "@mantine/core";
 
 
 
@@ -78,7 +80,10 @@ export default function Home() {
           <GraphSection />
         </div>
         <div className="flex w-2/4">
-          <LoogedCars />
+          <Paper withBorder p={18} w="100%">
+            <NewEvents />
+          </Paper>
+          {/* <LoogedCars /> */}
         </div>
       </div>
       <RecentVisitoTable />

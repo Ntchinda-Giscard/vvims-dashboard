@@ -43,7 +43,7 @@ function CardDashboard() {
             data.map((item, index) => (
                 <div key={item?.desc} className={classes.card}>
                     <div style={{marginBottom: 10}} className="flex flex-row justify-between mb-3 items-center">
-                        <ThemeIcon radius="xl" size="xl" color= {item?.color}>
+                        <ThemeIcon radius="xl" size={50} color= {item?.color}>
                             <item.icon color="black" stroke={1} style={{ width: '60%', height: '60%' }} />
                         </ThemeIcon>
                         <span className={classes.value}> {item?.value} </span>

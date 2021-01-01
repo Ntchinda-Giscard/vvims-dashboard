@@ -166,11 +166,16 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    height: fit-content;
+    width: fit-content;
+    padding-block: 8px;
+    padding-inline: 12px;
 }
 
 .dateSpan{
 
-    font-weight: 600;
+    font-weight: 700;
     color: black;
     font-size: smaller;
 }
@@ -185,4 +190,9 @@
     font-weight: 700;
     color: #B8B9BB;
     font-size: x-small;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 150px;
 }
