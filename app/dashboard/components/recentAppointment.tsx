@@ -12,7 +12,7 @@ function RecentAppointment() {
             p={15}
         >
             <p className={cx([classes.titleCars])}> Upcoming Appointment </p>
-            <div className="flex flex-row gap-3">
+            <div className="flex flex-row gap-3 mb-3">
                 <Badge styles={{
                     label:{
                         textTransform: 'capitalize'
@@ -31,6 +31,10 @@ function RecentAppointment() {
                 }} variant="outline" color="blue" radius="md">Tomorow</Badge>
             </div>
             <div className="grid grid-cols-1 flex justify-between lg:grid-cols-2">
+                <AppoineeCard />
+                <AppoineeCard />
+                <AppoineeCard />
+                <AppoineeCard />
                 <AppoineeCard />
             </div>
 

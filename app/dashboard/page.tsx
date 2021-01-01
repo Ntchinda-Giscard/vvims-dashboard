@@ -87,19 +87,18 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex w-full flex-col lg:flex-row">
-        <div className="md:w-4/12 w-full">
+      <div className="flex w-full gap-3 flex-col lg:flex-row">
+        <div className="lg:w-4/12 w-full">
           <LoogedCars />
         </div>
 
-        <div className="md:w-6/12 w-full">
+        <div className="lg:w-6/12 w-full">
           <RecentAppointment />
         </div>
-        <div className="md:w-2/12 w-full">
+        <div className="lg:w-2/12 w-full">
 
         </div>
       </div>
-      {/* <RecentVisitoTable /> */}
     </main>
   );
 }

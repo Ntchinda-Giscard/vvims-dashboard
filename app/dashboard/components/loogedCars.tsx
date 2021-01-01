@@ -36,7 +36,7 @@ function CardItem(){
     return(
         <div className="flex flex-row w-full  gap-3 items-center">
         {/* <Image src={car_f} alt={"image"} /> */}
-        <ThemeIcon radius="md" size={'xl'} color= {"#DCFAF8"}>
+        <ThemeIcon radius="md" size={'md'} color= {"#DCFAF8"}>
             <IconCar color="black" stroke={1} style={{ width: '60%', height: '60%' }} />
         </ThemeIcon>
         <div className={"flex flex-row w-full items-center justify-between"}>
@@ -46,7 +46,7 @@ function CardItem(){
             </div>
             <div className="flex flex-col">
                 <p className={cx([classes.time, font_heading.className])}> 03 minute ago </p>
-                <Badge variant="light" color="blue" radius="md">Badge</Badge>
+                <Badge variant="light" size="xs" color="blue" radius="md">Badge</Badge>
             </div>
         </div>
     </div>
