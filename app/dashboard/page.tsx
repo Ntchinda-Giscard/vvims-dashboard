@@ -11,13 +11,18 @@ import { useEffect } from "react";
 import img_p from "@/public/assets/visit.svg";
 import img_c from "@/public/assets/cars.svg";
 import img_cf from "@/public/assets/flaged_cad.svg";
-
+import { IconSwimming,
+  IconBike,
+  IconRun,
+  IconChevronDown,
+  IconChevronUp, } from '@tabler/icons-react';
 import bg_r from "@/public/assets/bg_card_r.svg";
 import bg_g from "@/public/assets/bg_card_g.svg";
 import bg_b from "@/public/assets/bg_card_b.svg";
 import { useSubscription } from "@apollo/client";
 import { GET_ALL_VISITS, GET_PERCENTAGE_DIFF } from "./queries/get_all_visits";
 import { useSelector } from "react-redux";
+import StatsControls from "./components/cardDashboard";
 
 
 
@@ -34,9 +39,9 @@ export default function Home() {
   const {data: dataPercent} = useSubscription(GET_PERCENTAGE_DIFF)
   
   const card_info = [
-    {title: "Total visits", amount: dataAgg?.visits_aggregate?.aggregate?.count, perc: dataPercent?.get_visit_percentage_difference?.[0]?.percentage_change, bg_img: bg_b, img: img_p},
-    {title: "Total Vehicles", amount: 0, perc: 0, bg_img: bg_g, img: img_c},
-    {title: "Flagged Vehicles", amount: 0, perc: 0, bg_img: bg_r, img: img_cf},
+    {title: "Total visits", icon: IconBike, amount: dataAgg?.visits_aggregate?.aggregate?.count, perc: dataPercent?.get_visit_percentage_difference?.[0]?.percentage_change, bg_img: bg_b, img: img_p},
+    {title: "Total Vehicles", icon: IconBike, amount: 0, perc: 0, bg_img: bg_g, img: img_c},
+    {title: "Flagged Vehicles", icon: IconBike, amount: 0, perc: 0, bg_img: bg_r, img: img_cf},
   ]
   useEffect(() =>{
     const askNotificationPermission = async () => {
@@ -64,18 +69,7 @@ export default function Home() {
     <main className="flex min-h-full flex-col gap-3">
       <p className={cx([classes.heading, font_heading.className])}> Dashboard </p>
       <div className="flex flex-row justify-center gap-3">
-        {
-          card_info.map((c) =>(
-            <CardDashboard
-              key={c?.title}
-              title={c?.title}
-              amount={c?.amount}
-              bg_img={c?.bg_img}
-              img={c?.img} 
-              perc={c?.perc}            
-            />
-          ))
-        }
+        <StatsControls />
 
       </div>
       

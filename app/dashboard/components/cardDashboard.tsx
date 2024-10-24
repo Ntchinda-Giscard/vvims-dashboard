@@ -1,48 +1,44 @@
-import { Badge, Group, Paper } from '@mantine/core'
-import Image from 'next/image'
-import { ReactElement } from 'react'
-import classes from "@/app/dashboard/components/css/dashboard.module.css";
-import { Poppins } from "next/font/google";
-import cx from 'clsx'
-import { IconChevronUp, IconChevronDown, Icon } from '@tabler/icons-react';
+import { useState } from 'react';
+import dayjs from 'dayjs';
+import { UnstyledButton, Text, Paper, Group, rem, ThemeIcon } from '@mantine/core';
+import {
+  IconSwimming,
+  IconBike,
+  IconRun,
+  IconChevronDown,
+  IconChevronUp,
+} from '@tabler/icons-react';
+import classes from '@/app/dashboard/components/StatsCommon.module.css';
 
-const font_heading = Poppins({ subsets: ["latin"], weight:["500"] });
-const font_amnt = Poppins({ subsets: ["latin"], weight:["700"] });
-const font_perc = Poppins({ subsets: ["latin"], weight:["400"] });
+const data = [
+  { icon: IconRun, label: 'Running', color: 'teal' },
+  { icon: IconSwimming, label: 'Swimming', color: 'grape' },
+  { icon: IconBike, label: 'Bike', color: 'violet' },
+  { icon: IconBike, label: 'Like', color: '' },
+];
 
-interface dashboard_card{
-    title: string
-    amount: number
-    perc: number
-    bg_img: string
-    img: string
-}
+export default function StatsControls() {
+  const [date, setDate] = useState(new Date(2021, 9, 24));
 
-function CardDashboard({title, amount, perc, bg_img, img}: dashboard_card) {
-    return ( <>
-    <Paper 
-        withBorder
-        radius="md"
-        w={350}
-    >
-        <Group justify={'space-between'}>
-            <Group p={10} gap={10}>
-                <Image src={img} alt="img" height={75} width={75} />
-                <p className={cx([classes.cardTitle, font_heading])}> {title} </p>
-            </Group>
-            <Image src={bg_img} alt='img' />
-        </Group>
-        <Group justify="flex-start" p={10} pb={0}>
-            <p className={cx([font_amnt.className, classes.amount])}> {amount} </p>
-            <Badge leftSection={ perc > 0 ?<IconChevronUp /> : <IconChevronDown />} variant="light" color={ perc > 0 ? "#16DBCC" : perc < 0 ? 'red' : ''} size="lg"  radius="md">  {perc}% </Badge>
-        </Group>
-        {/* <Group p={10} pt={0}>
-            <p className={cx([classes.perc, font_perc.className])}> {perc}% </p>
-            <p className={cx([classes.percDesc, font_perc.className])}> {perc > 0 ? "Total Increase" : perc < 0  ? "Total decrease" : "Equal"} </p>
-        </Group> */}
+  const stats = data.map((stat) => (
+    <Paper maw={200}  w={150} withBorder p="xs" radius="md"  key={stat.label}>
+      <ThemeIcon radius="xl" color={stat.color}>
+        <stat.icon
+          style={{ width: '70%', height: '70%' }}
+          // className={classes.icon}
+          stroke={1.5}
+        />
+      </ThemeIcon>
+      <div>
+        <p className={classes.label}>{stat.label}</p>
+        <p className={classes.count}>
+          <span className={classes.value}>{Math.floor(Math.random() * 6 + 4)}km</span> / 10km
+        </p>
+      </div>
     </Paper>
+  ));
 
-    </> );
+  return (
+      <div className='flex flex-col md:flex-row justify-around' >{stats}</div>
+  );
 }
-
-export default CardDashboard;

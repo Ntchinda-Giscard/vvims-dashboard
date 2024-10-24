@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_EMPLOYEE_SUB = gql`
-subscription GetEmployee($limit: Int! , $offset: Int!, $search: String = "%%", $company_id: uuid!) {
+query GetEmployee($limit: Int! , $offset: Int!, $search: String = "%%", $company_id: uuid!) {
   employees(limit: $limit, offset: $offset, 
     where: {
       company_id:{_eq: $company_id},

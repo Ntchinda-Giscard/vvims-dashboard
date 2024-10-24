@@ -4,7 +4,7 @@ import { LoadingOverlay, Button, Group, Box, Paper, TextInput, rem } from '@mant
 import { IconPlus, IconSearch } from '@tabler/icons-react';
 import Link from 'next/link'
 import ViewEmployeeTable from './components/viewEmployeeTable';
-import { useSubscription } from '@apollo/client';
+import { useQuery, useSubscription } from '@apollo/client';
 import { GET_EMPLOYEE_SUB } from './query/get_employee';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -29,7 +29,7 @@ export default function ViewEmployee() {
   const user = useSelector((state: any) => state.auth.userInfo);
   const [search, setSearch] = useState('');
   const [deleteDeptOpened, { open: openDelete, close: closeDelete }] = useDisclosure(false);
-  const {loading: loadEmployee, error: errEmployee, data: dataEmployee} = useSubscription(GET_EMPLOYEE_SUB,{
+  const {loading: loadEmployee, error: errEmployee, data: dataEmployee} = useQuery(GET_EMPLOYEE_SUB,{
     variables:{
       company_id: user?.employee?.company_id,
       limit: itemsPerPage,
