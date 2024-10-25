@@ -69,7 +69,7 @@ export default function Home() {
     <main className="flex min-h-full flex-col gap-3">
       <p className={cx([classes.heading, font_heading.className])}> Dashboard </p>
       <div className="flex flex-row justify-center gap-3">
-        <StatsControls />
+        {/* <StatsControls /> */}
 
       </div>
       
