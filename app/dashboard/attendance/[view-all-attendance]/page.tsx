@@ -1,6 +1,6 @@
 "use client"
 import { useRouter } from "next/navigation";
-import { useSubscription } from "@apollo/client";
+import { useQuery, useSubscription } from "@apollo/client";
 import { GET_ATTENDANCES_ALL, GET_ATTENDANCES_ALL_AGG } from "../queries/get_total_empl";
 import { ActionIcon, Group, NumberInput, Paper, TextInput, rem } from "@mantine/core";
 import { useState, useEffect } from "react";
@@ -11,6 +11,9 @@ import { IconArrowLeft, IconSearch } from "@tabler/icons-react";
 import FullWidthSkeletonStack from "../../components/defaultTable";
 import FootPage from "../../components/fotter";
 import { Poppins } from "next/font/google";
+import AttendanceTable from "../components/attendanceTable";
+import { GET_ATT_REPORT } from "../queries/get_att_report";
+import AttendanceReportTable from "./components/reportTable";
 
 
 const poppins = Poppins({ subsets: ["latin"], weight:["400"] });
@@ -29,11 +32,12 @@ const formattedLastDay = lastDayOfCurrentMonth.toISOString().split('T')[0];
 
 
     const router = useRouter()
+    const now = new Date()
     const user = useSelector((state: any) => state.auth.userInfo);
     //@ts-ignore
-    const [fromValue, setFromValue] = useState(null);
+    const [fromValue, setFromValue] = useState(new Date(now.getFullYear(), now.getMonth()), 1);
     //@ts-ignore
-    const [toValue, setToValue] = useState(null);
+    const [toValue, setToValue] = useState(new Date(now.getFullYear(), now.getMonth()+1), 0);
     const [activePage, setPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [search, setSearch] = useState('');
@@ -47,6 +51,13 @@ const formattedLastDay = lastDayOfCurrentMonth.toISOString().split('T')[0];
             _ilike: `%${search}%`,
         }
     })
+    const {data: dataAtt, loading: loadAtt, error: errAtt} = useQuery(GET_ATT_REPORT,{
+        variables:{
+            endDate: toValue,
+            startDate: fromValue
+        }
+    }
+    )
 
     const {data: dataAgg, loading: loadAgg, error: errAgg} = useSubscription(GET_ATTENDANCES_ALL_AGG,{
         variables:{
@@ -60,14 +71,36 @@ const formattedLastDay = lastDayOfCurrentMonth.toISOString().split('T')[0];
 
     useEffect(() =>{
         console.log(fromValue)
-        console.log("Datas", data)
+        console.log("Datas", dataAtt)
         if (loading){
             console.log("Loading...")
         }
         if (error){
             console.log("Error...", error)
         }
-    }, [toValue, data, fromValue])
+    }, [dataAtt])
+
+    function getDayOfWeek(dateStr: string) {
+        const date = new Date(dateStr);
+        const options = { weekday: 'long' };
+        //@ts-ignore
+        return date.toLocaleDateString('en-US', options);
+    }
+
+    function formatDateToDDMMYYYY(dateStr: string) {
+        const date = new Date(dateStr);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const year = date.getFullYear();
+        
+        return `${day}/${month}/${year}`;
+      }
+      
+      // Example usage
+      console.log(formatDateToDDMMYYYY("2024-09-30T00:00:00+00:00")); // Output: "30/09/2024"
+      
+      // Example usage
+      console.log(getDayOfWeek("2024-09-30T00:00:00+00:00")); // Output: "Monday"
 
     return ( <>
         <main className={"flex flex-col min-w-full min-h-full"}>
@@ -92,7 +125,6 @@ const formattedLastDay = lastDayOfCurrentMonth.toISOString().split('T')[0];
                 />
                     <Group>
                         <DateInput
-
                             value={fromValue}
                             //@ts-ignore
                             onChange={setFromValue}
@@ -133,11 +165,29 @@ const formattedLastDay = lastDayOfCurrentMonth.toISOString().split('T')[0];
                     </Group>
                 </div>
                {
-                loading || error ?
+                false ?
                 <FullWidthSkeletonStack /> :
-                <ViewAttendanceTable 
-                    datas = {data?.get_attenance_monthly_all_employee}
-                />}
+                    <>
+                        {
+                          dataAtt?.getReportAttandance?.map((m: any) =>(
+                            <>
+                                <AttendanceReportTable 
+                                    key={m?.employee?.id}
+                                    datas={m?.attendance}
+                                    date={ `${getDayOfWeek(m?.date)}  - ${formatDateToDDMMYYYY(m?.date)}` }
+                                />
+                            </>
+                          ))
+                        }
+                        
+                        {/* <AttendanceReportTable 
+                            datas={dataAtt}
+                        /> */}
+                    </>
+                // <ViewAttendanceTable 
+                //     datas = {data?.get_attenance_monthly_all_employee}
+                // />
+                }
                 <div className="flex md:flex-row flex-col justify-center md:justify-between items-center w-full">
                     {
                         errAgg || loadAgg ? null :
@@ -147,7 +197,7 @@ const formattedLastDay = lastDayOfCurrentMonth.toISOString().split('T')[0];
                     }
                     {
                     errAgg || loadAgg ? null :
-                    <Group>
+                    <div className="flex justify-center md:justify-between items-center ">
                         <NumberInput value={itemsPerPage} w={80} min={10} max={100} 
                             //@ts-ignore
                             onChange={setItemsPerPage} />
@@ -156,7 +206,7 @@ const formattedLastDay = lastDayOfCurrentMonth.toISOString().split('T')[0];
                         onPage={(v: any) => setPage(v)}
                         total={Math.ceil(dataAgg?.get_attenance_monthly_all_employee.length/itemsPerPage)}
                         />
-                    </Group>
+                    </div>
                     }
                 </div>
 
