@@ -123,7 +123,7 @@ function Page(){
                             onClick={ dataAttStatus?.attendance?.[0]?.clock_in_time ? handleClockOut : getLocation} 
                             color={dataAttStatus?.attendance?.[0]?.clock_in_time ? 'red' : ''} >
                             {
-                                dataAttStatus?.attendance?.[0]?.clock_in_time ? 'Clock out' : "Clock in"
+                              dataAttStatus?.attendance?.[0]?.clock_in_time ? 'Clock out' : "Clock in"
                             }
                         </Button>
                         <Button component={Link} href={`${pathname}/view-all-attendances`} bg={"#16DBCC"}>

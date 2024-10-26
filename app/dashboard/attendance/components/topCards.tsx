@@ -69,11 +69,11 @@ export default function StatsGrid() {
     
 
     const data = [
-        { title: 'Total work force', icon: 'user', value: dataEmpl?.employees_aggregate?.aggregate?.count, diff: 0 },
-        { title: 'Present workforce', icon: 'present', value: dataPresent?.employees_aggregate?.aggregate?.count, diff: 0 },
-        { title: 'On time workforce', icon: 'receipt', value: dataOnTime?.employees_aggregate?.aggregate?.count, diff: 0 },
-        { title: 'Late workforce', icon: 'coin', value: dataLate?.employees_aggregate?.aggregate?.count, diff: 0 },
-        { title: 'Absent workforce', icon: 'discount', value: (dataEmpl?.employees_aggregate?.aggregate?.count - dataPresent?.employees_aggregate?.aggregate?.count), diff: 0 },
+        { title: 'Total employee', icon: 'user', value: dataEmpl?.employees_aggregate?.aggregate?.count, diff: 0 },
+        { title: 'Present employee', icon: 'present', value: dataPresent?.employees_aggregate?.aggregate?.count, diff: 0 },
+        { title: 'On time employee', icon: 'receipt', value: dataOnTime?.employees_aggregate?.aggregate?.count, diff: 0 },
+        { title: 'Late employee', icon: 'coin', value: dataLate?.employees_aggregate?.aggregate?.count, diff: 0 },
+        { title: 'Absent employee', icon: 'discount', value: (dataEmpl?.employees_aggregate?.aggregate?.count - dataPresent?.employees_aggregate?.aggregate?.count), diff: 0 },
     ]
 
 
