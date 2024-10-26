@@ -112,7 +112,7 @@ const formattedLastDay = lastDayOfCurrentMonth.toISOString().split('T')[0];
                 <p style={{ fontWeight:  800, fontSize: "large", color: "#404040"}}> View All Attendance </p>
             </Group>
             <Paper p="md" mt="lg" radius="md" >
-                <div className="flex flex-col md:flex-row items-center w-full justify-between">
+                <div className="flex flex-col md:flex-row items-center w-full justify-start md:justify-between">
                 <TextInput
                     value={search}
                     leftSectionPointerEvents="none"

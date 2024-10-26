@@ -80,10 +80,11 @@ export default function AttendanceReportTable({ datas, onEdit, onDelete, date, k
       <Button onClick={handlePrint} leftSection={<IconPrinter style={{ width: rem(16), height: rem(16) }} stroke={1} />}>
         PDF
       </Button>
-      <p style={{ marginTop: 5, marginBottom: 5 }} > {date} </p>
+      
       <ScrollArea h={300} onScrollPositionChange={({ y }) => setScrolled(y !== 0)}>
         {/* Ref target for printing */}
         <div ref={tableRef}>
+          <p style={{ marginTop: 5, marginBottom: 5 }} > {date} </p>
           <Table withRowBorders miw={700}>
             <Table.Thead className={cx(classes.header, { [classes.scrolled]: scrolled })}>
               <Table.Tr>
