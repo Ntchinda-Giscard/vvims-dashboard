@@ -32,10 +32,11 @@ const formattedLastDay = lastDayOfCurrentMonth.toISOString().split('T')[0];
 
 
     const router = useRouter()
-    const now = new Date()
     const user = useSelector((state: any) => state.auth.userInfo);
     //@ts-ignore
-    const [fromValue, setFromValue] = useState(new Date(now.getFullYear(), now.getMonth()), 1);
+    const now = new Date()
+    //@ts-ignore
+    const [fromValue, setFromValue] = useState(new Date(now.getFullYear(), now.getMonth(), 3));
     //@ts-ignore
     const [toValue, setToValue] = useState(new Date(now.getFullYear(), now.getMonth()+1), 0);
     const [activePage, setPage] = useState(1);
