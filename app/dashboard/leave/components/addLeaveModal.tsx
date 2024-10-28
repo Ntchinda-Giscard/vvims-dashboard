@@ -1,15 +1,20 @@
 "use client"
-import { useQuery } from '@apollo/client';
-import { Modal, Button, Select, Textarea } from '@mantine/core';
+import { useMutation, useQuery } from '@apollo/client';
+import { Modal, Button, Select, Textarea, Group } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { GET_LEAVE_TYPE } from '../queries/queries';
 import { useEffect, useState } from 'react';
+import { INSERT_LEAVE } from '../mutation/mutations';
+import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 
 export default function AddLeaveManagement({opened, close}: any) {
 
     const {data: dataType, error: errType, loading: loadType} = useQuery(GET_LEAVE_TYPE);
+    const [insertLeave, {loading: loadInsert}] = useMutation(INSERT_LEAVE);
     const [types, setTypes] = useState([]);
+    const user = useSelector((state: any) => state.auth.userInfo);
 
     const form = useForm({
         mode: 'uncontrolled',
@@ -22,7 +27,6 @@ export default function AddLeaveManagement({opened, close}: any) {
         },
     
         validate: {
-          email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
         },
       });
 
@@ -35,11 +39,31 @@ export default function AddLeaveManagement({opened, close}: any) {
         setTypes(typeOptions)
     }, [dataType, errType, loadType])
 
+    function handelSubmit(values: any){
+        insertLeave(
+            {
+            variables:{
+                employee_id: user?.employee?.id,
+                comment: values?.comment,
+                end_date: values?.to,
+                start_date: values?.to,
+                leave_type: values?.type
+            },
+            onCompleted: () =>{
+                toast.success("Operation successful")
+                close()
+            },
+            onError: (err) =>{
+                toast.error(`${err.message}`)
+            }}
+        )
+    }
+
   return (
     <>
       <Modal opened={opened} onClose={close} title= {<p style={{color: "#404040"}} > Leave application </p>}>
         {/* Modal content */}
-        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+        <form onSubmit={form.onSubmit((values) => handelSubmit(values))}>
             <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex flex-col gap-3">
                     <DateInput
@@ -102,6 +126,11 @@ export default function AddLeaveManagement({opened, close}: any) {
                         }}
                 />
             </div>
+            <Group grow>
+                <Button loading={loadInsert} mt={'md'} type="submit" color={"#16DBCC"}>
+                    Add leave
+                </Button>
+            </Group>
         </form>
       </Modal>
 
