@@ -84,7 +84,7 @@ export default function AttendanceReportTable({ datas, onEdit, onDelete, date, k
       <ScrollArea h={300} onScrollPositionChange={({ y }) => setScrolled(y !== 0)}>
         {/* Ref target for printing */}
         <div ref={tableRef}>
-          <p style={{ marginTop: 5, marginBottom: 5 }} > {date} </p>
+          <p style={{ marginTop: 5, marginBottom: 5, color: "#404040" }} > {date} </p>
           <Table withRowBorders miw={700}>
             <Table.Thead className={cx(classes.header, { [classes.scrolled]: scrolled })}>
               <Table.Tr>
