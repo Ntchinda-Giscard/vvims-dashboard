@@ -1,5 +1,6 @@
 import { Button } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
+import LeavesTables from "./components/leavesTables";
 
 
 function Page() {
@@ -11,6 +12,7 @@ function Page() {
                             Add Leaves
                         </Button>
                 </div>
+                <LeavesTables />
             </main>
     </> );
 }
