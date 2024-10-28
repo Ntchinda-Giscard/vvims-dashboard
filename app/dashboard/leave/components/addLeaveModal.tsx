@@ -19,14 +19,17 @@ export default function AddLeaveManagement({opened, close}: any) {
     const form = useForm({
         mode: 'uncontrolled',
         initialValues: {
-          email: '',
-          type: '',
-          to: '',
-          from: '',
-          comment: '',
+          type: null,
+          to: null,
+          from: null,
+          comment: null,
         },
     
         validate: {
+            type: (value) => ( value !== null ? null : 'Invalid type'),
+            to: (value) => ( value !== null ? null : 'Invalid date'),
+            from: (value) => ( value !== null ? null : 'Invalid date'),
+            comment: (value) => ( value !== null ? null : 'Invalid comment'),
         },
       });
 
@@ -40,6 +43,11 @@ export default function AddLeaveManagement({opened, close}: any) {
     }, [dataType, errType, loadType])
 
     function handelSubmit(values: any){
+        console.log(values)
+        if ( values?.to  < values?.from){
+            toast.error(" 'From' date should be earlier than the 'To' date")
+            return
+        }
         insertLeave(
             {
             variables:{
