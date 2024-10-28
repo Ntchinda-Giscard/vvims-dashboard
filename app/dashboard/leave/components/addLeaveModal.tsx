@@ -39,68 +39,70 @@ export default function AddLeaveManagement({opened, close}: any) {
     <>
       <Modal opened={opened} onClose={close} title= {<p style={{color: "#404040"}} > Leave application </p>}>
         {/* Modal content */}
-        <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex flex-col gap-3">
-                <DateInput
-                    label="From"
-                    placeholder="Date"
-                    withAsterisk
-                    key={form.key('from')}
-                    {...form.getInputProps('from')}
-                    styles={{
-                        label:{
-                            color: "#404040"
-                        },
-                    }}
-                />
+        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+            <div className="flex flex-col md:flex-row gap-4">
+                <div className="flex flex-col gap-3">
+                    <DateInput
+                        label="From"
+                        placeholder="Date"
+                        withAsterisk
+                        key={form.key('from')}
+                        {...form.getInputProps('from')}
+                        styles={{
+                            label:{
+                                color: "#404040"
+                            },
+                        }}
+                    />
 
-                <DateInput
-                    label="To"
-                    placeholder="Date"
-                    withAsterisk
-                    key={form.key('to')}
-                    {...form.getInputProps('to')}
-                    styles={{
-                        label:{
-                            color: "#404040"
-                        },
-                    }}
-                />
+                    <DateInput
+                        label="To"
+                        placeholder="Date"
+                        withAsterisk
+                        key={form.key('to')}
+                        {...form.getInputProps('to')}
+                        styles={{
+                            label:{
+                                color: "#404040"
+                            },
+                        }}
+                    />
 
-                <Select 
-                    label= "Leave type"
-                    data={types}
-                    clearable
-                    searchable
-                    allowDeselect
-                    key={form.key('type')}
-                    {...form.getInputProps('type')}
-                    nothingFoundMessage="Nothing found..."
+                    <Select 
+                        label= "Leave type"
+                        data={types}
+                        clearable
+                        searchable
+                        allowDeselect
+                        key={form.key('type')}
+                        {...form.getInputProps('type')}
+                        nothingFoundMessage="Nothing found..."
+                        withAsterisk
+                        styles={{
+                            label:{
+                                color: "#404040"
+                            },
+                            option:{
+                                color: "#404040"
+                            }
+                        }}
+                    />
+                </div>
+                <Textarea
+                    size="lg"
+                    label="Comment"
+                    placeholder="comment..."
                     withAsterisk
-                    styles={{
-                        label:{
-                            color: "#404040"
-                        },
-                        option:{
-                            color: "#404040"
-                        }
-                    }}
+                        key={form.key('comment')}
+                        {...form.getInputProps('comment')}
+                        styles={{
+                            label:{
+                                color: "#404040"
+                            },
+                        }}
                 />
             </div>
-            <Textarea
-                size="lg"
-                label="Comment"
-                placeholder="comment..."
-                withAsterisk
-                    key={form.key('comment')}
-                    {...form.getInputProps('comment')}
-                    styles={{
-                        label:{
-                            color: "#404040"
-                        },
-                    }}
-            />
-        </div>
+        </form>
       </Modal>
 
     </>
