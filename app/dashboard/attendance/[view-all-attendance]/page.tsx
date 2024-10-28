@@ -166,7 +166,7 @@ const formattedLastDay = lastDayOfCurrentMonth.toISOString().split('T')[0];
                     </Group>
                 </div>
                {
-                false ?
+                loadAtt || errAtt ?
                 <FullWidthSkeletonStack /> :
                     <>
                         {
@@ -180,16 +180,9 @@ const formattedLastDay = lastDayOfCurrentMonth.toISOString().split('T')[0];
                             </>
                           ))
                         }
-                        
-                        {/* <AttendanceReportTable 
-                            datas={dataAtt}
-                        /> */}
                     </>
-                // <ViewAttendanceTable 
-                //     datas = {data?.get_attenance_monthly_all_employee}
-                // />
                 }
-                <div className="flex md:flex-row flex-col justify-center md:justify-between items-center w-full">
+                {/* <div className="flex md:flex-row flex-col justify-center md:justify-between items-center w-full">
                     {
                         errAgg || loadAgg ? null :
                         <p className={poppins.className} style={{color: "#007FFF", fontSize: "small"}}>
@@ -209,7 +202,7 @@ const formattedLastDay = lastDayOfCurrentMonth.toISOString().split('T')[0];
                         />
                     </div>
                     }
-                </div>
+                </div> */}
 
             </Paper>
         </main>
