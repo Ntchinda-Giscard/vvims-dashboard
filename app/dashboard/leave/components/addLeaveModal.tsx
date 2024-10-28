@@ -134,11 +134,14 @@ export default function AddLeaveManagement({opened, close}: any) {
                         }}
                 />
             </div>
-            <Group grow>
-                <Button loading={loadInsert} mt={'md'} type="submit" color={"#16DBCC"}>
+            <div className=" flex col gap-2 md:flex-row flex-grow" >
+                <Button loading={loadInsert} className="grow" type="submit" color={"#16DBCC"}>
                     Add leave
                 </Button>
-            </Group>
+                <Button color="red" className="grow" onClick={close} >
+                    Cancel
+                </Button>
+            </div>
         </form>
       </Modal>
 

@@ -1,5 +1,5 @@
 "use client"
-import { ActionIcon, Table, Menu, rem, ScrollArea,  } from '@mantine/core';
+import { ActionIcon, Table, Menu, rem, ScrollArea, Avatar,  } from '@mantine/core';
 import { IconTrash, IconEdit, IconDotsVertical, IconEye, IconUserX, IconUserCheck } from '@tabler/icons-react';
 import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode, useState } from 'react';
 import cx from 'clsx';
@@ -8,6 +8,11 @@ import classes from "@/app/dashboard/view-employees/table.module.css";
 export default function LeavesTables({datas, onEdit, onDelete, onDeactivate}:any) {
   const [scrolled, setScrolled] = useState(false)
   const rows = datas?.map((data: {
+    status: ReactNode;
+    start_date: ReactNode;
+    end_date: ReactNode;
+    leave_type: ReactNode;
+    employee: any;
     function: ReactNode;
       firstname: any;
       lastname: any; id: Key | null | undefined; region: any; department: { text_content: { content: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }; }; service: { text_content: { content: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }; }; phone_number: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; position: {
@@ -15,12 +20,18 @@ export default function LeavesTables({datas, onEdit, onDelete, onDeactivate}:any
 }; 
 }) => (
     <Table.Tr key={data?.id}>
-      <Table.Td style={{ color: "#404044" }} >{ `${data?.firstname}` + " "+ `${data?.lastname}`}</Table.Td>
-      <Table.Td style={{ color: "#404044" }}>{data?.department?.text_content?.content}</Table.Td>
-      <Table.Td style={{ color: "#404044" }}>{data?.service?.text_content?.content}</Table.Td>
-      <Table.Td style={{ color: "#404044" }}>{data?.position?.text_content?.content}</Table.Td>
-      <Table.Td style={{ color: "#404044" }}>{data?.function}</Table.Td>
-      <Table.Td style={{ color: "#404044" }}>{data?.phone_number}</Table.Td>
+      
+      <Table.Td style={{ color: "#404044" }} >
+        <EmployeeIcon 
+          file_url={data?.employee?.file?.file_url}
+          firstname={data?.employee?.firstname}
+          lastname={data?.employee?.lastname}
+        />
+      </Table.Td>
+      <Table.Td style={{ color: "#404044" }}>{data?.leave_type}</Table.Td>
+      <Table.Td style={{ color: "#404044" }}>{data?.start_date}</Table.Td>
+      <Table.Td style={{ color: "#404044" }}>{data?.end_date}</Table.Td>
+      <Table.Td style={{ color: "#404044" }}>{data?.status}</Table.Td>
       <Table.Td>
         <Menu shadow="md">
             <Menu.Target>
@@ -67,3 +78,23 @@ export default function LeavesTables({datas, onEdit, onDelete, onDeactivate}:any
   );
 }
 
+interface visitor_icon{
+  file_url: string,
+  firstname: string,
+  lastname: string
+}
+
+function EmployeeIcon({file_url, firstname, lastname}: visitor_icon){
+
+  return(
+    <>
+      <div className="flex flex-row gap-3 items-center">
+        <Avatar variant="filled" radius="xl" src={file_url} alt="no image here" />
+        <div className='flex flex-col'>
+          <p style={{fontSize: 'small', textTransform: 'uppercase'}}> {firstname} </p>
+          <p style={{fontSize: 'small', textTransform: 'capitalize'}}> {lastname} </p>
+        </div>
+      </div>
+    </>
+  )
+}

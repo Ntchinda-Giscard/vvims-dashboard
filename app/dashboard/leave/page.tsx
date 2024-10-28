@@ -4,10 +4,13 @@ import { IconPlus } from "@tabler/icons-react";
 import LeavesTables from "./components/leavesTables";
 import { useDisclosure } from '@mantine/hooks';
 import AddLeaveManagement from "./components/addLeaveModal";
+import { GET_LEAVES } from "./queries/queries";
+import { useSubscription } from "@apollo/client";
 
 
 function Page() {
     const [openedAdd, { open: openAdd, close: closeAdd }] = useDisclosure(false);
+    const {data: dataLeave, error: errLeave, loading: loadLeave} = useSubscription(GET_LEAVES);
     return ( <>
        <main className="flex flex-col min-w-full min-h-full">
         <AddLeaveManagement 
@@ -20,7 +23,9 @@ function Page() {
                             Add Leaves
                         </Button>
                 </div>
-                <LeavesTables />
+                <LeavesTables
+                    datas={dataLeave?.leaves}
+                />
             </main>
     </> );
 }

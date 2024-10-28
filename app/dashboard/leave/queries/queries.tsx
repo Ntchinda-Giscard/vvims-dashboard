@@ -6,3 +6,22 @@ query GetType @cached {
     type
   }
 }`;
+
+export const GET_LEAVES = gql`
+subscription GetLeaves {
+  leaves {
+    status
+    start_date
+    leave_type
+    end_date
+    employee {
+      id
+      lastname
+      firstname
+      file {
+        id
+        file_url
+      }
+    }
+  }
+}`;
