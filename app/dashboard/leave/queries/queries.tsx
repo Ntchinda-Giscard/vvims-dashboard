@@ -15,6 +15,7 @@ subscription GetLeaves {
     start_date
     leave_type
     end_date
+    comment
     employee {
       id
       lastname
