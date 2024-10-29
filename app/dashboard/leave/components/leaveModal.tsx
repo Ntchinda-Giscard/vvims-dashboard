@@ -81,6 +81,7 @@ export default function LeaveModal({opened, close, leave}: any){
     return(
         <>
             <Modal
+                size="sm"
                 withCloseButton={false}
                 opened={opened} 
                 onClose={close}

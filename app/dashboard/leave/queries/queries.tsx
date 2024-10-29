@@ -8,8 +8,8 @@ query GetType @cached {
 }`;
 
 export const GET_LEAVES = gql`
-subscription GetLeaves {
-  leaves {
+subscription GetLeaves($limit: Int = 10, $offset: Int = 0) {
+  leaves(limit: $limit, offset: $offset, order_by: {created_at: desc}) {
     id
     status
     start_date
@@ -25,7 +25,6 @@ subscription GetLeaves {
         id
         file_url
       }
-
     }
   }
 }`;
