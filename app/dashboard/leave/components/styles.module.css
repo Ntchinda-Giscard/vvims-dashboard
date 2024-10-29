@@ -66,3 +66,28 @@
     color: black;
     font-weight: 600;
 }
+
+.leavecard{
+    padding: 20px;
+    border: solid 1px #c8c4c4;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.value{
+    font-weight: 700;
+    font-size: larger;
+    color: black;
+}
+
+.title{
+    font-size: smaller;
+    color: black;
+    font-weight: 700;
+}
+
+.desc{
+    font-size: x-small;
+    color: gray;
+    font-weight: 400;
+}

@@ -11,6 +11,7 @@ import { useState } from "react";
 import FullWidthSkeletonStack from "../components/defaultTable";
 import { DELETE_LEAVE } from "./mutation/mutations";
 import DeleteLEaveModal from "./components/deleteLeaveModal";
+import TopLeaveCard from "./components/topLeaveCards";
 
 
 function Page() {
@@ -47,21 +48,23 @@ function Page() {
                 leave={leaves}
             />
             <div className={"flex flex-col  md:flex-row justify-between mb-8"}>
-                    <p style={{fontWeight: 800, fontSize: "large", color: "#404040"}}> Leaves </p>
-                        <Button onClick={openAdd} leftSection={ <IconPlus size={14} /> }  color={"#16DBCC"}>
-                            Add Leaves
-                        </Button>
-                </div>
-                {
-                    errLeave || loadLeave ?
-                    <FullWidthSkeletonStack /> :
-                    <LeavesTables
-                        datas={dataLeave?.leaves}
-                        onEdit={(v:any) => handleViewLeave(v)}
-                        onDelete={(v: any) => handelDelete(v)}
-                    />
-                }
-            </main>
+                <p style={{fontWeight: 800, fontSize: "large", color: "#404040"}}> Leaves </p>
+                <Button onClick={openAdd} leftSection={ <IconPlus size={14} /> }  color={"#16DBCC"}>
+                    Add Leaves
+                </Button>
+            </div>
+            <TopLeaveCard 
+                />
+            {
+                errLeave || loadLeave ?
+                <FullWidthSkeletonStack /> :
+                <LeavesTables
+                    datas={dataLeave?.leaves}
+                    onEdit={(v:any) => handleViewLeave(v)}
+                    onDelete={(v: any) => handelDelete(v)}
+                />
+            }
+        </main>
     </> );
 }
 
