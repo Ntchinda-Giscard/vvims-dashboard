@@ -81,7 +81,7 @@ export default function LeaveModal({opened, close, leave}: any){
                             <div className={"flex flex-col"}>
                                 <Divider my={5} size="sm" variant="dashed" />
                                 <p className={classes.numberDays}> 
-                                    {`${getDaysDifference(leave?.start_date, leave?.end_date) }days` }
+                                    {`${getDaysDifference(leave?.start_date, leave?.end_date) } days` }
                                 </p>
                             </div>
                             <div className="flex flex-col items-center" >
@@ -92,6 +92,12 @@ export default function LeaveModal({opened, close, leave}: any){
                                 </div>
                                 <p className={classes.numberDays}> {getDayOfWeek(leave?.end_date)} </p>
                             </div>
+                        </div>
+                        <div className={classes.commentBox}>
+                            <div className={classes.leaveType}> 
+                                <p className={classes.type}> {`${leave?.leave_type} type`} </p>
+                            </div>
+                            <p className={classes.comment}> {leave?.comment} </p>
                         </div>
                     </div>
                 </Modal.Body>
