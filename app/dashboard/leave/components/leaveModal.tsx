@@ -7,6 +7,7 @@ import { IconPlus, IconCalendar } from "@tabler/icons-react";
 import cx from 'clsx';
 import { useMutation } from "@apollo/client";
 import { ACCEPT_LEAVE, REJECT_LEAVE } from "../mutation/mutations";
+import toast from "react-hot-toast";
 
 export default function LeaveModal({opened, close, leave}: any){
 
@@ -47,8 +48,34 @@ export default function LeaveModal({opened, close, leave}: any){
         return Math.abs(diffInDays); // Return the absolute value to avoid negative days
     }
 
-    const handleDelete = () =>{
+    const handleAccept = () =>{
+        acceptLeave({
+            variables:{
+                id: leave?.id
+            },
+            onCompleted: () =>{
+                toast.success("Leave accepted");
+                close()
+            },
+            onError: (err) =>{
+                toast.error(`${err.message}`)
+            }
+        })
+    }
 
+    const handleReject = () =>{
+        declineLeave({
+            variables:{
+                id: leave?.id
+            },
+            onCompleted: () =>{
+                toast.success("Leave rejected");
+                close()
+            },
+            onError: (err) =>{
+                toast.error(`${err.message}`)
+            }
+        })
     }
 
     return(
@@ -110,8 +137,8 @@ export default function LeaveModal({opened, close, leave}: any){
                         </div>
                     </div>
                     <Group grow mt={"md"} px={15} py={15}>
-                        <Button onClick={handleDelete} loading={loadAccept} color="red"  radius="md">Accept</Button>  
-                        <Button onClick={close} loading={loadDecline} color="#16DBCC"  radius="md">Reject</Button>
+                        <Button onClick={handleAccept} loading={loadAccept} color="red"  radius="md">Accept</Button>  
+                        <Button onClick={handleReject} loading={loadDecline} color="#16DBCC"  radius="md">Reject</Button>
                     </Group>
                 </Modal.Body>
             {/* Modal content */}
