@@ -11,6 +11,23 @@ export default function LeaveModal({opened, close, leave}: any){
     useEffect(() =>{
         console.log("Leaves :", leave)
     }, [leave])
+
+    function getMonthAbbreviation(dateString: any) {
+        const date = new Date(dateString);
+        return date.toLocaleString('en-US', { month: 'short' }).toUpperCase();
+    }
+
+    function getDayNumber(dateString: any) {
+        const date = new Date(dateString);
+        const day = date.getDate(); // Extracts the day number (1-31)
+        return day.toString().padStart(2, '0'); // Pads with '0' if needed
+    }
+
+    function getDayOfWeek(dateString: any) {
+        const date = new Date(dateString);
+        return date.toLocaleString('en-US', { weekday: 'short' }).toUpperCase();
+    }
+
     return(
         <>
             <Modal
@@ -39,26 +56,26 @@ export default function LeaveModal({opened, close, leave}: any){
                 <Modal.Body>
                     <div>
                         <div className="flex flex-row w-full justify-center  items-center gap-5">
-                            <Space mt={15} />
+                            <Space mt={25} />
                             <div className="flex flex-col items-center" >
-                                <p className={classes.month}> OCT </p>
+                                <p className={classes.month}> {getMonthAbbreviation(leave?.start_date)} </p>
                                 <div className= {`flex py-1 px-1 flex-row gap-2 items-center ${classes.boders} `} >
-                                    <p className={classes.day}>19</p>
+                                    <p className={classes.day}>{getDayNumber(leave?.start_date)}</p>
                                     <IconCalendar style={{ width: rem(16), height: rem(16) }} />
                                 </div>
-                                <p className={classes.numberDays}> Wed </p>
+                                <p className={classes.numberDays}> {getDayOfWeek(leave?.start_date)} </p>
                             </div>
                             <div className={"flex flex-col"}>
-                                <Divider my={5} size="md" variant="dashed" />
+                                <Divider my={5} size="sm" variant="dashed" />
                                 <p className={classes.numberDays}> 3 days </p>
                             </div>
                             <div className="flex flex-col items-center" >
-                                <p className={classes.month}> OCT </p>
+                                <p className={classes.month}> {getMonthAbbreviation(leave?.end_date)} </p>
                                 <div className= {`flex py-1 px-1 flex-row gap-2 items-center ${classes.boders} `}>
-                                    <p className={classes.day}>19</p>
+                                    <p className={classes.day}>{getDayNumber(leave?.end_date)}</p>
                                     <IconCalendar style={{ width: rem(16), height: rem(16) }} />
                                 </div>
-                                <p className={classes.numberDays}> Wed </p>
+                                <p className={classes.numberDays}> {getDayOfWeek(leave?.end_date)} </p>
                             </div>
                         </div>
                     </div>
