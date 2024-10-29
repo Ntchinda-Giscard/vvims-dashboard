@@ -32,7 +32,9 @@ export default function LeavesTables({datas, onEdit, onDelete, onDeactivate}:any
       <Table.Td style={{ color: "#404044" }}>{data?.start_date}</Table.Td>
       <Table.Td style={{ color: "#404044" }}>{data?.end_date}</Table.Td>
       <Table.Td style={{ color: "#404044" }}>
-      <Badge variant="light" color="blue">{data?.status}</Badge>
+      <Badge variant="light" color={data?.status === "PENDING" ? "blue" : data?.status === "ACCEPTED" ? "teal" : "red" } >
+      {data?.status}
+      </Badge>
       </Table.Td>
       <Table.Td>
         <Menu shadow="md">

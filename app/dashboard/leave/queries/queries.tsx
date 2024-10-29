@@ -10,6 +10,7 @@ query GetType @cached {
 export const GET_LEAVES = gql`
 subscription GetLeaves {
   leaves {
+    id
     status
     start_date
     leave_type
@@ -18,10 +19,12 @@ subscription GetLeaves {
       id
       lastname
       firstname
+      function
       file {
         id
         file_url
       }
+
     }
   }
 }`;

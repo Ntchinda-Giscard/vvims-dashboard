@@ -1,0 +1,40 @@
+
+.name{
+    font-weight: 600;
+    font-size: small;
+    text-transform: capitalize;
+    color: #404040;
+    margin: 0;
+}
+
+.function{
+    font-weight: 500;
+    font-size: smaller;
+    color: rgb(126, 124, 124);
+    margin: 0;
+}
+
+
+.day{
+    font-weight: 600;
+    font-size: larger;
+    color: black;
+}
+
+.numberDays{
+    color: gray;
+    font-size: x-small;
+    margin: 0;
+}
+
+.boders{
+    border: solid 1px #c8c4c4;
+    border-radius: 5px;
+}
+
+
+.month{
+    font-weight: 600;
+    font-size: small;
+    color: black;
+}
