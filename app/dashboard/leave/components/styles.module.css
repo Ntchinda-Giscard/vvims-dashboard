@@ -52,8 +52,17 @@
     margin-top: 25px;
 }
 
+.comment{
+    padding-inline: 10px;
+    font-size: small;
+    font-weight: 500;
+    color: #404040;
+    margin-bottom: 10px;
+}
 
 .type{
-    font-size: small;
+    font-size: medium;
     text-transform: lowercase;
+    color: black;
+    font-weight: 600;
 }

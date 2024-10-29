@@ -1,12 +1,17 @@
 "use client"
 
-import { Modal, Avatar, Paper, Divider, rem, Space } from "@mantine/core"
+import { Modal, Avatar, Paper, Divider, rem, Space, Group, Button } from "@mantine/core"
 import classes from "@/app/dashboard/leave/components/styles.module.css";
 import {useEffect} from "react"
 import { IconPlus, IconCalendar } from "@tabler/icons-react";
 import cx from 'clsx';
+import { useMutation } from "@apollo/client";
+import { ACCEPT_LEAVE, REJECT_LEAVE } from "../mutation/mutations";
 
 export default function LeaveModal({opened, close, leave}: any){
+
+    const [acceptLeave, {loading:loadAccept}] = useMutation(ACCEPT_LEAVE)
+    const [declineLeave, {loading:loadDecline}] = useMutation(REJECT_LEAVE)
 
     useEffect(() =>{
         console.log("Leaves :", leave)
@@ -40,7 +45,11 @@ export default function LeaveModal({opened, close, leave}: any){
         const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
       
         return Math.abs(diffInDays); // Return the absolute value to avoid negative days
-      }
+    }
+
+    const handleDelete = () =>{
+
+    }
 
     return(
         <>
@@ -79,7 +88,7 @@ export default function LeaveModal({opened, close, leave}: any){
                                 <p className={classes.numberDays}> {getDayOfWeek(leave?.start_date)} </p>
                             </div>
                             <div className={"flex flex-col"}>
-                                <Divider my={5} size="sm" variant="dashed" />
+                                <Divider my={5} color={'black'} size="sm" variant="dashed" />
                                 <p className={classes.numberDays}> 
                                     {`${getDaysDifference(leave?.start_date, leave?.end_date) } days` }
                                 </p>
@@ -95,11 +104,15 @@ export default function LeaveModal({opened, close, leave}: any){
                         </div>
                         <div className={classes.commentBox}>
                             <div className={classes.leaveType}> 
-                                <p className={classes.type}> {`${leave?.leave_type} type`} </p>
+                                <p className={classes.type}> {`${leave?.leave_type} leave`} </p>
                             </div>
                             <p className={classes.comment}> {leave?.comment} </p>
                         </div>
                     </div>
+                    <Group grow mt={"md"} px={15} py={15}>
+                        <Button onClick={handleDelete} loading={loadAccept} color="red"  radius="md">Accept</Button>  
+                        <Button onClick={close} loading={loadDecline} color="#16DBCC"  radius="md">Reject</Button>
+                    </Group>
                 </Modal.Body>
             {/* Modal content */}
             </Modal>

@@ -14,3 +14,18 @@ mutation DeleteLeave($id: uuid! ) {
     id
   }
 }`;
+
+
+export const ACCEPT_LEAVE = gql`
+mutation AcceptLeave($id: uuid!) {
+  update_leaves_by_pk(pk_columns: {id: $id}, _set: {status: ACCEPTED}) {
+    id
+  }
+}`;
+
+export const REJECT_LEAVE = gql`
+mutation RejectLeave($id: uuid!) {
+  update_leaves_by_pk(pk_columns: {id: $id}, _set: {status: REJECTED}) {
+    id
+  }
+}`;
