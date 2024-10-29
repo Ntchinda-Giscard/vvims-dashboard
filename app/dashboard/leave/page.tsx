@@ -1,5 +1,5 @@
 "use client"
-import { Button } from "@mantine/core";
+import { Button, Paper } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 import LeavesTables from "./components/leavesTables";
 import { useDisclosure } from '@mantine/hooks';
@@ -12,6 +12,7 @@ import FullWidthSkeletonStack from "../components/defaultTable";
 import { DELETE_LEAVE } from "./mutation/mutations";
 import DeleteLEaveModal from "./components/deleteLeaveModal";
 import TopLeaveCard from "./components/topLeaveCards";
+import Demo from "./components/leaveGraph";
 
 
 function Page() {
@@ -53,8 +54,12 @@ function Page() {
                     Add Leaves
                 </Button>
             </div>
-            <TopLeaveCard 
-                />
+            <div className="flex flex-row">
+                <TopLeaveCard />
+                <Paper withBorder>
+                    <Demo />
+                </Paper>
+            </div>
             {
                 errLeave || loadLeave ?
                 <FullWidthSkeletonStack /> :
