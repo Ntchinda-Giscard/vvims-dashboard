@@ -38,3 +38,15 @@ query MyQuery {
     }
   }
 }`;
+
+
+export const GET_EMPLOYEE_ON_LEAVE = gql`
+query MyQuery {
+  employees {
+    leaves_aggregate(where: {status: {_eq: ACCEPTED}}) {
+      aggregate {
+        count
+      }
+    }
+  }
+}`;

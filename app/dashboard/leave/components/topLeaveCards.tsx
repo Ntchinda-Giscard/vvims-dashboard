@@ -21,7 +21,7 @@ export default function TopLeaveCard(){
     
 
     useEffect(() =>{
-
+        console.log("Pending :", dataPending)
     },[dataAccept, dataPending])
 
 
