@@ -1,5 +1,5 @@
 "use client"
-import { ActionIcon, Table, Menu, rem, ScrollArea, Avatar,  } from '@mantine/core';
+import { ActionIcon, Table, Menu, rem, ScrollArea, Avatar, Badge } from '@mantine/core';
 import { IconTrash, IconEdit, IconDotsVertical, IconEye, IconUserX, IconUserCheck } from '@tabler/icons-react';
 import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode, useState } from 'react';
 import cx from 'clsx';
@@ -31,7 +31,9 @@ export default function LeavesTables({datas, onEdit, onDelete, onDeactivate}:any
       <Table.Td style={{ color: "#404044" }}>{data?.leave_type}</Table.Td>
       <Table.Td style={{ color: "#404044" }}>{data?.start_date}</Table.Td>
       <Table.Td style={{ color: "#404044" }}>{data?.end_date}</Table.Td>
-      <Table.Td style={{ color: "#404044" }}>{data?.status}</Table.Td>
+      <Table.Td style={{ color: "#404044" }}>
+      <Badge variant="light" color="blue">{data?.status}</Badge>
+      </Table.Td>
       <Table.Td>
         <Menu shadow="md">
             <Menu.Target>
