@@ -5,4 +5,12 @@ mutation InsertLeave($comment: String = "", $employee_id: uuid = "", $end_date: 
   insert_leaves_one(object: {comment: $comment, employee_id: $employee_id, end_date: $end_date, status: PENDING, start_date: $start_date, leave_type: $leave_type}) {
     id
   }
-}`
+}`;
+
+
+export const DELETE_LEAVE = gql`
+mutation DeleteLeave($id: uuid! ) {
+  delete_leaves_by_pk(id: $id) {
+    id
+  }
+}`;

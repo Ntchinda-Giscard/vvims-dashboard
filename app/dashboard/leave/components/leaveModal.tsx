@@ -28,6 +28,20 @@ export default function LeaveModal({opened, close, leave}: any){
         return date.toLocaleString('en-US', { weekday: 'short' }).toUpperCase();
     }
 
+    function getDaysDifference(startDate:any, endDate: any) {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+      
+        // Calculate the difference in milliseconds
+        //@ts-ignore
+        const diffInMs = end - start;
+      
+        // Convert milliseconds to days (1 day = 24 * 60 * 60 * 1000 ms)
+        const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+      
+        return Math.abs(diffInDays); // Return the absolute value to avoid negative days
+      }
+
     return(
         <>
             <Modal
@@ -55,8 +69,7 @@ export default function LeaveModal({opened, close, leave}: any){
                 </Modal.Header>
                 <Modal.Body>
                     <div>
-                        <div className="flex flex-row w-full justify-center  items-center gap-5">
-                            <Space mt={25} />
+                        <div className="flex flex-row w-full mt-5 justify-center  items-center gap-5">
                             <div className="flex flex-col items-center" >
                                 <p className={classes.month}> {getMonthAbbreviation(leave?.start_date)} </p>
                                 <div className= {`flex py-1 px-1 flex-row gap-2 items-center ${classes.boders} `} >
@@ -67,7 +80,9 @@ export default function LeaveModal({opened, close, leave}: any){
                             </div>
                             <div className={"flex flex-col"}>
                                 <Divider my={5} size="sm" variant="dashed" />
-                                <p className={classes.numberDays}> 3 days </p>
+                                <p className={classes.numberDays}> 
+                                    {`${getDaysDifference(leave?.start_date, leave?.end_date) }days` }
+                                </p>
                             </div>
                             <div className="flex flex-col items-center" >
                                 <p className={classes.month}> {getMonthAbbreviation(leave?.end_date)} </p>

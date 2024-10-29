@@ -46,7 +46,7 @@ export default function LeavesTables({datas, onEdit, onDelete, onDeactivate}:any
             <Menu.Dropdown>
               <Menu.Item color="green" onClick={() => onEdit(data)} leftSection={<IconEye  style={{ width: rem(14), height: rem(14) }} /> }> View </Menu.Item>
               {/* <Menu.Item color="orange" onClick={() => onDeactivate(data)} leftSection={<IconUserX  style={{ width: rem(14), height: rem(14) }} />}> Deactivate </Menu.Item> */}
-              {/* <Menu.Item color="red" onClick={() => onDelete(data)} leftSection={<IconTrash  style={{ width: rem(14), height: rem(14) }} /> }> Delete </Menu.Item> */}
+              <Menu.Item color="red" onClick={() => onDelete(data)} leftSection={<IconTrash  style={{ width: rem(14), height: rem(14) }} /> }> Delete </Menu.Item>
             </Menu.Dropdown>
         </Menu>
         

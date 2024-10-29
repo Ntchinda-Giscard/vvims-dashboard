@@ -1,6 +1,6 @@
 "use client"
 import { useMutation, useQuery } from '@apollo/client';
-import { Modal, Button, Select, Textarea, Group } from '@mantine/core';
+import { Modal, Button, Select, Textarea, Group, rem } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { GET_LEAVE_TYPE } from '../queries/queries';
@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { INSERT_LEAVE } from '../mutation/mutations';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
+import { IconCalendar } from '@tabler/icons-react';
 
 export default function AddLeaveManagement({opened, close}: any) {
 
@@ -44,7 +45,7 @@ export default function AddLeaveManagement({opened, close}: any) {
 
     function handelSubmit(values: any){
         console.log(values)
-        if ( values?.to  < values?.from){
+        if ( !(values?.to > values?.from)){
             toast.error(" 'From' date should be earlier than the 'To' date")
             return
         }
@@ -54,11 +55,12 @@ export default function AddLeaveManagement({opened, close}: any) {
                 employee_id: user?.employee?.id,
                 comment: values?.comment,
                 end_date: values?.to,
-                start_date: values?.to,
+                start_date: values?.from,
                 leave_type: values?.type
             },
             onCompleted: () =>{
                 toast.success("Operation successful")
+                form.reset()
                 close()
             },
             onError: (err) =>{
@@ -75,9 +77,11 @@ export default function AddLeaveManagement({opened, close}: any) {
             <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex flex-col gap-3">
                     <DateInput
+                        minDate={new Date()}
                         label="From"
                         placeholder="Date"
                         withAsterisk
+                        leftSection={<IconCalendar style={{width: rem(16), height: rem(16)}} />}
                         key={form.key('from')}
                         {...form.getInputProps('from')}
                         styles={{
@@ -88,9 +92,11 @@ export default function AddLeaveManagement({opened, close}: any) {
                     />
 
                     <DateInput
+                        minDate={new Date()}
                         label="To"
                         placeholder="Date"
                         withAsterisk
+                        leftSection={<IconCalendar style={{width: rem(16), height: rem(16)}} />}
                         key={form.key('to')}
                         {...form.getInputProps('to')}
                         styles={{
@@ -134,7 +140,7 @@ export default function AddLeaveManagement({opened, close}: any) {
                         }}
                 />
             </div>
-            <div className=" flex col gap-2 md:flex-row flex-grow" >
+            <div className=" mt-5 flex col gap-2 md:flex-row flex-grow" >
                 <Button loading={loadInsert} className="grow" type="submit" color={"#16DBCC"}>
                     Add leave
                 </Button>
