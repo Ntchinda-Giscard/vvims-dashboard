@@ -370,12 +370,15 @@ function AddEmployee() {
                 <Select
                     label={"Role"}
                     placeholder="Pick role"
-                    data={['EMPLOYEE', 'ADMIN']}
+                    data={['ADMIN', 'EMPLOYEE', 'GUARD']}
                     key={form.key('role')}
                     {...form.getInputProps('role')}
                     withAsterisk
                     styles={{
                         label:{
+                            color: "#404040"
+                        },
+                        option:{
                             color: "#404040"
                         }
                     }}
