@@ -30,7 +30,7 @@ export default function TopLeaveCard(){
             <div className="flex flex-col md:flex-row gap-2">
                 {
                     data.map((item, index) => (
-                        <div className={classes.leavecard}>
+                        <div key={item?.desc} className={classes.leavecard}>
                             <div className="flex flex-row justify-between items-center">
                                 <ThemeIcon radius="xl" size="lg" color="rgba(247, 247, 247, 1)">
                                     <item.icon color="black" stroke={1} style={{ width: '60%', height: '60%' }} />
