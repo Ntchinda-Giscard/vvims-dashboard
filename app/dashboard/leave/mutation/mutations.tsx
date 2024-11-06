@@ -27,11 +27,11 @@ mutation AcceptLeave($id: uuid!, $approver_id: uuid! ) {
 }`;
 
 export const REJECT_LEAVE = gql`
-mutation RejectLeave($id: uuid!, $approver_id: uuid! , $comment: String!) {
-  update_leaves_by_pk(pk_columns: {id: $id}, _set: {status: REJECTED, comment: $comment}) {
+mutation RejectLeave($id: uuid!, $approver_id: uuid!, $comments: String!) {
+  update_leaves_by_pk(pk_columns: {id: $id}, _set: {status: REJECTED}) {
     id
   }
-  insert_leave_approval_one(object: {approval_status: REJECTED, approver_id: $approver_id, leave_id: $id}) {
+  insert_leave_approval_one(object: {approval_status: REJECTED, approver_id: $approver_id, leave_id: $id, comments: $comments}) {
     id
   }
 }`;

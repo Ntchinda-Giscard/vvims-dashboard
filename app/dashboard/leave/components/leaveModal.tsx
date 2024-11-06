@@ -1,22 +1,31 @@
 "use client"
-
-import { Modal, Avatar, Paper, Divider, rem, Space, Group, Button } from "@mantine/core"
+import { useDisclosure } from '@mantine/hooks';
+import { Modal, Avatar, Paper, Divider, rem, Badge, Group, Button, Dialog, TextInput, Text } from "@mantine/core"
 import classes from "@/app/dashboard/leave/components/styles.module.css";
-import {useEffect} from "react"
+import {useEffect, useState} from "react"
 import { IconPlus, IconCalendar } from "@tabler/icons-react";
 import cx from 'clsx';
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { ACCEPT_LEAVE, REJECT_LEAVE } from "../mutation/mutations";
 import toast from "react-hot-toast";
+import { useSelector } from 'react-redux';
+import { GET_LEAVES_APPROVAL_STATUS } from '../queries/queries';
 
 export default function LeaveModal({opened, close, leave}: any){
-
-    const [acceptLeave, {loading:loadAccept}] = useMutation(ACCEPT_LEAVE)
-    const [declineLeave, {loading:loadDecline}] = useMutation(REJECT_LEAVE)
+    const user = useSelector((state: any) => state.auth.userInfo);
+    const [acceptLeave, {loading:loadAccept}] = useMutation(ACCEPT_LEAVE);
+    const [declineLeave, {loading:loadDecline}] = useMutation(REJECT_LEAVE);
+    const {data, loading, error} = useQuery(GET_LEAVES_APPROVAL_STATUS, {
+        variables:{
+            leave_id: leave?.id
+        }
+    });
 
     useEffect(() =>{
+        console.log("Leave modal")
         console.log("Leaves :", leave)
-    }, [leave])
+        console.log("Le :", data?.leave_approval)
+    }, [leave, data])
 
     function getMonthAbbreviation(dateString: any) {
         const date = new Date(dateString);
@@ -48,10 +57,15 @@ export default function LeaveModal({opened, close, leave}: any){
         return Math.abs(diffInDays); // Return the absolute value to avoid negative days
     }
 
+    const [openedDialog, { toggle, close: closeDialog , open}] = useDisclosure(false);
+    const [value, setValue] = useState('');
+
+
     const handleAccept = () =>{
         acceptLeave({
             variables:{
-                id: leave?.id
+                id: leave?.id,
+                approver_id: user?.employee?.id
             },
             onCompleted: () =>{
                 toast.success("Leave accepted");
@@ -64,18 +78,24 @@ export default function LeaveModal({opened, close, leave}: any){
     }
 
     const handleReject = () =>{
+        
         declineLeave({
             variables:{
-                id: leave?.id
+                id: leave?.id,
+                approver_id: user?.employee?.id,
+                comments: value
             },
             onCompleted: () =>{
                 toast.success("Leave rejected");
-                close()
+                toggle();
+                close();
+                setValue('');
             },
             onError: (err) =>{
                 toast.error(`${err.message}`)
             }
         })
+
     }
 
     return(
@@ -96,12 +116,21 @@ export default function LeaveModal({opened, close, leave}: any){
                 }}
             >
                 <Modal.Header>
-                    <div className="flex flex-row gap-2">
-                        <Avatar src={leave?.employee?.file?.file_url} radius="xl" size="md" />
-                        <div className="flex flex-col gap-0">
-                            <p className={classes.name}> {leave?.employee?.firstname} </p>
-                            <p className={classes.function}> {leave?.employee?.function} </p>
+                    <div className="flex w-full items-center flex-row justify-between">
+                        <div className="flex flex-row gap-2 ">
+                            <Avatar src={leave?.employee?.file?.file_url} radius="xl" size="md" />
+                            <div className="flex flex-col gap-0">
+                                <p className={classes.name}> {leave?.employee?.firstname} </p>
+                                <p className={classes.function}> {leave?.employee?.function} </p>
+                            </div>
                         </div>
+                        {
+                            data?.leave_approval?.[0]?.approval_status === "PENDING" ?  
+                            null :
+                            <Badge variant="light" color={ data?.leave_approval?.[0]?.approval_status === "REJECTED" ? "red" : "" } >
+                                {data?.leave_approval?.[0]?.approval_status}
+                            </Badge> 
+                        }
                     </div>
                 </Modal.Header>
                 <Modal.Body>
@@ -137,12 +166,38 @@ export default function LeaveModal({opened, close, leave}: any){
                             <p className={classes.comment}> {leave?.comment} </p>
                         </div>
                     </div>
+                    {
+                        data?.leave_approval?.[0]?.approval_status === "REJECTED" ?
+                        <div className="mt-1 pl-2 pr-2 flex flex-col gap-2">
+                            <p style={{fontSize: 'small'}}>Reason: </p>
+                            <em style={{fontSize: 'smaller', lineHeight: 1.6}}>
+                                {data?.leave_approval?.[0]?.comments}
+                            </em>
+                        </div> : null
+                    }
                     <Group grow mt={"md"} px={15} py={15}>
-                        <Button onClick={handleAccept} loading={loadAccept} color="red"  radius="md">Accept</Button>  
-                        <Button onClick={handleReject} loading={loadDecline} color="#16DBCC"  radius="md">Reject</Button>
+                        <Button 
+                            disabled={data?.leave_approval?.[0]?.approval_status === "ACCEPTED"}
+                            onClick={handleAccept} loading={loadAccept} color="red"  radius="md">Accept</Button>  
+                        <Button
+                            disabled={data?.leave_approval?.[0]?.approval_status === "REJECTED"}
+                            onClick={open}
+                            loading={loadDecline} color="#16DBCC"  radius="md">Reject</Button>
                     </Group>
+
+                    
                 </Modal.Body>
             {/* Modal content */}
+            <Dialog position={{ top: 20, left: "30%"}} opened={openedDialog} withCloseButton onClose={closeDialog} size="lg" radius="md">
+        <Text size="sm" mb="xs" fw={500}>
+          Reseans for refusal
+        </Text>
+
+        <Group align="flex-end">
+          <TextInput value={value} onChange={(event) => setValue(event.currentTarget.value)} placeholder="hello@gluesticker.com" style={{ flex: 1 }} />
+          <Button onClick={handleReject}>Save</Button>
+        </Group>
+      </Dialog>
             </Modal>
         </>
     )

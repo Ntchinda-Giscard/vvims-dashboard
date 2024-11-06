@@ -7,8 +7,17 @@ query GetType @cached {
   }
 }`;
 
+export const GET_LEAVE_AGG = gql`
+subscription MyQuery {
+  leaves_aggregate {
+    aggregate {
+      count
+    }
+  }
+}`;
+
 export const GET_LEAVES = gql`
-subscription GetLeaves($limit: Int = 10, $offset: Int = 0) {
+subscription GetLeaves($limit: Int!, $offset: Int!) {
   leaves(limit: $limit, offset: $offset, order_by: {created_at: desc}) {
     id
     status
@@ -28,6 +37,15 @@ subscription GetLeaves($limit: Int = 10, $offset: Int = 0) {
     }
   }
 }`;
+
+export const GET_LEAVES_APPROVAL_STATUS = gql`
+query MyQuery($leave_id: uuid!) {
+  leave_approval(where: {leave_id: {_eq: $leave_id}}) {
+    id
+    comments
+    approval_status
+  }
+}`
 
 
 export const GET_PENDING_LEAVES_AGG = gql`
