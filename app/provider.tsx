@@ -34,7 +34,7 @@ useEffect(() =>{
 const httpLink = new HttpLink({
   uri: 'https://faithful-lynx-39.hasura.app/v1/graphql',
   headers: {
-    'x-hasura-admin-secret': adminSecret, // Add the admin secret in the header
+    // 'x-hasura-admin-secret': adminSecret,
     Authorization: `Bearer ${token}`
   }
 });
@@ -43,7 +43,7 @@ const wsLink = new GraphQLWsLink(createClient({
   url: 'wss://faithful-lynx-39.hasura.app/v1/graphql',
   connectionParams: {
     headers: {
-      'x-hasura-admin-secret': adminSecret, // Add the admin secret for websocket connections too
+      // 'x-hasura-admin-secret': adminSecret,
       Authorization: `Bearer ${token}`
     }
   }
