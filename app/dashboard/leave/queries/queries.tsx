@@ -31,7 +31,7 @@ subscription GetLeaves($limit: Int = 10, $offset: Int = 0) {
 
 
 export const GET_PENDING_LEAVES_AGG = gql`
-query MyQuery {
+subscription MyQuery {
   leaves_aggregate(where: {status: {_eq: PENDING}}) {
     aggregate {
       count
