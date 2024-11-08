@@ -22,7 +22,7 @@ import bg_b from "@/public/assets/bg_card_b.svg";
 import { useSubscription } from "@apollo/client";
 import { GET_ALL_VISITS, GET_PERCENTAGE_DIFF } from "./queries/get_all_visits";
 import { useSelector } from "react-redux";
-import StatsControls from "./components/cardDashboard";
+
 
 
 
@@ -68,10 +68,10 @@ export default function Home() {
   return (
     <main className="flex min-h-full flex-col gap-3">
       <p className={cx([classes.heading, font_heading.className])}> Dashboard </p>
-      <div className="flex flex-row justify-center gap-3">
-        {/* <StatsControls /> */}
+      {/* <div className="flex flex-row justify-center gap-3"> */}
+      <CardDashboard />
 
-      </div>
+      {/* </div> */}
       
       <div className="flex flex-row gap-3">
         <div className="flex w-3/4">

@@ -1,44 +1,52 @@
-import { useState } from 'react';
-import dayjs from 'dayjs';
-import { UnstyledButton, Text, Paper, Group, rem, ThemeIcon } from '@mantine/core';
-import {
-  IconSwimming,
-  IconBike,
-  IconRun,
-  IconChevronDown,
-  IconChevronUp,
-} from '@tabler/icons-react';
-import classes from '@/app/dashboard/components/StatsCommon.module.css';
+import { Badge, Group, Paper, ThemeIcon } from '@mantine/core'
+import Image from 'next/image'
+import { ReactElement } from 'react'
+import classes from "@/app/dashboard/components/css/dashboard.module.css";
+import { Poppins } from "next/font/google";
+import cx from 'clsx'
+import { IconInfoHexagon, IconCalendar, IconCalendarDot, IconUsersGroup } from "@tabler/icons-react";
+
+const font_heading = Poppins({ subsets: ["latin"], weight:["500"] });
+const font_amnt = Poppins({ subsets: ["latin"], weight:["700"] });
+const font_perc = Poppins({ subsets: ["latin"], weight:["400"] });
+
+interface dashboard_card{
+    title: string
+    amount: number
+    perc: number
+    bg_img: string
+    img: string
+}
 
 const data = [
-  { icon: IconRun, label: 'Running', color: 'teal' },
-  { icon: IconSwimming, label: 'Swimming', color: 'grape' },
-  { icon: IconBike, label: 'Bike', color: 'violet' },
-  { icon: IconBike, label: 'Like', color: '' },
+    { icon: IconUsersGroup, title: "Total Employees", desc: "Tracking leave request", value: 0, color: "rgba(63, 36, 199, 0.18)" },
+    { icon: IconCalendar, title: "On Leave", desc: "Tracking employees on leave in week", value: 0,color: "rgba(4, 32, 189, 0.19)"},
+    { icon: IconUsersGroup, title: "On leave", desc: "Tracking employees on leave", value: 0, color: "rgba(4, 189, 183, 0.45)" },
+    { icon: IconInfoHexagon, title: "Attendance Percentage", desc: "Tracking leave request", value: 4, color: "rgba(22, 189, 4, 0.29)" },
 ];
 
-export default function StatsControls() {
-  const [date, setDate] = useState(new Date(2021, 9, 24));
+function CardDashboard() {
+    return ( <>
+        <div className="flex flex-col md:flex-row gap-2">
+        {
+            data.map((item, index) => (
+                <div key={item?.desc} className={classes.card}>
+                    <div className="flex flex-row justify-between items-center">
+                        <ThemeIcon radius="xl" size="lg" color= {item?.color}>
+                            <item.icon color="black" stroke={1} style={{ width: '60%', height: '60%' }} />
+                        </ThemeIcon>
+                        <span className={classes.value}> {item?.value} </span>
+                    </div>
+                    <div className="flex flex-col">
+                        <p className={classes.title}> {item?.title} </p>
+                        <p className={classes.desc}> {item?.desc} </p>
+                    </div>
+                </div>
+            ))
+        }
+    </div>
 
-  const stats = data.map((stat) => (
-    <Paper maw={200}  w={150} withBorder p="xs" radius="md"  key={stat.label}>
-      <ThemeIcon radius="xl" color={stat.color}>
-        <stat.icon
-          style={{ width: '70%', height: '70%' }}
-          // className={classes.icon}
-          stroke={1.5}
-        />
-      </ThemeIcon>
-      <div>
-        <p className={classes.label}>{stat.label}</p>
-        <p className={classes.count}>
-          <span className={classes.value}>{Math.floor(Math.random() * 6 + 4)}km</span> / 10km
-        </p>
-      </div>
-    </Paper>
-  ));
-
-  return (
-      <div className='flex flex-col md:flex-row justify-around' >{stats}</div>
-  );
+    </> );
 }
+
+export default CardDashboard;
