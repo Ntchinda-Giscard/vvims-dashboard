@@ -34,12 +34,12 @@
 
 .cmake{
     color: #C9C9C9;
-    font-size: small;
+    font-size: x-small;
     text-transform: capitalize;
 }
 
 .license{
-    font-size: small;
+    font-size: x-small;
     color: var(--mantine-color-blue-6);
     text-transform: uppercase;
 }
@@ -234,4 +234,25 @@
     color: #B8B9BA;
     font-size: xx-small;
     font-weight: 400;
+}
+
+.overviewCard{
+    background-color: #CBF2FF;
+    padding: 15px;
+    display: flex;
+    direction: column;
+    justify-content: start;
+    border-radius: 15px;
+}
+
+.overviewValue{
+    font-weight: 700;
+    font-size: medium;
+    color: black;
+}
+
+.overviewLabel{
+    font-weight: 400;
+    font-size: smaller;
+    color: #B8B9BA;
 }

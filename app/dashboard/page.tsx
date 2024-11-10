@@ -25,6 +25,7 @@ import { useSelector } from "react-redux";
 import NewEvents from "./components/newEvents";
 import { Paper } from "@mantine/core";
 import RecentAppointment from "./components/recentAppointment";
+import LeaDashOverview from "./components/leaveDashOverview";
 
 
 
@@ -96,7 +97,7 @@ export default function Home() {
           <RecentAppointment />
         </div>
         <div className="lg:w-2/12 w-full">
-
+          <LeaDashOverview />
         </div>
       </div>
     </main>

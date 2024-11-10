@@ -30,7 +30,7 @@ function RecentAppointment() {
                     }
                 }} variant="outline" color="blue" radius="md">Tomorow</Badge>
             </div>
-            <div className="grid grid-cols-1 flex justify-between lg:grid-cols-2">
+            <div className="grid grid-cols-1 gap-x-2 gap-y-3 flex justify-between lg:grid-cols-2">
                 <AppoineeCard />
                 <AppoineeCard />
                 <AppoineeCard />
@@ -53,13 +53,13 @@ function AppoineeCard(){
         <div className={classes.appointeContainer}>
             <div className="w-full flex flex-row justify-between items-center">
                 <div className="flex flex-row items-center gap-2">
-                    <Avatar variant="filled" radius="xl" src={""} alt="no image here" />
+                    <Avatar variant="filled" color="#73B7F0" radius="xl" src={""} alt="no image here" />
                     <div className="flex flex-col">
                         <p className={classes.appointeeName}> Robert Fox</p>
                         <p className={classes.appointeeReason}> For RDV </p>
                     </div>
                 </div>
-                <Badge variant="outline" size="xs" color="teal.5"> 11:00-12:00 </Badge>
+                <Badge variant="white" size="xs" color="teal.5"> 11:00-12:00 </Badge>
             </div>
         </div>
     </>);
