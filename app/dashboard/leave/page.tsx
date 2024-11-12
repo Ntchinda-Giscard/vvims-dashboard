@@ -15,6 +15,7 @@ import TopLeaveCard from "./components/topLeaveCards";
 import Demo from "./components/leaveGraph";
 import FootPage from "../components/fotter";
 import { Poppins } from "next/font/google";
+import LeaveTypesGroupAgg from "./components/leaveTypeGroupBy";
 
 const poppins = Poppins({ subsets: ["latin"], weight:["400"] });
 
@@ -71,6 +72,9 @@ function Page() {
                 {/* <Paper withBorder>
                     <Demo />
                 </Paper> */}
+                <div className="flex flex-col md:flex-row">
+                    <LeaveTypesGroupAgg />
+                </div>
                 <Space h={20} />
                 <Paper
                     shadow="md"
@@ -86,27 +90,27 @@ function Page() {
                             onDelete={(v: any) => handelDelete(v)}
                         />
                     }
+                    <div className="flex min-w-full items-center md:flex-row flex-col justify-center md:justify-between">
+                            {
+                                errAgg || loadAgg ? null :
+                                <p className={poppins.className} style={{color: "#007FFF", fontSize: "small"}}>
+                                Displaying { dataLeave?.leaves?.length ? dataLeave?.leaves?.length*activePage : 0} of {dataAgg?.leaves_aggregate?.aggregate?.count} leaves.
+                                </p>}
+                            {
+                                errAgg || loadAgg ? null :
+                                <div className="flex flex-row">
+                                <NumberInput w={100} value={itemsPerPage} min={10} max={100} 
+                                //@ts-ignore
+                                onChange={setItemsPerPage} />
+                                <FootPage 
+                                    activePage={activePage}
+                                    onPage={(v: any) => setPage(v)}
+                                    total={Math.ceil(dataAgg?.leaves_aggregate?.aggregate?.count/itemsPerPage)}
+                                />
+                                </div>
+                            }
+                    </div>
                 </Paper>
-            <div className="flex min-w-full items-center md:flex-row flex-col justify-center md:justify-between">
-                    {
-                        errAgg || loadAgg ? null :
-                        <p className={poppins.className} style={{color: "#007FFF", fontSize: "small"}}>
-                        Displaying { dataLeave?.leaves?.length ? dataLeave?.leaves?.length*activePage : 0} of {dataAgg?.leaves_aggregate?.aggregate?.count} leaves.
-                        </p>}
-                    {
-                        errAgg || loadAgg ? null :
-                        <div className="flex flex-row">
-                          <NumberInput w={100} value={itemsPerPage} min={10} max={100} 
-                          //@ts-ignore
-                          onChange={setItemsPerPage} />
-                          <FootPage 
-                            activePage={activePage}
-                            onPage={(v: any) => setPage(v)}
-                            total={Math.ceil(dataAgg?.leaves_aggregate?.aggregate?.count/itemsPerPage)}
-                          />
-                        </div>
-                    }
-            </div>
         </main>
     </> );
 }
