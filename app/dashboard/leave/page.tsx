@@ -72,15 +72,21 @@ function Page() {
                     <Demo />
                 </Paper> */}
                 <Space h={20} />
-            {
-                errLeave || loadLeave ?
-                <FullWidthSkeletonStack /> :
-                <LeavesTables
-                    datas={dataLeave?.leaves}
-                    onEdit={(v:any) => handleViewLeave(v)}
-                    onDelete={(v: any) => handelDelete(v)}
-                />
-            }
+                <Paper
+                    shadow="md"
+                    radius="md"
+                    p="md"
+                >
+                    {
+                        errLeave || loadLeave ?
+                        <FullWidthSkeletonStack /> :
+                        <LeavesTables
+                            datas={dataLeave?.leaves}
+                            onEdit={(v:any) => handleViewLeave(v)}
+                            onDelete={(v: any) => handelDelete(v)}
+                        />
+                    }
+                </Paper>
             <div className="flex min-w-full items-center md:flex-row flex-col justify-center md:justify-between">
                     {
                         errAgg || loadAgg ? null :

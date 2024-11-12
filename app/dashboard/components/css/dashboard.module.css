@@ -240,7 +240,7 @@
     background-color: #CBF2FF;
     padding: 15px;
     display: flex;
-    direction: column;
+    flex-direction: column;
     justify-content: start;
     border-radius: 15px;
 }
@@ -254,5 +254,5 @@
 .overviewLabel{
     font-weight: 400;
     font-size: smaller;
-    color: #B8B9BA;
+    color: #64646C;
 }
