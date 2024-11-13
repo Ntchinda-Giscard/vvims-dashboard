@@ -256,3 +256,20 @@
     font-size: smaller;
     color: #64646C;
 }
+
+
+.noDataTitle{
+    color: black;
+    font-weight: 700;
+    font-size: large;
+    text-align: center;
+    text-transform: capitalize;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.noDataDesc{
+    color: #404040;
+    font-weight: 400;
+    text-align: center;
+}

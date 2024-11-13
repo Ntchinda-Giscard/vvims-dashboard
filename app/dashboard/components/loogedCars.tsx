@@ -1,10 +1,11 @@
 import car_f from '@/public/assets/cars_f.svg'
 import classes from "@/app/dashboard/components/css/dashboard.module.css"
-import { IconInfoHexagon, IconCar, IconUserShare, IconUsersGroup } from "@tabler/icons-react";
+import { IconInfoHexagon, IconCar, IconUserShare, IconUsersGroup, IconChevronRight } from "@tabler/icons-react";
 import cx from "clsx";
 import { Poppins } from "next/font/google";
 import { Paper, Group, Stack, Badge, ThemeIcon } from '@mantine/core';
 import Image from "next/image";
+import Link from "next/link"
 
 const font_heading = Poppins({ subsets: ["latin"], weight:["400"] });
 
@@ -15,7 +16,14 @@ function LoogedCars() {
         p={15}
         w={"100%"}
     >
-        <p className={cx([classes.titleCars])}> Recently Logged In Vehicles </p>
+        <div className="flex flex-row justify-between items-center">
+            <p className={cx([classes.titleCars])}> Recently Logged In Vehicles </p>
+            <div className="flex flex-row items-center">
+                    <Link href={"#"} style={{fontSize: 12, color: "blue", fontWeight: 300}}> view all </Link>
+                    <IconChevronRight stroke={1} style={{width: 10, height: 10, color: "blue"}} />
+                </div>
+
+        </div>
         <div className={"flex flex-col gap-3"}>
             <CardItem />
             <CardItem />

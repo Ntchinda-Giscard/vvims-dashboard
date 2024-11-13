@@ -8,6 +8,7 @@ import classes from "@/app/dashboard/view-employees/table.module.css";
 export default function LeavesApprovalTables({datas, onEdit, onDelete, onDeactivate}:any) {
   const [scrolled, setScrolled] = useState(false)
   const rows = datas?.map((data: {
+      comments: ReactNode;
       approval_status: string;
       leave: any;
     status: ReactNode;

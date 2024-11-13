@@ -1,18 +1,27 @@
+
+"use client"
 import classes from "@/app/dashboard/components/css/dashboard.module.css";
+import { useQuery } from "@apollo/client";
 import { Paper } from "@mantine/core";
+import { GET_EVENT_CARD } from "../query/get_percent";
+import NoDataComponent from "./nodataComponent";
 
 function NewEvents() {
+    const {data, loading, error} = useQuery(GET_EVENT_CARD);
     return (
         <>
         <p className={classes.taskEventTitle}> Task and Events </p>
-            <div className="grid gap-x-8 gap-y-8 w-full md:grid-cols-2 grid-cols-1 ">
-                <EventButton />
-                <EventButton />
-                <EventButton />
-                <EventButton />
-                <EventButton />
-                <EventButton />
-            </div>
+            {
+                data?.events?.length < 1 && error ?
+                <div className="grid gap-x-8 gap-y-8 w-full md:grid-cols-2 grid-cols-1 ">
+                    <EventButton date={data?.events?.start_date}  title={data?.events?.title} time={data?.events?.start_time} desc={data?.events?.description}  />
+                    <EventButton date={data?.events?.start_date}  title={data?.events?.title} time={data?.events?.start_time} desc={data?.events?.description}  />
+                    <EventButton date={data?.events?.start_date}  title={data?.events?.title} time={data?.events?.start_time} desc={data?.events?.description}  />
+                    <EventButton date={data?.events?.start_date}  title={data?.events?.title} time={data?.events?.start_time} desc={data?.events?.description}  />
+                    <EventButton date={data?.events?.start_date}  title={data?.events?.title} time={data?.events?.start_time} desc={data?.events?.description}  />
+                </div> :
+                <NoDataComponent link={"#"} comment="No event have been created yet. Click the button bellow to add new events" />
+            }
     
         </>
     );
@@ -21,23 +30,23 @@ function NewEvents() {
 export default NewEvents;
 
 
-function EventButton(){
+function EventButton({title, time, desc, date}:any){
 
     return(<>
         <div className="flex flex-row items-center gap-3">
-            <EventDateBox />
+            <EventDateBox date={date} />
             <div className="flex flex-col w-full "> 
                 <div className={"flex flex-row w-full justify-between"}>
-                    <div className={classes.eventTitle}> Board meeting </div>
-                    <div className={classes.eventTime}> 12:00 </div>
+                    <div className={classes.eventTitle}>{title}</div>
+                    <div className={classes.eventTime}> {time}</div>
                 </div>
-                <div className={`${classes.eventDesc}`}> Attend all project manageers board meeting to ake them fell cool </div>
+                <div className={`${classes.eventDesc}`}> {desc} </div>
             </div>
         </div>
     </>);
 }
 
-function EventDateBox(){
+function EventDateBox({date}:any){
 
     return(<>
         <div className={classes.dateEvent}>
