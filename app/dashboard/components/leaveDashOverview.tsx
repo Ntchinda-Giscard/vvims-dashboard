@@ -4,7 +4,8 @@ import { Paper } from "@mantine/core";
 import cx from 'clsx';
 import classes from "@/app/dashboard/components/css/dashboard.module.css";
 import { useQuery } from "@apollo/client";
-import { AGG_LEAVES_PENDING } from "../query/get_percent";
+import { AGG_LEAVES_PENDING, AGG_LEAVES_ACCEPTED, AGG_LEAVES_REJECTED } from "../query/get_percent";
+import { useEffect } from "react";
 
 
 function LeaDashOverview() {
@@ -15,7 +16,7 @@ function LeaDashOverview() {
 
     useEffect(() => {
 
-    },[dataPending, , ])
+    },[dataPending,dataAccepted , dataReject])
     return ( <>
 
     <Paper
