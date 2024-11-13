@@ -15,7 +15,7 @@ function LeaDashOverview() {
     const {data: dataReject} = useQuery(AGG_LEAVES_REJECTED);
 
     useEffect(() => {
-
+        console.log("Pending data", dataPending )
     },[dataPending,dataAccepted , dataReject])
     return ( <>
 

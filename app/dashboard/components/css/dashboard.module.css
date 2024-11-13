@@ -243,6 +243,7 @@
     flex-direction: column;
     justify-content: start;
     border-radius: 15px;
+    margin-top: 18px;
 }
 
 .overviewValue{
