@@ -3,7 +3,7 @@ import { IconArrowRight, IconExclamationMark } from "@tabler/icons-react";
 import Link from "next/link";
 import classes from "@/app/dashboard/components/css/dashboard.module.css";
 
-function NoDataComponent({comment, link}:any) {
+function NoDataComponent({comment, link, button_msg}:any) {
     return ( <>
         <div className="flex flex-col w-full h-full items-center">
             <ThemeIcon radius="xl" size="xl">
@@ -19,7 +19,7 @@ function NoDataComponent({comment, link}:any) {
                 rightSection={<IconArrowRight size={14} />}
                 mt={10}
             >
-                Visit gallery
+                {button_msg}
             </Button>
         </div>
     </> );

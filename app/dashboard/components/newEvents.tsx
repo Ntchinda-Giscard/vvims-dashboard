@@ -20,7 +20,7 @@ function NewEvents() {
                     <EventButton date={data?.events?.start_date}  title={data?.events?.title} time={data?.events?.start_time} desc={data?.events?.description}  />
                     <EventButton date={data?.events?.start_date}  title={data?.events?.title} time={data?.events?.start_time} desc={data?.events?.description}  />
                 </div> :
-                <NoDataComponent link={"#"} comment="No event have been created yet. Click the button bellow to add new events" />
+                <NoDataComponent button_msg={"Add event"} link={"#"} comment="No event have been created yet. Click the button bellow to add new events." />
             }
     
         </>

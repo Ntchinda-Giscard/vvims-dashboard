@@ -41,13 +41,40 @@ query MyQuery {
 
 export const GET_RECENT_APP_CARD = gql`
 query MyQuery($employee_id: uuid) {
-  appointments(where: {employee_id: {_eq: $employee_id}, date: {_eq: "now"}}) {
+  appointments(where: {employee_id: {_eq: $employee_id}, status: {_eq: PENDING}}, limit: 10, order_by: {created_at: desc}) {
     start_time
     id
     end_time
     description
     visitor {
       firstname
+    }
+  }
+}`;
+
+export const AGG_LEAVES_PENDING = gql`
+query MyQuery {
+  leaves_aggregate(where: {status: {_eq: PENDING}}) {
+    aggregate {
+      count
+    }
+  }
+}`;
+
+export const AGG_LEAVES_ACCEPTED = gql`
+query MyQuery {
+  leaves_aggregate(where: {status: {_eq: ACCEPTED}}) {
+    aggregate {
+      count
+    }
+  }
+}`;
+
+export const AGG_LEAVES_REJECTED = gql`
+query MyQuery {
+  leaves_aggregate(where: {status: {_eq: REJECTED}}) {
+    aggregate {
+      count
     }
   }
 }`;

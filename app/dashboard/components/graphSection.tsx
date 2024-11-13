@@ -22,7 +22,7 @@ function GraphSection() {
 
     <Paper withBorder pl={18} pr={18} pt={15} w={"100%"}>
         <Group p={10} justify="space-between">
-            <p className={cx([classes.titleCars])}> Entry Statistics </p>
+            <p className={cx([classes.titleCars])}> Weekly Entry Statistics </p>
             <Group>
                 <SegmentedControl
                     value={value}

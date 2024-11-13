@@ -1,11 +1,30 @@
+"use client"
+
 import {Paper, Badge, Avatar, Group} from "@mantine/core"
 import classes from "@/app/dashboard/components/css/dashboard.module.css"
 import cx from "clsx";
 import { IconChevronRight } from "@tabler/icons-react";
 import Link from "next/link"
+import { useQuery } from "@apollo/client";
+import { useSelector } from "react-redux";
+import { GET_RECENT_APP_CARD } from "../query/get_percent";
+import { useEffect } from "react";
+import NoDataComponent from "./nodataComponent";
 
 function RecentAppointment() {
+    const user = useSelector((state: any) => state.auth.userInfo);
+    const {data, loading, error} = useQuery(GET_RECENT_APP_CARD, {
+        variables:{
+            employee_id: user?.employee?.id
+        }
+    });
 
+    useEffect(() =>{
+        console.log("Data", data)
+        if (error){
+            console.log("Error", error)
+        }
+    },[data])
 
 
     return ( <>
@@ -21,7 +40,7 @@ function RecentAppointment() {
                 </div>
 
             </div>
-            <div className="flex flex-row gap-3 mb-3">
+            {/* <div className="flex flex-row gap-3 mb-3">
                 <Badge styles={{
                     label:{
                         textTransform: 'capitalize'
@@ -30,21 +49,34 @@ function RecentAppointment() {
                         cursor: 'pointer'
                     }
                 }} color="blue" radius="md">Today</Badge>
-                {/* <Badge styles={{
+                <Badge styles={{
                     label:{
                         textTransform: 'capitalize'
                     },
                     root:{
                         cursor: 'pointer'
                     }
-                }} variant="outline" color="blue" radius="md">Tomorow</Badge> */}
-            </div>
+                }} variant="outline" color="blue" radius="md">Tomorow</Badge>
+            </div> */}
             <div className="grid grid-cols-1 gap-x-2 gap-y-3 flex justify-between lg:grid-cols-2">
-                <AppoineeCard />
-                <AppoineeCard />
-                <AppoineeCard />
-                <AppoineeCard />
-                <AppoineeCard />
+                {
+                    data?.appointments.length < 0 || error ?
+                        data?.appointments?.map((a: { visitor: { firstname: any; }; description: any; start_time: any; end_time: any; }) =>(
+                            <AppoineeCard 
+                                visitor_name={a?.visitor?.firstname}
+                                reason={a?.description}
+                                st={a?.start_time}
+                                et={a?.end_time}
+                            />
+                        ))
+                        :
+
+                    <NoDataComponent
+                        comment="No appointment for today. Click the button to create new appointment"
+                        button_msg="Add appointments"
+                        link={'/dashboard/appointment'}
+                    />
+                }
             </div>
 
         </Paper>
@@ -56,7 +88,7 @@ export default RecentAppointment;
 
 
 
-function AppoineeCard(){
+function AppoineeCard({visitor_name, reason, st, et}: any){
 
     return(<>
         <div className={classes.appointeContainer}>
