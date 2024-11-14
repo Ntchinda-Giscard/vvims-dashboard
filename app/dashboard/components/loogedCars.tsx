@@ -15,6 +15,7 @@ function LoogedCars() {
         withBorder
         p={15}
         w={"100%"}
+        h={"100%"}
     >
         <div className="flex flex-row justify-between items-center">
             <p className={cx([classes.titleCars])}> Recently Logged In Vehicles </p>

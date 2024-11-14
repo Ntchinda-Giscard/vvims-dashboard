@@ -54,7 +54,7 @@ function CardDashboard() {
       { icon: IconInfoHexagon, title: "Attendance Percentage", desc: "Tracking attendance", value: `${dataPerc?.getAttendancePercentage?.attendancePercentage? dataPerc?.getAttendancePercentage?.attendancePercentage : 0}%`, color: "rgba(22, 189, 4, 0.29)" },
   ];
 
-  if (errTotalEmpl) return <div style={{color: "#404040"}}> {`${errTotalEmpl}`} </div>
+//   if (errTotalEmpl) return <div style={{color: "#404040"}}> {`${errTotalEmpl}`} </div>
     return ( <>
         <div className="flex flex-col lg:flex-row gap-2">
         {

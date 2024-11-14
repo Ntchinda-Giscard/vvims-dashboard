@@ -20,22 +20,25 @@ function RecentAppointment() {
     });
 
     useEffect(() =>{
-        console.log("Data", data)
+        console.log("Data APPOINTMENT", data)
         if (error){
             console.log("Error", error)
         }
     },[data])
 
-
+    if (error) return <div> {`${error}`} </div>
+    
+      
     return ( <>
         <Paper
             withBorder
             p={15}
+            h={"100%"}
         >
             <div className="flex flex-row justify-between items-center">
                 <p className={cx([classes.titleCars])}> Upcoming Appointment </p>
                 <div className="flex flex-row items-center">
-                    <Link href={"#"} style={{fontSize: 12, color: "blue", fontWeight: 300}}> view all </Link>
+                    <Link href={"/dashboard/appointment"} style={{fontSize: 12, color: "blue", fontWeight: 300}}> view all </Link>
                     <IconChevronRight stroke={1} style={{width: 10, height: 10, color: "blue"}} />
                 </div>
 
@@ -60,6 +63,11 @@ function RecentAppointment() {
             </div> */}
                 {
                     data?.appointments.length < 0 || error ?
+                    <NoDataComponent
+                        comment="No appointment for today. Click the button to create new appointment"
+                        button_msg="Add appointments"
+                        link={'/dashboard/appointment'}
+                    /> :
                     <div className="grid grid-cols-1 gap-x-2 gap-y-3 flex justify-between lg:grid-cols-2">
                     
                        { data?.appointments?.map((a: {
@@ -72,12 +80,8 @@ function RecentAppointment() {
                                 et={a?.end_time}
                             />
                         ))}
-                    </div> :
-                    <NoDataComponent
-                        comment="No appointment for today. Click the button to create new appointment"
-                        button_msg="Add appointments"
-                        link={'/dashboard/appointment'}
-                    />
+                    </div> 
+                   
                 }
                 
             
@@ -92,18 +96,21 @@ export default RecentAppointment;
 
 
 function AppoineeCard({visitor_name, reason, st, et}: any){
-
+    function removeSeconds(timeString:string) {
+        const [hours, minutes] = timeString.split(":");
+        return `${hours}:${minutes}`;
+      }
     return(<>
         <div className={classes.appointeContainer}>
             <div className="w-full flex flex-row justify-between items-center">
                 <div className="flex flex-row items-center gap-2">
                     <Avatar variant="filled" color="#73B7F0" radius="xl" src={""} alt="no image here" />
                     <div className="flex flex-col">
-                        <p className={classes.appointeeName}> Robert Fox</p>
-                        <p className={classes.appointeeReason}> For RDV </p>
+                        <p className={classes.appointeeName}> {visitor_name} </p>
+                        <p className={classes.appointeeReason}> {reason} </p>
                     </div>
                 </div>
-                <Badge variant="white" size="xs" color="teal.5"> 11:00-12:00 </Badge>
+                <Badge variant="white" size="xs" color="teal.5"> {`${removeSeconds(st)}-${removeSeconds(et)}`}</Badge>
             </div>
         </div>
     </>);
