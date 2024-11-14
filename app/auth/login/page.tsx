@@ -73,14 +73,14 @@ function Login() {
     
     return ( <>
         <div className=" flex flex-row min-w-sreen min-h-screen">
-            <div className="flex w-2/4 min-h-full">
+            <div className="flex w-2/4 hidden lg:block  min-h-full">
                 <Image src={pic} alt="Car Rental" 
                     // layout="fill"
                     //  objectFit="cover" 
                     priority
                 />
             </div>
-            <div className="flex w-2/4 min-h-full flex-col justify-center items-center">
+            <div className="flex w-full lg:w-2/4 min-h-full flex-col justify-center items-center">
                 <span className={cx([classes.logo, poppins_logo.className])}>VVIMS <span style={{color: "#17DBCC"}}>®</span></span>
                 <Paper
                     p={15}

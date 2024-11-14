@@ -26,6 +26,7 @@ export default function VisitorChart() {
   return (
     <BarChart
       h={300}
+      withLegend
       data={ data ? data?.getVisitsByDay : []}
       dataKey="visitDay"
       series={[{ name: 'visitorCount', color: 'blue' }]}
