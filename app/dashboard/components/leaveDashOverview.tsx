@@ -10,13 +10,18 @@ import { useEffect } from "react";
 
 function LeaDashOverview() {
 
-    const {data: dataPending} = useQuery(AGG_LEAVES_PENDING);
-    const {data: dataAccepted} = useQuery(AGG_LEAVES_ACCEPTED);
-    const {data: dataReject} = useQuery(AGG_LEAVES_REJECTED);
+    const {data: dataPending, error: errPending} = useQuery(AGG_LEAVES_PENDING);
+    const {data: dataAccepted, error: errAccepted} = useQuery(AGG_LEAVES_ACCEPTED);
+    const {data: dataReject, error: errRejected} = useQuery(AGG_LEAVES_REJECTED);
 
     useEffect(() => {
         console.log("Pending data", dataPending )
     },[dataPending,dataAccepted , dataReject])
+
+    if (errPending) return <div>{ `${errPending}`} </div>
+    if (errAccepted) return <div>{ `${errAccepted}`} </div>
+    if (errRejected) return <div>{ `${errRejected}`} </div>
+
     return ( <>
 
     <Paper

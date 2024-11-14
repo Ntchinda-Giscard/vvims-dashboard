@@ -28,11 +28,11 @@ subscription MyQuery($company_id: uuid!, $date: date, $status: [appointment_stat
 }`
 
 export const GET_APP_AGG = gql`
-subscription MyQuery($company_id: uuid, $date: date, $status: appointment_status_enum) {
+subscription MyQuery($company_id: uuid, $date: date, $status: [appointment_status_enum!]) {
   appointments_aggregate(where: {employee: {company_id: {_eq: $company_id}},
     _or: [
       {date: {_eq: $date}},
-      {status: {_eq: $status}}
+      {status: {_in: $status}}
     ]
   }) {
     aggregate {

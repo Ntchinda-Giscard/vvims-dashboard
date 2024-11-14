@@ -45,6 +45,7 @@ function Page() {
         }
     });
 
+
     const [canceledAppointment, {}] = useMutation(CANCEL_APP)
     const [completeAppointment, {}] = useMutation(UPDATE_APP_COM)
 
@@ -82,6 +83,7 @@ function Page() {
     }
 
     // if (errApp) return `${errApp}`
+    if (errAgg) return <div> {`${errAgg}`} </div>
     return ( <>
        <main className="flex flex-col min-w-full min-h-full">
         <AddAppoinmentModal
