@@ -88,3 +88,13 @@ query MyQuery {
     visitorCount
   }
 }`;
+
+export const GET_ATTENDANE_WEEK = gql`
+query MyQuery {
+  getAttendanceByDay {
+    day
+    lateEmployees
+    onTimeEmployees
+    presentEmployees
+  }
+}`;
