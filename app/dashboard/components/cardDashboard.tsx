@@ -44,8 +44,8 @@ function CardDashboard() {
 
     const {data: dataOnLeave, error: errONLeave, loading: loadOnLeave} = useQuery(GET_TOT_LEAVE_EMPLOYEE);
     useEffect(() =>{
-      console.log("Total employee:", dataEmpl)
-    }, [dataEmpl ]);
+      console.log("Total percentage:", dataTaskPerc)
+    }, [dataTaskPerc ]);
 
     const data = [
       { icon: IconUsersGroup, title: "Total Employees", desc: "Tracking leave request", value: dataEmpl?.employees_aggregate?.aggregate?.count, color: "rgba(63, 36, 199, 0.18)" },

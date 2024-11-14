@@ -7,6 +7,7 @@ import cx from "clsx"
 import { useSubscription } from "@apollo/client";
 import { GET_VISITS_STAT } from "../queries/get_all_visits";
 import AttendanceOverviewBarChart from "./attendanceBarChart";
+import VisitorChart from "./visitorChart";
 
 
 
@@ -29,31 +30,26 @@ function GraphSection() {
                     onChange={setValue}
                     data={[
                         { label: 'Visitors', value: 'vi' },
-                        { label: 'Vehicles', value: 've' },
+                        // { label: 'Vehicles', value: 've' },
                         {label: "Attendance", value: 'att'}
                     ]}
                 />
-                <Select
+                {/* <Select
                     placeholder="Pick value"
                     data={['Month', 'Today', 'Week']}
                     w={100}
-                />
+                /> */}
             </Group>
         </Group>
         {
             value === 'att' ?
             <AttendanceOverviewBarChart />
         :
-        <LineChart
-            h={300}
-            data={[]}
-            dataKey="day"
-            series={[
-                { name: 'visits_per_day', color: '#16DBCC' },
-            ]}
-            curveType="natural"
-            withDots={false}
-        />
+
+        value === 'vi' ?
+        <VisitorChart /> :
+        <VisitorChart /> 
+
         }
     </Paper>
     

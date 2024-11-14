@@ -13,6 +13,7 @@ import { useEffect } from 'react';
 import { GET_EMP, GET_NOTIF } from '../query/notif';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '@/app/auth/login/slice/authSlice';
+import { UserButton } from './userButton';
 
 
 const poppins_logo = Poppins({ subsets: ["latin"], weight:["500"] });
@@ -76,10 +77,16 @@ export default function ResponsiveSizes(
         <div className="flex flex-row min-w-full min-h-full items-center">
           
             <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          <div className="flex flex-row min-w-full items-center justify-start md:justify-between pl-4 pr-4">
+          <div className="flex flex-row min-w-full items-center justify-between md:justify-between pl-4 pr-4">
             <span className={cx([classes.logo, poppins_logo.className])}>VVIMS <span style={{color: "#17DBCC"}}>®</span></span>
             <p className={classes.abrev}>FODECC</p>
-            <UserTopButton />
+            {/* <UserTopButton /> */}
+            <UserButton 
+              name={`${userInfo?.employee?.firstname} ${userInfo?.employee?.lastname}`} 
+              url={data?.employees_by_pk?.file?.file_url}
+              email={userInfo?.employee?.email}
+
+            />
           </div>
         </div>
             

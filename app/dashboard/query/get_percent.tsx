@@ -78,3 +78,13 @@ query MyQuery {
     }
   }
 }`;
+
+
+
+export const VISITI_GB_DAY = gql`
+query MyQuery {
+  getVisitsByDay {
+    visitDay
+    visitorCount
+  }
+}`;
