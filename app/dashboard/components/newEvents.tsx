@@ -15,7 +15,7 @@ function NewEvents() {
                 data?.events?.length < 1 && error ?
                 <div className="grid gap-x-8 gap-y-8 w-full md:grid-cols-2 grid-cols-1 ">
                     {
-                        data?.events.map((e) => (
+                        data?.events.map((e: { title: any; events: { start_date: any; title: any; start_time: any; description: any; }; }) => (
                             <EventButton key={e?.title} date={e?.events?.start_date}  title={e?.events?.title} time={e?.events?.start_time} desc={e?.events?.description}  />
                         ))
                     }
