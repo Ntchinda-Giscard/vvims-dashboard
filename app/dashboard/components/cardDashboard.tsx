@@ -44,8 +44,8 @@ function CardDashboard() {
 
     const {data: dataOnLeave, error: errONLeave, loading: loadOnLeave} = useQuery(GET_TOT_LEAVE_EMPLOYEE);
     useEffect(() =>{
-      console.log("Leaves eperc:", dataTotLeave)
-    }, [dataPerc ]);
+      console.log("Total employee:", dataEmpl)
+    }, [dataEmpl ]);
 
     const data = [
       { icon: IconUsersGroup, title: "Total Employees", desc: "Tracking leave request", value: dataEmpl?.employees_aggregate?.aggregate?.count, color: "rgba(63, 36, 199, 0.18)" },
@@ -53,6 +53,8 @@ function CardDashboard() {
     //   { icon: IconUsersGroup, title: "On leave", desc: "Tracking employees on leave", value: 0, color: "rgba(4, 189, 183, 0.45)" },
       { icon: IconInfoHexagon, title: "Attendance Percentage", desc: "Tracking attendance", value: `${dataPerc?.getAttendancePercentage?.attendancePercentage? dataPerc?.getAttendancePercentage?.attendancePercentage : 0}%`, color: "rgba(22, 189, 4, 0.29)" },
   ];
+
+  if (errTotalEmpl) return <div> {`${errTotalEmpl}`} </div>
     return ( <>
         <div className="flex flex-col lg:flex-row gap-2">
         {

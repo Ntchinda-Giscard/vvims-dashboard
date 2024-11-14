@@ -58,12 +58,12 @@ function RecentAppointment() {
                     }
                 }} variant="outline" color="blue" radius="md">Tomorow</Badge>
             </div> */}
-            <div className="grid grid-cols-1 gap-x-2 gap-y-3 flex justify-between lg:grid-cols-2">
                 {
                     data?.appointments.length < 0 || error ?
-                        data?.appointments?.map((a: {
-                            id: any; visitor: { firstname: any; }; description: any; start_time: any; end_time: any; 
-}) =>(
+                    <div className="grid grid-cols-1 gap-x-2 gap-y-3 flex justify-between lg:grid-cols-2">
+                    
+                       { data?.appointments?.map((a: {
+                            id: any; visitor: { firstname: any; }; description: any; start_time: any; end_time: any;}) =>(
                             <AppoineeCard 
                                 key={a?.id}
                                 visitor_name={a?.visitor?.firstname}
@@ -71,16 +71,16 @@ function RecentAppointment() {
                                 st={a?.start_time}
                                 et={a?.end_time}
                             />
-                        ))
-                        :
-
+                        ))}
+                    </div> :
                     <NoDataComponent
                         comment="No appointment for today. Click the button to create new appointment"
                         button_msg="Add appointments"
                         link={'/dashboard/appointment'}
                     />
                 }
-            </div>
+                
+            
 
         </Paper>
     </> );
