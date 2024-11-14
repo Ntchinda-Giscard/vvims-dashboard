@@ -63,6 +63,7 @@ function RecentAppointment() {
                     data?.appointments.length < 0 || error ?
                         data?.appointments?.map((a: { visitor: { firstname: any; }; description: any; start_time: any; end_time: any; }) =>(
                             <AppoineeCard 
+                                key={a?.id}
                                 visitor_name={a?.visitor?.firstname}
                                 reason={a?.description}
                                 st={a?.start_time}
