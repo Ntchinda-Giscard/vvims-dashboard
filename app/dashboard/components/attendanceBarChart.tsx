@@ -22,13 +22,14 @@ export default function AttendanceOverviewBarChart(){
     return(
         <BarChart
             h={300}
-            data={data ? data?.getAttendanceByDay : []} 
+            data={data}
+            // data={data ? data?.getAttendanceByDay : []} 
             series={[
-                {name: 'lateEmployees', label: 'Late employees', color: '#C9B7EC'},
-                {name: 'onTimeEmployees', label: 'Ontime employees', color: 'blue.6'},
-                {name: 'presentEmployees', label: 'Present employees', color: '#DCFAF8'},
+                {name: 'SmarthPhones', label: 'Late employees', color: '#C9B7EC'},
+                {name: 'laptops', label: 'Ontime employees', color: 'blue.6'},
+                {name: 'Tablets', label: 'Present employees', color: '#DCFAF8'},
             ]} 
-            dataKey={"day"}
+            dataKey={"month"}
             withLegend
             xAxisLabel="Days"
             yAxisLabel="Amout"

@@ -62,7 +62,7 @@ function RecentAppointment() {
                 }} variant="outline" color="blue" radius="md">Tomorow</Badge>
             </div> */}
                 {
-                    data?.appointments.length < 0 || error ?
+                    data?.appointments.length < 1 || error ?
                     <NoDataComponent
                         comment="No appointment for today. Click the button to create new appointment"
                         button_msg="Add appointments"
