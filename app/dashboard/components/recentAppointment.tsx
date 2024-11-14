@@ -61,7 +61,9 @@ function RecentAppointment() {
             <div className="grid grid-cols-1 gap-x-2 gap-y-3 flex justify-between lg:grid-cols-2">
                 {
                     data?.appointments.length < 0 || error ?
-                        data?.appointments?.map((a: { visitor: { firstname: any; }; description: any; start_time: any; end_time: any; }) =>(
+                        data?.appointments?.map((a: {
+                            id: any; visitor: { firstname: any; }; description: any; start_time: any; end_time: any; 
+}) =>(
                             <AppoineeCard 
                                 key={a?.id}
                                 visitor_name={a?.visitor?.firstname}
