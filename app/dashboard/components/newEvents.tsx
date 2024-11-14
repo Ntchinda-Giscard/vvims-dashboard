@@ -14,11 +14,11 @@ function NewEvents() {
             {
                 data?.events?.length < 1 && error ?
                 <div className="grid gap-x-8 gap-y-8 w-full md:grid-cols-2 grid-cols-1 ">
-                    <EventButton date={data?.events?.start_date}  title={data?.events?.title} time={data?.events?.start_time} desc={data?.events?.description}  />
-                    <EventButton date={data?.events?.start_date}  title={data?.events?.title} time={data?.events?.start_time} desc={data?.events?.description}  />
-                    <EventButton date={data?.events?.start_date}  title={data?.events?.title} time={data?.events?.start_time} desc={data?.events?.description}  />
-                    <EventButton date={data?.events?.start_date}  title={data?.events?.title} time={data?.events?.start_time} desc={data?.events?.description}  />
-                    <EventButton date={data?.events?.start_date}  title={data?.events?.title} time={data?.events?.start_time} desc={data?.events?.description}  />
+                    {
+                        data?.events.map((e) => (
+                            <EventButton key={e?.title} date={e?.events?.start_date}  title={e?.events?.title} time={e?.events?.start_time} desc={e?.events?.description}  />
+                        ))
+                    }
                 </div> :
                 <NoDataComponent button_msg={"Add event"} link={"#"} comment="No event have been created yet. Click the button bellow to add new events." />
             }
