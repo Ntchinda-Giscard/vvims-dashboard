@@ -27,11 +27,17 @@ export default function AttendanceOverviewBarChart(){
     return(
         <BarChart
             h={300}
+            styles={{
+                legend:{
+                    color: "#404040"
+                }
+            }}
             data={data ? data?.getAttendanceByDay : []} 
             series={[
-                {name: 'lateEmployees', label: 'Late employees', color: '#C9B7EC'},
+                
                 {name: 'onTimeEmployees', label: 'Ontime employees', color: 'blue.6'},
                 {name: 'presentEmployees', label: 'Present employees', color: '#DCFAF8'},
+                {name: 'lateEmployees', label: 'Late employees', color: '#C9B7EC'},
             ]} 
             dataKey={"day"}
             withLegend

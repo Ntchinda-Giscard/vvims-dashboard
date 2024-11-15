@@ -27,6 +27,11 @@ export default function VisitorChart() {
     <BarChart
       h={300}
       withLegend
+      styles={{
+        legend:{
+            color: "#404040"
+        }
+    }}
       data={ data ? data?.getVisitsByDay : []}
       dataKey="visitDay"
       series={[{ name: 'visitorCount', color: 'blue' }]}
