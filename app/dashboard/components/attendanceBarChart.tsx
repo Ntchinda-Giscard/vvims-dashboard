@@ -1,11 +1,16 @@
 import { useQuery } from "@apollo/client";
 import {BarChart} from "@mantine/charts";
 import { GET_ATTENDANE_WEEK } from "../query/get_percent";
+import {useEffect} from "react"
 
 
 
 export default function AttendanceOverviewBarChart(){
     const {data, error, loading} = useQuery(GET_ATTENDANE_WEEK);
+
+    useEffect(() =>{
+        console.log("Attendace group", data)
+    }, [data])
     // const data = [
     //     {month: 'January', SmarthPhones: 1000, laptops: 400, Tablets: 600},
     //     {month: 'Febuary', SmarthPhones: 1500, laptops: 400, Tablets: 500},
