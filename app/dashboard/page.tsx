@@ -82,7 +82,7 @@ export default function Home() {
           <GraphSection />
         </div>
         <div className="flex w-full lg:w-2/4">
-          <Paper withBorder p={18} w="100%">
+          <Paper withBorder p={18} radius={"lg"} w="100%">
             <NewEvents />
           </Paper>
         </div>

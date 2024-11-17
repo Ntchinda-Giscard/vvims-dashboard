@@ -21,7 +21,7 @@ function GraphSection() {
     },[dataVisitStat])
     return ( <>
 
-    <Paper withBorder pl={18} pr={18} pt={15} w={"100%"}>
+    <Paper withBorder radius="lg" pl={18} pr={18} pt={15} w={"100%"}>
         <Group p={10} justify="space-between">
             <p className={cx([classes.titleCars])}> Weekly Entry Statistics </p>
             <Group>

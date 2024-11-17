@@ -27,6 +27,7 @@ function LeaDashOverview() {
     <Paper
         withBorder
         p={15}
+        radius={"lg"}
     >
         <p className={cx([classes.titleCars])}> Leave Overview </p>
 

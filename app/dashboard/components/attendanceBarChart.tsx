@@ -11,22 +11,10 @@ export default function AttendanceOverviewBarChart(){
     useEffect(() =>{
         console.log("Attendace group", data)
     }, [data])
-    // const data = [
-    //     {month: 'January', SmarthPhones: 1000, laptops: 400, Tablets: 600},
-    //     {month: 'Febuary', SmarthPhones: 1500, laptops: 400, Tablets: 500},
-    //     {month: 'March', SmarthPhones: 1200, laptops: 900, Tablets: 300},
-    //     {month: 'April', SmarthPhones: 900, laptops: 600, Tablets: 400},
-    //     {month: 'May', SmarthPhones: 800, laptops: 660, Tablets: 500},
-    //     {month: 'January', SmarthPhones: 1000, laptops: 400, Tablets: 600},
-    //     {month: 'Febuary', SmarthPhones: 1500, laptops: 400, Tablets: 500},
-    //     {month: 'March', SmarthPhones: 1200, laptops: 900, Tablets: 300},
-    //     {month: 'April', SmarthPhones: 900, laptops: 600, Tablets: 400},
-    //     {month: 'May', SmarthPhones: 800, laptops: 660, Tablets: 500},
 
-    // ]
     return(
         <BarChart
-            h={300}
+            h={500}
             styles={{
                 legend:{
                     color: "#404040"

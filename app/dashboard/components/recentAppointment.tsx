@@ -34,6 +34,7 @@ function RecentAppointment() {
             withBorder
             p={15}
             h={"100%"}
+            radius="lg"
         >
             <div className="flex flex-row justify-between items-center">
                 <p className={cx([classes.titleCars])}> Upcoming Appointment </p>

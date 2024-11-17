@@ -15,6 +15,7 @@ function LoogedCars() {
         withBorder
         p={15}
         w={"100%"}
+        radius="lg"
         h={"100%"}
     >
         <div className="flex flex-row justify-between items-center">
