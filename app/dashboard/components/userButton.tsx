@@ -37,6 +37,7 @@ export function UserButton({name, url, email}: any) {
           radius="xl"
           name={name}
           color={'initials'}
+          size={'sm'}
         />
         <div style={{ flex: 1 }}>
                     <Text tt={'capitalize'} c={'white'} size="sm" fw={500}>
@@ -51,7 +52,7 @@ export function UserButton({name, url, email}: any) {
             withArrow
         >
             <Menu.Target>
-                <IconChevronRight style={{ width: rem(14), height: rem(14) }} stroke={1.5} />
+                <IconChevronRight color={'white'} style={{ width: rem(14), height: rem(14) }} stroke={1.5} />
             </Menu.Target>
             <Menu.Dropdown>
             {/* <Menu.Item

@@ -7,7 +7,8 @@ import {DatePicker, DatePickerProps, Calendar} from "@mantine/dates"
 import { GET_EVENT_CARD } from "../query/get_percent";
 import NoDataComponent from "./nodataComponent";
 import { useEffect, useState } from "react";
-import { IconClock } from "@tabler/icons-react";
+import { IconChevronRight, IconClock } from "@tabler/icons-react";
+import Link from "next/link";
 
 function NewEvents() {
     const {data, loading, error} = useQuery(GET_EVENT_CARD);
@@ -16,7 +17,7 @@ function NewEvents() {
         if (date.getDay() === new Date().getDay() && date.getDate() === new Date().getDate()) {
           return {
             style: {
-              backgroundColor: '#fff010',
+              backgroundColor: '#fff020',
               color: 'var(--mantine-color-white)',
               borderRadius: 30,
             },
@@ -77,9 +78,13 @@ function NewEvents() {
     },[data])
     return (
         <>
-        <p className={classes.taskEventTitle}> Task and Events </p>
-            {
-                data?.events?.length == 0 && !error ?
+            <div className="flex flex-row justify-between items-center">
+                <p className={classes.taskEventTitle}> Task and Events </p>
+                <div className="flex flex-row items-center">
+                    <Link href={"#"} style={{fontSize: 12, color: "blue", fontWeight: 300}}> view all </Link>
+                    <IconChevronRight stroke={1} style={{width: 10, height: 10, color: "blue"}} />
+                </div>
+            </div>
                 <>
                     <div className="w-full flex justify-center">
                         <DatePicker
@@ -114,21 +119,27 @@ function NewEvents() {
                         </div> */}
                     </div>
                     <Space h="md" />
-                    <EventCard
-                        time={'07:00'}
-                        bg={'rgba(207, 61, 209, 0.2)'}
-                        b={'rgba(207, 61, 209, 0.9)'}
-                    />
+                    {
+                        data?.events?.length < 1 && error ?
+                        <>
+                            
+                        <EventCard
+                            time={'07:00'}
+                            bg={'rgba(207, 61, 209, 0.2)'}
+                            b={'rgba(207, 61, 209, 0.9)'}
+                        />
 
-                    <EventCard
-                        time={'07:00'}
-                        bg={'rgba(81, 61, 209, 0.2)'}
-                        b={'rgba(81, 61, 209, 0.9)'}
-                    />
-                </>
+                        <EventCard
+                            time={'07:00'}
+                            bg={'rgba(81, 61, 209, 0.2)'}
+                            b={'rgba(81, 61, 209, 0.9)'}
+                        />
+                        </>
+
                  :
                 <NoDataComponent button_msg={"Add event"} link={"#"} comment="No event have been created yet. Click the button bellow to add new events." />
-            }
+                }
+                </>
     
         </>
     );

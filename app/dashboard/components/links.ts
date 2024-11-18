@@ -28,7 +28,10 @@ export const links = [
             {link: "/dashboard/view-employees", label:  "View Employees"},
         ], icon: IconUsers},
     {link: '/dashboard/visitors', label: 'Visitors', sub_links: [], icon: IconUsersGroup},
-    {link: '/dashboard/appointment', label: 'Appointments', sub_links: [], icon: IconCalendar},
+    {link: '#', label: 'Agenda', sub_links: [
+        {link: '/dashboard/appointment', label: 'appointments'},
+        {link: '/dashboard/events', label: 'events'},
+    ], icon: IconCalendar},
     // {link: '/dashboard/vehicle', label: 'Vehicles', sub_links: [], icon: IconCar},
     {link: '/dashboard/attendance', label: 'Attendances', sub_links: [], icon: IconUserPin},
     {link: '/dashboard/leave', label: 'Leaves', sub_links: [
