@@ -61,9 +61,9 @@ export default function EventsTable({datas, onEdit, onComplete, onCanceled, onDe
         <Table.Tr>
           <Table.Th style={{ color: "#404044" }}> Event </Table.Th>
           <Table.Th style={{ color: "#404044" }}>Creator</Table.Th>
-          <Table.Th style={{ color: "#404044" }}>Date</Table.Th>
-          <Table.Th style={{ color: "#404044" }}>Star time</Table.Th>
-          <Table.Th style={{ color: "#404044" }}>End time</Table.Th>
+          <Table.Th style={{ color: "#404044" }}> Date </Table.Th>
+          <Table.Th style={{ color: "#404044" }}> Star time </Table.Th>
+          <Table.Th style={{ color: "#404044" }}> Task </Table.Th>
           <Table.Th style={{ color: "#404044" }}>Participants</Table.Th>
           <Table.Th style={{ color: "#404044" }}>Actions</Table.Th>
         </Table.Tr>

@@ -81,7 +81,7 @@ function NewEvents() {
             <div className="flex flex-row justify-between items-center">
                 <p className={classes.taskEventTitle}> Task and Events </p>
                 <div className="flex flex-row items-center">
-                    <Link href={"#"} style={{fontSize: 12, color: "blue", fontWeight: 300}}> view all </Link>
+                    <Link href={"/dashboard/events"} style={{fontSize: 12, color: "blue", fontWeight: 300}}> view all </Link>
                     <IconChevronRight stroke={1} style={{width: 10, height: 10, color: "blue"}} />
                 </div>
             </div>
@@ -137,7 +137,7 @@ function NewEvents() {
                         </>
 
                  :
-                <NoDataComponent button_msg={"Add event"} link={"#"} comment="No event have been created yet. Click the button bellow to add new events." />
+                <NoDataComponent button_msg={"Add event"} link={"/dashboard/events"} comment="No event have been created yet. Click the button bellow to add new events." />
                 }
                 </>
     
