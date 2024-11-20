@@ -1,6 +1,6 @@
 "use client"
 import { ActionIcon, Table, Menu, rem, ScrollArea, Badge, Avatar } from '@mantine/core';
-import { IconTrash, IconEdit, IconDotsVertical, IconEye, IconUserX, IconUserCheck } from '@tabler/icons-react';
+import { IconTrash, IconEdit, IconDotsVertical, IconPlaylistAdd, IconUserX } from '@tabler/icons-react';
 import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode, useState } from 'react';
 import cx from 'clsx';
 import classes from "@/app/dashboard/view-employees/table.module.css";
@@ -73,11 +73,8 @@ export default function EventsTable({datas, onEdit, onComplete, onCanceled, onDe
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Item color="blue" onClick={() => onEdit(data)} leftSection={<IconEdit  style={{ width: rem(14), height: rem(14) }} />}> Edit </Menu.Item>
-              { data?.status === 'PENDING' ?
-                <Menu.Item color="teal" onClick={() => onComplete(data)} leftSection={<IconUserCheck  style={{ width: rem(14), height: rem(14) }} />}> Accept </Menu.Item>
-              : null}
-
-                <Menu.Item color="orange" onClick={() => onCanceled(data)} leftSection={<IconUserX  style={{ width: rem(14), height: rem(14) }} />}> Canceled </Menu.Item>
+                <Menu.Item color="teal" onClick={() => onComplete(data)} leftSection={<IconPlaylistAdd  style={{ width: rem(14), height: rem(14) }} />}> Add task </Menu.Item>
+                <Menu.Item color="red" onClick={() => onCanceled(data)} leftSection={<IconTrash  style={{ width: rem(14), height: rem(14) }} />}> Delete </Menu.Item>
             </Menu.Dropdown>
         </Menu>        
       </Table.Td>
