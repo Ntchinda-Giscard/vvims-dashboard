@@ -109,8 +109,10 @@ function Paticipants({participants}: any){
     <>
       <Avatar.Group>
         {
-          participants.map((p: { employee: { firstname: any; lastname: any; }; file: { file_url: string | null | undefined; }; }) => (
-            <Avatar key={p?.employee.lastname} color="initials" size="sm" name={`${p?.employee?.firstname} ${p?.employee?.lastname}`} src={p?.file?.file_url} />
+          participants.map((p: { employee: {
+            file: any; firstname: any; lastname: any; 
+}; file: { file_url: string | null | undefined; }; }) => (
+            <Avatar key={p?.employee.lastname} color="initials" size="sm" name={`${p?.employee?.firstname} ${p?.employee?.lastname}`} src={p?.employee?.file?.file_url} />
           ))
         }
         

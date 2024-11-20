@@ -14,11 +14,15 @@ import {IconLogout,
 import {useRouter } from "next/navigation"
 import { useDispatch } from 'react-redux';
 import { logout } from '@/app/auth/login/slice/authSlice';
+import { useMediaQuery } from '@mantine/hooks';
+
 
 export function UserButton({name, url, email}: any) {
 
     const dispatch = useDispatch();
-    const router = useRouter()
+    const router = useRouter();
+
+    const matches = useMediaQuery('(min-width: 426px)');
 
     const handleLogout = () => {
         dispatch(logout());
@@ -30,36 +34,53 @@ export function UserButton({name, url, email}: any) {
   return (
     <UnstyledButton 
     // className={classes.user}
+      mr={20}
     >
-      <Group gap={1}>
-        <Avatar
-          src={url}
-          radius="xl"
-          name={name}
-          color={'initials'}
-          size={'sm'}
-        />
-        <div style={{ flex: 1 }}>
-                    <Text tt={'capitalize'} c={'white'} size="sm" fw={500}>
-                        {name}
-                    </Text>
-
-                    <Text c="dimmed" size="xs">
-                        {email}
-                    </Text>
-                </div>
+      <Group gap={0}>
+        
         <Menu
-            withArrow
+          withArrow
         >
+          <Avatar
+            src={url}
+            radius="xl"
+            name={name}
+            color={'initials'}
+            size={'sm'}
+          />
+          <div style={{ flex: 1, display: matches ? 'block' : 'none' }}>
+            <Text tt={'capitalize'} c={'white'} size="sm" fw={500}>
+                {name}
+            </Text>
+
+            <Text c="dimmed" size="xs">
+                {email}
+            </Text>
+          </div>
             <Menu.Target>
-                <IconChevronRight color={'white'} style={{ width: rem(14), height: rem(14) }} stroke={1.5} />
+              <IconChevronRight color={'white'} style={{ width: rem(14), height: rem(14) }} stroke={1.5} />
             </Menu.Target>
             <Menu.Dropdown>
-            {/* <Menu.Item
-            leftSection={<IconSettings style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
-          >
-            Account settings
-          </Menu.Item> */}
+            <Menu.Item rightSection={<IconChevronRight size={16} stroke={1.5} />}>
+            <Group>
+              <Avatar
+                radius="xl"
+                src={url}
+              />
+
+              <div>
+                <Text tt={'capitalize'} c={'black'} size="sm" fw={500}>
+                  {name}
+                </Text>
+
+                <Text c="dimmed" size="xs">
+                  {email}
+                </Text>
+              </div>
+            </Group>
+          </Menu.Item>
+
+          <Menu.Divider />
           <Menu.Item
             leftSection={<IconLogout style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
             onClick={handleLogout}
