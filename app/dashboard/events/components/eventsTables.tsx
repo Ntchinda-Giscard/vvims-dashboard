@@ -1,5 +1,5 @@
 "use client"
-import { ActionIcon, Table, Menu, rem, ScrollArea, Badge } from '@mantine/core';
+import { ActionIcon, Table, Menu, rem, ScrollArea, Badge, Avatar } from '@mantine/core';
 import { IconTrash, IconEdit, IconDotsVertical, IconEye, IconUserX, IconUserCheck } from '@tabler/icons-react';
 import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode, useState } from 'react';
 import cx from 'clsx';
@@ -7,8 +7,38 @@ import classes from "@/app/dashboard/view-employees/table.module.css";
 
 
 export default function EventsTable({datas, onEdit, onComplete, onCanceled, onDelete}:any) {
+  function formatDate(dateStr: any) {
+    const date = new Date(dateStr);
+  
+    // List of month names
+    const months = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+  
+    // Extract parts of the date
+    const month = months[date.getMonth()];
+    const day = date.getDate();
+    const year = date.getFullYear();
+  
+    // Return formatted date
+    return `${month}, ${day} ${year}`;
+  }
+
+  function formatTime(timeStr: any) {
+    // Split the time string into parts
+    const [hours, minutes] = timeStr.split(":");
+    
+    // Return only the hours and minutes
+    return `${hours}:${minutes}`;
+  }
+  
   const [scrolled, setScrolled] = useState(false)
   const rows = datas?.map((data: {
+    tasks_aggregate: any;
+    start_date: ReactNode;
+    title: any;
+    event_participants: any;
       date: ReactNode;
       start_time: ReactNode;
       end_time: ReactNode;
@@ -22,16 +52,18 @@ export default function EventsTable({datas, onEdit, onComplete, onCanceled, onDe
 }; 
 }) => (
     <Table.Tr key={data?.id}>
-      <Table.Td style={{ color: "#404044", textTransform: "capitalize"}} >{ `${data?.employee?.firstname}` + " "+ `${data?.employee?.lastname}`}</Table.Td>
-      <Table.Td style={{ color: "#404044", textTransform: "capitalize"}}>{ `${data?.visitor?.firstname}` + " "+ `${data?.visitor?.lastname}`}</Table.Td>
-      <Table.Td style={{ color: "#404044", textTransform: "capitalize"}}>{data?.date}</Table.Td>
-      <Table.Td style={{ color: "#404044", textTransform: "capitalize"}}>{data?.start_time}</Table.Td>
-      <Table.Td style={{ color: "#404044", textTransform: "capitalize"}}>{data?.end_time}</Table.Td>
+      <Table.Td style={{ color: "#404044", textTransform: "capitalize"}} >{ `${data?.title}`}</Table.Td>
       <Table.Td style={{ color: "#404044", textTransform: "capitalize"}}>
-        <Badge variant="light" color={data?.status === 'PENDING' ? "grape" : data?.status === 'COMPLETED' ? 'green' : 'red'}>
-        {data?.status}
-        </Badge>
+        { <VisitorIcon 
+            firstname={data?.employee?.firstname}  
+            lastname={data?.employee?.lastname}
+            file_url={data?.employee?.file?.file_url}  
+          /> }
       </Table.Td>
+      <Table.Td style={{ color: "#404044", textTransform: "capitalize"}}>{formatDate(data?.start_date)}</Table.Td>
+      <Table.Td style={{ color: "#404044", textTransform: "capitalize"}}>{data?.tasks_aggregate?.aggregate?.count}</Table.Td>
+      <Table.Td style={{ color: "#404044", textTransform: "capitalize"}}>{ <Paticipants participants={data?.event_participants} /> }</Table.Td>
+      <Table.Td style={{ color: "#404044", textTransform: "capitalize"}}>{formatTime(data?.start_time)}</Table.Td>
       <Table.Td>
         <Menu shadow="md">
             <Menu.Target>
@@ -62,9 +94,9 @@ export default function EventsTable({datas, onEdit, onComplete, onCanceled, onDe
           <Table.Th style={{ color: "#404044" }}> Event </Table.Th>
           <Table.Th style={{ color: "#404044" }}>Creator</Table.Th>
           <Table.Th style={{ color: "#404044" }}> Date </Table.Th>
-          <Table.Th style={{ color: "#404044" }}> Star time </Table.Th>
           <Table.Th style={{ color: "#404044" }}> Task </Table.Th>
           <Table.Th style={{ color: "#404044" }}>Participants</Table.Th>
+          <Table.Th style={{ color: "#404044" }}> Star time </Table.Th>
           <Table.Th style={{ color: "#404044" }}>Actions</Table.Th>
         </Table.Tr>
       </Table.Thead>
@@ -74,3 +106,37 @@ export default function EventsTable({datas, onEdit, onComplete, onCanceled, onDe
   );
 }
 
+function Paticipants({participants}: any){
+
+  return(
+    <>
+      <Avatar.Group>
+        {
+          participants.map((p: { employee: { firstname: any; lastname: any; }; file: { file_url: string | null | undefined; }; }) => (
+            <Avatar color="initials" size="sm" name={`${p?.employee?.firstname} ${p?.employee?.lastname}`} src={p?.file?.file_url} />
+          ))
+        }
+        
+        { participants.length > 3 ?
+
+          <Avatar size="sm"> {`+${participants.length-3}`} </Avatar> : null
+        }
+    </Avatar.Group>
+    </>
+  )
+}
+
+function VisitorIcon({file_url, firstname, lastname}: any){
+
+  return(
+    <>
+      <div className="flex flex-row gap-3 items-center">
+        <Avatar variant="filled" radius="xl" src={file_url} alt="no image here" />
+        <div className='flex flex-col'>
+          <p style={{fontSize: 'small', textTransform: 'uppercase'}}> {firstname} </p>
+          <p style={{fontSize: 'small', textTransform: 'capitalize'}}> {lastname} </p>
+        </div>
+      </div>
+    </>
+  )
+}

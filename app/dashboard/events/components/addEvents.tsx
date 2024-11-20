@@ -1,17 +1,22 @@
 "use client"
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { Modal, Button, TextInput, Group, MultiSelect, Textarea } from '@mantine/core';
 import { DatePickerInput, TimeInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { useEffect, useState } from 'react';
 import { GET_EMPLOYEE_EVENTS } from '../queries/get_empl';
+import { useSelector } from 'react-redux';
+import { INSERT_EVENTS } from '../mutation/insert_events';
+import toast from 'react-hot-toast';
 
 
 export default function AddEvent({opened, close}: any) {
 
   const [employees, setEmployees ] = useState([])
+  const userInfo = useSelector((state: any) => state.auth.userInfo)
 
-  const {data: dataAllEmpl, loading: loadEmpl} = useQuery(GET_EMPLOYEE_EVENTS)
+  const {data: dataAllEmpl, loading: loadEmpl} = useQuery(GET_EMPLOYEE_EVENTS);
+  const [insertEvents, {loading: loadInsertEvents}] = useMutation(INSERT_EVENTS);
   const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
@@ -36,13 +41,39 @@ export default function AddEvent({opened, close}: any) {
 
     setEmployees(allOptions)
 
-  }, [dataAllEmpl])
+  }, [dataAllEmpl]);
+
+  function convertToEmployeeObjects(arr: any[]) {
+    return arr.map((id: any) => ({ employee_id: id }));
+}
+
+  const handleSubmit = (value: any) =>{
+    console.log(value)
+    insertEvents({
+      variables:{
+        orgenizer_id: userInfo?.employee?.id,
+        start_date: value?.date,
+        title: value?.title,
+        end_time: value?.end_time,
+        start_time: value?.start_time,
+        participants: convertToEmployeeObjects(value?.participants)
+
+      },
+      onCompleted: () =>{
+        toast.success("Events created");
+        close();
+      },
+      onError: (err) =>{
+        toast.error(`${err.message}`)
+      }
+    })
+  }
 
   return (
     <>
       <Modal opened={opened} onClose={close} title=   {<p style={{fontSize: 'small', color: "#404040", fontWeight: 600}} > Add Event </p>} >
         {/* Modal content */}
-        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+        <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
         <TextInput
             radius="md"
             withAsterisk
@@ -106,7 +137,7 @@ export default function AddEvent({opened, close}: any) {
         />
 
         <Group grow justify="flex-end" mt="md">
-            <Button type="submit">Submit</Button>
+            <Button type="submit" loading={loadInsertEvents} >Submit</Button>
         </Group>
     </form>
       </Modal>
