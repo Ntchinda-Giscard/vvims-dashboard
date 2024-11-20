@@ -15,7 +15,7 @@ import { createClient } from "graphql-ws";
 import { getMainDefinition } from '@apollo/client/utilities';
 import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
-import { Notifications } from 'react-push-notification';
+
 
 
 
@@ -74,7 +74,6 @@ const client_hasura = new ApolloClient({
         <ColorSchemeScript />
       </head>
       <body>
-      <Notifications />
       <MantineProvider>
         <ToastContainer />
       <ApolloProvider client={client_hasura}>
