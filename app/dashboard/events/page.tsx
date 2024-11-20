@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import AddEvent from './components/addEvents';
 import { useSubscription } from '@apollo/client';
 import { GET_EVENTS } from './queries/get_events';
+import addNotification from 'react-push-notification';
 
 function EventsPage() {
 
@@ -21,54 +22,22 @@ function EventsPage() {
   };
 
   const [openedAdd, { open: openAdd , close: closeAdd }] = useDisclosure(false);
-  const games = [
-    { name: "Game 1", author: "Author 1", slug: "game1" },
-    { name: "Game 2", author: "Author 2", slug: "game2" },
-    { name: "Game 3", author: "Author 3", slug: "game3" },
-  ];
 
-  useEffect(() => {
-    if (typeof window !== "undefined" && "Notification" in window) {
-      if (Notification.permission === "granted") {
-        randomNotification();
-      } else if (Notification.permission === "default") {
-        Notification.requestPermission().then((permission) => {
-          if (permission === "granted") {
-            randomNotification();
-          } else {
-            console.log("Notifications are blocked.");
-          }
-        });
-      }
-    } else {
-      console.error("Notification API is not supported in this environment.");
-    }
-  }, [dataEvents]);
-
-  function randomNotification() {
-    const randomItem = Math.floor(Math.random() * games.length);
-    const notifTitle = games[randomItem].name;
-    const notifBody = `Created by ${games[randomItem].author}.`;
-    if (!("Notification" in window)) {
-        console.error("This browser does not support desktop notifications.");
-      } else {
-        console.log("Notification API is supported.");
-    }
-    const notifImg = `/data/img/${games[randomItem].slug}.jpg`; // Adjust path based on your setup
-    const options = {
-      body: notifBody,
-    //   icon: notifImg,
-    };
-
-    new Notification(notifTitle, options);
-    setTimeout(randomNotification, 10000); // Call the function again after 30 seconds
-  }
-
-  
+  const buttonClick = () => {
+    addNotification({
+        title: 'Warning',
+        subtitle: 'This is a subtitle',
+        message: 'This is a very long message',
+        theme: 'darkblue',
+        native: true // when using native, your OS will handle theming.
+    });
+};
+ 
   
     return ( 
     <>
         <main className="flex flex-col min-w-full min-h-full">
+            <Button onClick={buttonClick} > Notify me </Button>
             <AddEvent
                 close={closeAdd}
                 opened={openedAdd}

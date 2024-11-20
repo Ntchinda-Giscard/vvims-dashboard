@@ -1,5 +1,5 @@
 "use client"
-import { UnstyledButton, Group, Avatar, Text, rem, Menu } from '@mantine/core';
+import { UnstyledButton, Group, Avatar, Text, rem, Menu, Indicator, ThemeIcon } from '@mantine/core';
 import {IconLogout,
   IconBell,
     IconHeart,
@@ -42,13 +42,20 @@ export function UserButton({name, url, email}: any) {
         <Menu
           withArrow
         >
-          <Avatar
-            src={url}
-            radius="xl"
-            name={name}
-            color={'initials'}
-            size={'sm'}
-          />
+          <div className="flex flex-row gap-4">
+            <Indicator color="red" size={10}>
+              <ThemeIcon variant="light" color="white">
+                <IconBell style={{ width: '70%', height: '70%' }} />
+              </ThemeIcon>
+            </Indicator>
+            <Avatar
+              src={url}
+              radius="xl"
+              name={name}
+              color={'initials'}
+              size={'sm'}
+            />
+          </div>
           <div style={{ flex: 1, display: matches ? 'block' : 'none' }}>
             <Text tt={'capitalize'} c={'white'} size="sm" fw={500}>
                 {name}

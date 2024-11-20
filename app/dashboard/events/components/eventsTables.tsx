@@ -22,7 +22,7 @@ export default function EventsTable({datas, onEdit, onComplete, onCanceled, onDe
     const year = date.getFullYear();
   
     // Return formatted date
-    return `${month}, ${day} ${year}`;
+    return `${month} ${day}, ${year}`;
   }
 
   function formatTime(timeStr: any) {
