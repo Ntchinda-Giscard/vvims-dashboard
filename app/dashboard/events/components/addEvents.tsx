@@ -75,12 +75,17 @@ export default function AddEvent({opened, close}: any) {
         {/* Modal content */}
         <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
         <TextInput
-            radius="md"
-            withAsterisk
-            label="Title"
-            placeholder="enter title"
-            key={form.key('title')}
-            {...form.getInputProps('title')}
+          radius="md"
+          withAsterisk
+          label="Title"
+          placeholder="enter title"
+          key={form.key('title')}
+          {...form.getInputProps('title')}
+          styles={{
+            label:{
+              color: "#404040"
+            }
+          }}
         />
         <Textarea
           radius='md'
@@ -89,6 +94,11 @@ export default function AddEvent({opened, close}: any) {
           placeholder="enter description"
           key={form.key('description')}
           {...form.getInputProps('description')}
+          styles={{
+            label:{
+              color: "#404040"
+            }
+          }}
         />
         <MultiSelect
           radius="md"
@@ -118,6 +128,11 @@ export default function AddEvent({opened, close}: any) {
           minDate={new Date()}
           key={form.key('date')}
           {...form.getInputProps('date')}
+          styles={{
+            label:{
+              color: "#404040"
+            }
+          }}
 
         />
         <TimeInput
@@ -126,6 +141,11 @@ export default function AddEvent({opened, close}: any) {
           label="Start time"
           key={form.key('start_time')}
           {...form.getInputProps('start_time')}
+          styles={{
+            label:{
+              color: "#404040"
+            }
+          }}
         />
 
         <TimeInput
@@ -134,6 +154,11 @@ export default function AddEvent({opened, close}: any) {
           label="End time"
           key={form.key('end_time')}
           {...form.getInputProps('end_time')}
+          styles={{
+            label:{
+              color: "#404040"
+            }
+          }}
         />
 
         <Group grow justify="flex-end" mt="md">
