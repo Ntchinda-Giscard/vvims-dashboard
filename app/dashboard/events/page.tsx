@@ -27,7 +27,6 @@ function EventsPage() {
     return ( 
     <>
         <main className="flex flex-col min-w-full min-h-full">
-            <Button onClick={buttonClick} > Notify me </Button>
             <AddEvent
                 close={closeAdd}
                 opened={openedAdd}
