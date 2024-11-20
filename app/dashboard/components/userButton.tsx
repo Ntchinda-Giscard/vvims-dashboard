@@ -1,6 +1,7 @@
 "use client"
 import { UnstyledButton, Group, Avatar, Text, rem, Menu } from '@mantine/core';
 import {IconLogout,
+  IconBell,
     IconHeart,
     IconStar,
     IconMessage,
@@ -82,12 +83,25 @@ export function UserButton({name, url, email}: any) {
 
           <Menu.Divider />
           <Menu.Item
+            leftSection={<IconBell style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
+            // onClick={handleLogout}
+          >
+            Notifications
+          </Menu.Item>
+          <Menu.Item
+            leftSection={<IconSettings style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
+            // onClick={handleLogout}
+          >
+            Settings
+          </Menu.Item>
+          <Menu.Item
             leftSection={<IconLogout style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
             onClick={handleLogout}
+            color={'red'}
           >
             Logout
           </Menu.Item>
-            </Menu.Dropdown>
+          </Menu.Dropdown>
         </Menu>
       </Group>
     </UnstyledButton>
