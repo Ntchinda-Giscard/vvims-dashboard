@@ -31,6 +31,7 @@ export const links = [
     {link: '#', label: 'Agenda', sub_links: [
         {link: '/dashboard/appointment', label: 'appointments'},
         {link: '/dashboard/events', label: 'events'},
+        {link: '/dashboard/calendar', label: 'calendar'},
     ], icon: IconCalendar},
     // {link: '/dashboard/vehicle', label: 'Vehicles', sub_links: [], icon: IconCar},
     {link: '/dashboard/attendance', label: 'Attendances', sub_links: [], icon: IconUserPin},

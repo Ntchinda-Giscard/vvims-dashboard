@@ -18,8 +18,9 @@ import { logout } from '@/app/auth/login/slice/authSlice';
 import { useMediaQuery } from '@mantine/hooks';
 import classes from '@/app/dashboard/components/css/topBar.module.css';
 import { useEffect, useState } from 'react';
-import { useSubscription } from '@apollo/client';
+import { useMutation, useSubscription } from '@apollo/client';
 import { GET_EVENT_NOTIF } from '../events/queries/event_notif';
+import { ACCEPT_EVENT, DECLINE_EVENTS } from '../events/mutation/insert_events';
 
 
 export function UserButton({name, url, email}: any) {
@@ -34,6 +35,25 @@ export function UserButton({name, url, email}: any) {
         employee_id: userInfo?.employee?.id
       }
     });
+    const [acceptEvents, {loading: acceptLoad}] = useMutation(ACCEPT_EVENT);
+    const [declineEvent, {loading: declineLoad}] = useMutation(DECLINE_EVENTS);
+
+    const acceptEventsPart = (id: string) =>{
+      acceptEvents({
+        variables:{
+          id: id
+        }
+      })
+    }
+
+    const declineEventsPart = (id: string) =>{
+      declineEvent({
+        variables:{
+          id: id
+        }
+      })
+    }
+
     const [notif, setNotif] = useState()
 
     useEffect(() =>{
@@ -110,10 +130,14 @@ export function UserButton({name, url, email}: any) {
                         <div className='flex flex-row'>
                           <p className={classes.notif_time}> {formatTimestamp(n?.created_at)} </p>
                         </div>
-                        <Group>
-                          <Button variant="filled" color="blue" radius="md" size="xs" > Accept </Button>
-                          <Button variant="outline" color="blue" radius="md" size="xs" > Decline </Button>
-                        </Group>
+                        {
+                          n?.event?.event_participants?.status === 'PENDING' ?
+                          null :
+                          <Group>
+                            <Button loading={acceptLoad} onClick={() => acceptEventsPart(n?.event?.event_participants?.[0]?.id)} variant="filled" color="blue" radius="md" size="xs" > Accept </Button>
+                            <Button loading={declineLoad} onClick={() => declineEventsPart(n?.event?.event_participants?.[0]?.id)} variant="outline" color="blue" radius="md" size="xs" > Decline </Button>
+                          </Group>
+                        }
                       </div>
                     </div>
                     <Divider my={'xs'} />

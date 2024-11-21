@@ -7,3 +7,19 @@ mutation MyMutation($start_date: date!, $title: String!, $description: String, $
     id
   }
 }`;
+
+
+export const ACCEPT_EVENT = gql`
+mutation MyMutation($id: UUID!) {
+  acceptParticipateEvents(participant: {id: $id}) {
+    id
+  }
+}`;
+
+
+export const DECLINE_EVENTS = gql`
+mutation MyMutation($id: UUID!) {
+  declineParticipateEvents(participant: {id: $id}) {
+    id
+  }
+}`;
