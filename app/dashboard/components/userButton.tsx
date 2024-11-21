@@ -77,7 +77,7 @@ export function UserButton({name, url, email}: any) {
           <Popover 
             shadow="md"
             radius="lg" 
-            width={'xl'} 
+            width={'lg'} 
             closeOnClickOutside={true} 
             styles={{
               dropdown:{
