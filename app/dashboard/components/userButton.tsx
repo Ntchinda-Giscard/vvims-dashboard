@@ -83,6 +83,11 @@ export function UserButton({name, url, email}: any) {
       return `${formattedDate} - ${hours}:${minutes}`;
     }
 
+    function hasUnreadNotifications(employeeNotifications: any) {
+      if(!employeeNotifications) return false
+      return employeeNotifications.some((notification: { is_read: boolean; }) => notification.is_read === false);
+    }
+
   return (
     <UnstyledButton 
     // className={classes.user}
@@ -106,7 +111,7 @@ export function UserButton({name, url, email}: any) {
             }}
           >
             <Popover.Target>
-              <Indicator color="red" size={10}>
+              <Indicator disabled={!hasUnreadNotifications(dataNotif?.employee_notifications)} color="red" size={10}>
                 <ThemeIcon variant="light" color="white">
                   <IconBell style={{ width: '70%', height: '70%' }} />
                 </ThemeIcon>

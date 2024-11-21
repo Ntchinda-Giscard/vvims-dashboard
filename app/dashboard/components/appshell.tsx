@@ -16,6 +16,7 @@ import { logout } from '@/app/auth/login/slice/authSlice';
 import { UserButton } from './userButton';
 
 
+
 const poppins_logo = Poppins({ subsets: ["latin"], weight:["500"] });
 const poppins_light = Poppins({ subsets: ["latin"], weight:["400"] });
 
@@ -49,7 +50,8 @@ export default function ResponsiveSizes(
  
 
 
-  const [opened, { toggle }] = useDisclosure();
+  const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
+  const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
   const pathname = usePathname()
 
   const isActive = (path: string) => {
@@ -65,7 +67,7 @@ export default function ResponsiveSizes(
       navbar={{
         width: { base: 200, md: 200, lg: 200 },
         breakpoint: 'sm',
-        collapsed: { mobile: !opened },
+        collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
       }}
       padding="md"
     >
@@ -76,7 +78,8 @@ export default function ResponsiveSizes(
       }}>
         <div className="flex flex-row min-w-full min-h-full items-center">
           
-            <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+          <Burger opened={mobileOpened} onClick={toggleMobile} hiddenFrom="sm" size="sm" />
+          <Burger opened={desktopOpened} onClick={toggleDesktop} visibleFrom="sm" size="sm" />
           <div className="flex flex-row min-w-full items-center justify-between md:justify-between pl-4 pr-4">
             <span className={cx([classes.logo, poppins_logo.className])}>VVIMS <span style={{color: "#17DBCC"}}>®</span></span>
             <p className={classes.abrev}>FODECC</p>
