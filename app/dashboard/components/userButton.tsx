@@ -98,7 +98,7 @@ export function UserButton({name, url, email}: any) {
             <Divider my={'sm'} />
               {
                 dataNotif?.employee_notifications?.map((n : any) =>(
-                  <Box py={10} px={20} >
+                  <Box py={10} px={20} key={n?.id} >
                     <div className="flex flex-row gap-5">
                       <ThemeIcon variant="light" radius="xl" size="lg">
                         <IconCalendar style={{ width: '70%', height: '70%' }} />
