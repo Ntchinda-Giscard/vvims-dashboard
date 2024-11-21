@@ -1,5 +1,5 @@
 "use client"
-import { UnstyledButton, Group, Avatar, Text, rem, Menu, Indicator, ThemeIcon } from '@mantine/core';
+import { UnstyledButton, Group, Avatar, Text, rem, Menu, Indicator, ThemeIcon, Divider, Popover, Box, Button } from '@mantine/core';
 import {IconLogout,
   IconBell,
     IconHeart,
@@ -10,28 +10,59 @@ import {IconLogout,
     IconTrash,
     IconSwitchHorizontal,
     IconChevronRight,
-    IconDots, } from '@tabler/icons-react';
+    IconCalendar,IconPhoto } from '@tabler/icons-react';
 // import classes from './UserButton.module.css';
 import {useRouter } from "next/navigation"
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '@/app/auth/login/slice/authSlice';
 import { useMediaQuery } from '@mantine/hooks';
+import classes from '@/app/dashboard/components/css/topBar.module.css';
+import { useEffect, useState } from 'react';
+import { useSubscription } from '@apollo/client';
+import { GET_EVENT_NOTIF } from '../events/queries/event_notif';
 
 
 export function UserButton({name, url, email}: any) {
-
+  const userInfo = useSelector((state: any) => state.auth.userInfo)
     const dispatch = useDispatch();
     const router = useRouter();
 
     const matches = useMediaQuery('(min-width: 426px)');
 
+    const {data: dataNotif} = useSubscription(GET_EVENT_NOTIF,{
+      variables:{
+        employee_id: userInfo?.employee?.id
+      }
+    });
+    const [notif, setNotif] = useState()
+
+    useEffect(() =>{
+      console.log('Print notif', dataNotif)
+      setNotif(dataNotif)
+      console.log('Print notif', notif)
+    }, [dataNotif])
+
     const handleLogout = () => {
-        dispatch(logout());
-        localStorage.removeItem("token")
-        // Navigate to login page
-        router.push('/auth/login');
-  
+      dispatch(logout());
+      localStorage.removeItem("token")
+      // Navigate to login page
+      router.push('/auth/login');
+
     }
+
+    function formatTimestamp(timestamp: string): string {
+      const date = new Date(timestamp);
+    
+      // Get components of the date
+      const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric', year: 'numeric' };
+      const formattedDate: string = date.toLocaleDateString('en-US', options); // e.g., "Nov 21, 2024"
+    
+      const hours: string = date.getHours().toString().padStart(2, '0');
+      const minutes: string = date.getMinutes().toString().padStart(2, '0');
+    
+      return `${formattedDate} - ${hours}:${minutes}`;
+    }
+
   return (
     <UnstyledButton 
     // className={classes.user}
@@ -43,11 +74,56 @@ export function UserButton({name, url, email}: any) {
           withArrow
         >
           <div className="flex flex-row gap-4">
-            <Indicator color="red" size={10}>
-              <ThemeIcon variant="light" color="white">
-                <IconBell style={{ width: '70%', height: '70%' }} />
-              </ThemeIcon>
-            </Indicator>
+          <Popover 
+            shadow="md"
+            radius="lg" 
+            width={'xl'} 
+            closeOnClickOutside={true} 
+            styles={{
+              dropdown:{
+                padding: 0
+              }
+            }}
+          >
+            <Popover.Target>
+              <Indicator color="red" size={10}>
+                <ThemeIcon variant="light" color="white">
+                  <IconBell style={{ width: '70%', height: '70%' }} />
+                </ThemeIcon>
+              </Indicator>
+              
+            </Popover.Target>
+            <Popover.Dropdown>
+            <p className={classes.notif}> Notifications </p>
+            <Divider my={'sm'} />
+              {
+                dataNotif?.employee_notifications?.map((n : any) =>(
+                  <Box py={10} px={20} >
+                    <div className="flex flex-row gap-5">
+                      <ThemeIcon variant="light" radius="xl" size="lg">
+                        <IconCalendar style={{ width: '70%', height: '70%' }} />
+                      </ThemeIcon>
+                      <div className="flex flex-col gap-1 w-full">
+                        <div className="flex flex-col">
+                          <p className={classes.notif_title}> {`${n?.action}`} {`${n?.event?.employee?.firstname}`} <span className={classes.notif_desc}> added you to</span> {`${n?.title}`} </p>
+                        </div>
+                        <div className='flex flex-row'>
+                          <p className={classes.notif_time}> {formatTimestamp(n?.created_at)} </p>
+                        </div>
+                        <Group>
+                          <Button variant="filled" color="blue" radius="md" size="xs" > Accept </Button>
+                          <Button variant="outline" color="blue" radius="md" size="xs" > Decline </Button>
+                        </Group>
+                      </div>
+                    </div>
+                    <Divider my={'xs'} />
+                  </Box>
+                ))
+              }
+              
+            </Popover.Dropdown>
+          </Popover>
+            
             <Avatar
               src={url}
               radius="xl"

@@ -17,6 +17,7 @@ export default function AddEvent({opened, close}: any) {
 
   const {data: dataAllEmpl, loading: loadEmpl} = useQuery(GET_EMPLOYEE_EVENTS);
   const [insertEvents, {loading: loadInsertEvents}] = useMutation(INSERT_EVENTS);
+  
   const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
@@ -56,7 +57,8 @@ export default function AddEvent({opened, close}: any) {
         title: value?.title,
         end_time: value?.end_time,
         start_time: value?.start_time,
-        participants: convertToEmployeeObjects(value?.participants)
+        participants: convertToEmployeeObjects(value?.participants),
+        description: value?.description
 
       },
       onCompleted: () =>{
