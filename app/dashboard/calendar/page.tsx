@@ -9,38 +9,51 @@ import interactionPlugin from '@fullcalendar/interaction';
 // import '@fullcalendar/daygrid/main.css';
 // import '@fullcalendar/timegrid/main.css';
 // import { useCalendarApp, ScheduleXCalendar } from '@schedule-x/react'
+import { useNextCalendarApp, ScheduleXCalendar, useCalendarApp } from '@schedule-x/react';
+import {
+  createViewDay,
+  createViewMonthAgenda,
+  createViewMonthGrid,
+  createViewWeek,
+} from '@schedule-x/calendar';
+import { createEventsServicePlugin } from '@schedule-x/events-service'
+import '@schedule-x/theme-default/dist/index.css';
 
 
 export default function MyCalendar(){
     const [isLoading, setIsLoading] = useState(false);
+    const events = [
+      { id: '1', title: 'Meeting', start: '2024-11-21T10:00:00', end: '2024-11-21T11:00:00' },
+      { id: '2', title: 'Lunch', start: '2024-11-21T12:00:00', end: '2024-11-21T13:00:00' },
+    ];
+    const plugins = [createEventsServicePlugin()]
+    const calendar = useCalendarApp({
+      views: [createViewDay(), createViewWeek(), createViewMonthGrid(), createViewMonthAgenda()],
+      events: [
+        {
+          id: '1',
+          title: 'Event 1',
+          start: '2024-11-16 09:00',
+          end: '2024-11-16 14:00',
+        },
+      ],
+      selectedDate: '2024-11-16'
+    }, plugins)
 
     useEffect(() => {
       setIsLoading(true);
 
       // fetching data
-      
+      calendar.eventsService.getAll()
       setIsLoading(false);
-    }, []);
+    }, [calendar]);
 
-    const events = [
-        { title: 'Meeting', start: new Date() },
-        {
-            title: 'Meeting',
-            start: new Date('2024-11-21T10:00:00'),
-            end: new Date('2024-11-21T11:00:00'),
-          },
-          {
-            title: 'Lunch',
-            start: new Date('2024-11-21T12:00:00'),
-            end: new Date('2024-11-21T13:00:00'),
-          },
-          { id: '1', title: 'Meeting', start: '2024-11-21T10:00:00', end: '2024-11-21T11:00:00' },
-        { id: '2', title: 'Lunch', start: '2024-11-21T12:00:00', end: '2024-11-21T13:00:00' },
-      ]
+    
     return(
         <>
-        <div className='relative w-full h-[600px]'>
-            <FullCalendar
+        <div className='relative w-full h-full'>
+          <ScheduleXCalendar calendarApp={calendar} />
+            {/* <FullCalendar
                 // plugins={[dayGridPlugin]}
                 plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                 initialView='dayGridMonth'
@@ -52,7 +65,7 @@ export default function MyCalendar(){
                         center: "title",
                     }
                 }
-            />
+            /> */}
         </div>
         </>
     )
