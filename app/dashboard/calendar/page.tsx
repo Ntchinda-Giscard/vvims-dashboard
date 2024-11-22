@@ -33,11 +33,11 @@ export default function MyCalendar(){
         {
           id: '1',
           title: 'Event 1',
-          start: '2024-11-16 09:00',
-          end: '2024-11-16 14:00',
+          start: '2024-11-22 09:00',
+          end: '2024-11-22 14:00',
         },
       ],
-      selectedDate: '2024-11-16'
+      selectedDate: '2024-11-22'
     }, plugins)
 
     useEffect(() => {
