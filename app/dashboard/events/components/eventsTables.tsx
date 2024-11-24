@@ -6,7 +6,7 @@ import cx from 'clsx';
 import classes from "@/app/dashboard/view-employees/table.module.css";
 
 
-export default function EventsTable({datas, onEdit, onComplete, onCanceled, onDelete}:any) {
+export default function EventsTable({datas, onEdit, onAddTask, onDelete}:any) {
   function formatDate(dateStr: any) {
     const date = new Date(dateStr);
   
@@ -73,8 +73,8 @@ export default function EventsTable({datas, onEdit, onComplete, onCanceled, onDe
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Item color="blue" onClick={() => onEdit(data)} leftSection={<IconEdit  style={{ width: rem(14), height: rem(14) }} />}> Edit </Menu.Item>
-                <Menu.Item color="teal" onClick={() => onComplete(data)} leftSection={<IconPlaylistAdd  style={{ width: rem(14), height: rem(14) }} />}> Add task </Menu.Item>
-                <Menu.Item color="red" onClick={() => onCanceled(data)} leftSection={<IconTrash  style={{ width: rem(14), height: rem(14) }} />}> Delete </Menu.Item>
+                <Menu.Item color="teal" onClick={() => onAddTask(data)} leftSection={<IconPlaylistAdd  style={{ width: rem(14), height: rem(14) }} />}> Add task </Menu.Item>
+                <Menu.Item color="red" onClick={() => onDelete(data)} leftSection={<IconTrash  style={{ width: rem(14), height: rem(14) }} />}> Delete </Menu.Item>
             </Menu.Dropdown>
         </Menu>        
       </Table.Td>

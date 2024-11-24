@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import AddEvent from './components/addEvents';
 import { useSubscription } from '@apollo/client';
 import { GET_EVENTS } from './queries/get_events';
+import AddTask from "@/app/dashboard/events/components/add_task";
 
 
 function EventsPage() {
@@ -22,10 +23,18 @@ function EventsPage() {
   };
 
   const [openedAdd, { open: openAdd , close: closeAdd }] = useDisclosure(false);
+    const [openedTask, { open: openTask, close: closeTask }] = useDisclosure(false);
+    const [eventData, setEventData] = useState()
 
   useEffect(() =>{
       console.log("Events table", dataEvents);
   }, [dataEvents])
+
+    const handleAddTask = (v: any) => {
+        openTask()
+        setEventData(v)
+      console.log('Event chosen', v)
+    }
  
   
     return ( 
@@ -34,6 +43,12 @@ function EventsPage() {
             <AddEvent
                 close={closeAdd}
                 opened={openedAdd}
+
+            />
+            <AddTask
+                opened={openedTask}
+                close={closeTask}
+                data={eventData}
             />
             <div className={"flex flex-col  md:flex-row justify-between mb-8"}>
                 <p style={{fontWeight: 800, fontSize: "large", color: "#404040"}}> Events Managements </p>
@@ -75,6 +90,7 @@ function EventsPage() {
                 </div>
                 <EventsTable 
                     datas={dataEvents?.events}
+                    onAddTask={(v: any) => handleAddTask(v)}
                 />
             </Paper>
         </main>
