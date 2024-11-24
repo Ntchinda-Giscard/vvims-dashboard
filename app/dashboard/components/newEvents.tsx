@@ -182,7 +182,7 @@ function EventCard({color, st, et, title, participant}: any){
                             <Avatar.Group>
                                 {
                                     participant.slice(0, 3)?.map((p: { firstname: any; lastname: any; }) => (
-                                        <Avatar color="initials" size="sm" name= {`${p?.firstname} ${p?.lastname}`} src="" />
+                                        <Avatar key={p?.firstname} color="initials" size="sm" name= {`${p?.firstname} ${p?.lastname}`} src="" />
                                     ) )
                                 }
 
