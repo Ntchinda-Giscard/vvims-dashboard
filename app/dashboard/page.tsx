@@ -35,6 +35,7 @@ const font_heading = Poppins({ subsets: ["latin"], weight:["500"] });
 
 export default function Home() {
   const user = useSelector((state: any) => state.auth.userInfo);
+
   const {data: dataAgg, loading: loadAgg, error: errAgg} = useSubscription(GET_ALL_VISITS,{
     variables:{
       company_id: user?.employee?.company_id
@@ -48,6 +49,7 @@ export default function Home() {
     {title: "Flagged Vehicles", icon: IconBike, amount: 0, perc: 0, bg_img: bg_r, img: img_cf},
   ]
   useEffect(() =>{
+      console.log(user)
     const askNotificationPermission = async () => {
       if (!('Notification' in window)) {
         console.log('This browser does not support notifications.');

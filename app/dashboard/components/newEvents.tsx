@@ -9,10 +9,26 @@ import NoDataComponent from "./nodataComponent";
 import { useEffect, useState } from "react";
 import { IconChevronRight, IconClock } from "@tabler/icons-react";
 import Link from "next/link";
+import {useSelector} from "react-redux";
 
 function NewEvents() {
-    const {data, loading, error} = useQuery(GET_EVENT_CARD);
-    const [value, setValue] = useState<Date | null>(null)
+    const [value, setValue] = useState<Date>(new Date())
+    const user = useSelector((state: any) => state.auth.userInfo);
+
+    function formatDateToYYYYMMDD(date: Date) {
+        const yyyy = date.getFullYear();
+        const mm = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const dd = String(date.getDate()).padStart(2, '0');
+        return `${yyyy}-${mm}-${dd}`;
+    }
+
+    const {data, loading, error} = useQuery(GET_EVENT_CARD, {
+        variables:{
+            date: formatDateToYYYYMMDD(value),
+            employeeId: user?.employee?.id
+        }
+    });
+
     const getDayProps: DatePickerProps['getDayProps'] = (date) => {
         if (date.getDay() === new Date().getDay() && date.getDate() === new Date().getDate()) {
           return {
@@ -76,6 +92,7 @@ function NewEvents() {
     useEffect(() =>{
         console.log("Event data ===>", data)
     },[data])
+    // @ts-ignore
     return (
         <>
             <div className="flex flex-row justify-between items-center">
@@ -92,6 +109,7 @@ function NewEvents() {
                             // value={value}
                             // size={'xs'}
                             // w={"100%"}
+                            //@ts-ignore
                             onChange={setValue}
                             defaultDate={new Date()}
                             getDayProps={getDayProps}
@@ -109,31 +127,24 @@ function NewEvents() {
                                 }
                             }}
                         />
-                        
-                        {/* <div className="grid gap-x-8 gap-y-8 w-full md:grid-cols-2 grid-cols-1 ">
-                            {
-                                data?.events.map((e: { title: any; events: { start_date: any; title: any; start_time: any; description: any; }; }) => (
-                                    <EventButton key={e?.title} date={e?.events?.start_date}  title={e?.events?.title} time={e?.events?.start_time} desc={e?.events?.description}  />
-                                ))
-                            }
-                        </div> */}
+
                     </div>
                     <Space h="md" />
                     {
-                        data?.events?.length < 1 && error ?
+                        data?.getEventsByUser?.length >= 1 && !error ?
                         <>
-                            
-                        <EventCard
-                            time={'07:00'}
-                            bg={'rgba(207, 61, 209, 0.2)'}
-                            b={'rgba(207, 61, 209, 0.9)'}
-                        />
+                            {
+                                data?.getEventsByUser?.map((e: any) => (
+                                    <EventCard
+                                        key={e?.description}
+                                        title={e?.event?.title}
+                                        time={'07:00'}
+                                        bg={'rgba(207, 61, 209, 0.2)'}
+                                        b={'rgba(207, 61, 209, 0.9)'}
+                                    />
+                                ))
+                            }
 
-                        <EventCard
-                            time={'07:00'}
-                            bg={'rgba(81, 61, 209, 0.2)'}
-                            b={'rgba(81, 61, 209, 0.9)'}
-                        />
                         </>
 
                  :
@@ -148,7 +159,7 @@ function NewEvents() {
 export default NewEvents;
 
 
-function EventCard({bg, b, time}: any){
+function EventCard({bg, b, time, title}: any){
 
     return(
         <>
@@ -159,7 +170,7 @@ function EventCard({bg, b, time}: any){
                     <Box p="md" bg={bg} className={classes.eventCard} w="100%" >
                         <div className="flex flex-col">
                             <span className={classes.eventTitleSpan} style={{ borderLeft: `solid 3px ${b}` }} > 
-                                Meeting with design team
+                                {title}
                             </span>
                             <div className="flex flex-row gap-2 mt-2  mb-2 items-center">
                                 <IconClock color="#404040" stroke={1} width={15} height={15} />

@@ -38,18 +38,20 @@ export function UserButton({name, url, email}: any) {
     const [acceptEvents, {loading: acceptLoad}] = useMutation(ACCEPT_EVENT);
     const [declineEvent, {loading: declineLoad}] = useMutation(DECLINE_EVENTS);
 
-    const acceptEventsPart = (id: string) =>{
+    const acceptEventsPart = (id: any) =>{
+      console.log('Accept notif', id)
       acceptEvents({
         variables:{
-          id: id
+          id: id?.id
         }
       })
     }
 
-    const declineEventsPart = (id: string) =>{
+    const declineEventsPart = (id: any) =>{
+      console.log('Decline notif', id)
       declineEvent({
         variables:{
-          id: id
+          id: id?.id
         }
       })
     }
@@ -136,11 +138,11 @@ export function UserButton({name, url, email}: any) {
                           <p className={classes.notif_time}> {formatTimestamp(n?.created_at)} </p>
                         </div>
                         {
-                          n?.event?.event_participants?.status === 'PENDING' ?
+                          n?.event?.event_participants?.[0]?.status !== 'PENDING' ?
                           null :
                           <Group>
-                            <Button loading={acceptLoad} onClick={() => acceptEventsPart(n?.event?.event_participants?.[0]?.id)} variant="filled" color="blue" radius="md" size="xs" > Accept </Button>
-                            <Button loading={declineLoad} onClick={() => declineEventsPart(n?.event?.event_participants?.[0]?.id)} variant="outline" color="blue" radius="md" size="xs" > Decline </Button>
+                            <Button loading={acceptLoad} onClick={() => acceptEventsPart(n?.event?.event_participants?.[0])} variant="filled" color="blue" radius="md" size="xs" > Accept </Button>
+                            <Button loading={declineLoad} onClick={() => declineEventsPart(n?.event?.event_participants?.[0])} variant="outline" color="blue" radius="md" size="xs" > Decline </Button>
                           </Group>
                         }
                       </div>

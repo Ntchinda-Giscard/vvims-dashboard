@@ -27,15 +27,21 @@ query MyQuery($id: UUID!) {
 }`;
 
 export const GET_EVENT_CARD = gql`
-query MyQuery {
-  events {
-    id
-    start_date
-    start_time
-    title
-    description
-  }
-}`;
+    query MyQuery($date: Date!, $employeeId: UUID!) {
+        getEventsByUser(inputs: {date: $date, employeeId: $employeeId}) {
+            event {
+                date
+                description
+                endTime
+                startTime
+                title
+            }
+            participant {
+                firstname
+                lastname
+            }
+        }
+    }`;
 
 
 

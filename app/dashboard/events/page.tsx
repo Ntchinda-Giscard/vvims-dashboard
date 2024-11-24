@@ -22,6 +22,10 @@ function EventsPage() {
   };
 
   const [openedAdd, { open: openAdd , close: closeAdd }] = useDisclosure(false);
+
+  useEffect(() =>{
+      console.log("Events table", dataEvents);
+  }, [dataEvents])
  
   
     return ( 
