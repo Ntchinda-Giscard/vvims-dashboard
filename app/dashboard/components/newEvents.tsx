@@ -2,7 +2,7 @@
 import classes from "@/app/dashboard/components/css/dashboard.module.css";
 import styles from "@/app/dashboard/components/css/MyCalendar.module.css";
 import { useQuery } from "@apollo/client";
-import { Paper, Divider, Space, Box, Avatar } from "@mantine/core";
+import { Paper, Divider, Space, Box, Avatar, darken, lighten } from "@mantine/core";
 import {DatePicker, DatePickerProps, Calendar} from "@mantine/dates"
 import { GET_EVENT_CARD } from "../query/get_percent";
 import NoDataComponent from "./nodataComponent";
@@ -10,6 +10,8 @@ import { useEffect, useState } from "react";
 import { IconChevronRight, IconClock } from "@tabler/icons-react";
 import Link from "next/link";
 import {useSelector} from "react-redux";
+
+var randomColor = require('randomcolor');
 
 function NewEvents() {
     const [value, setValue] = useState<Date>(new Date())
@@ -92,7 +94,7 @@ function NewEvents() {
     useEffect(() =>{
         console.log("Event data ===>", data)
     },[data])
-    // @ts-ignore
+    var color = randomColor();
     return (
         <>
             <div className="flex flex-row justify-between items-center">
@@ -138,9 +140,10 @@ function NewEvents() {
                                     <EventCard
                                         key={e?.description}
                                         title={e?.event?.title}
-                                        time={'07:00'}
-                                        bg={'rgba(207, 61, 209, 0.2)'}
-                                        b={'rgba(207, 61, 209, 0.9)'}
+                                        st={e?.event?.startTime}
+                                        et={e?.event?.endTime}
+                                        color={randomColor()}
+                                        participant={e?.participant}
                                     />
                                 ))
                             }
@@ -151,7 +154,6 @@ function NewEvents() {
                 <NoDataComponent button_msg={"Add event"} link={"/dashboard/events"} comment="No event have been created yet. Click the button bellow to add new events." />
                 }
                 </>
-    
         </>
     );
 }
@@ -159,29 +161,33 @@ function NewEvents() {
 export default NewEvents;
 
 
-function EventCard({bg, b, time, title}: any){
+function EventCard({color, st, et, title, participant}: any){
 
     return(
         <>
             <div className="flex flex-col">
-                <Divider my="xs" label={time} labelPosition="left" />
+                <Divider my="xs" label={st?.slice(0, 5)} labelPosition="left" />
                 <div className="flex flex-row">
                     <Box w={30}></Box>
-                    <Box p="md" bg={bg} className={classes.eventCard} w="100%" >
+                    <Box p="md" bg={lighten(`${color}`, 0.8)} className={classes.eventCard} w="100%" >
                         <div className="flex flex-col">
-                            <span className={classes.eventTitleSpan} style={{ borderLeft: `solid 3px ${b}` }} > 
+                            <span className={classes.eventTitleSpan} style={{ borderLeft: `solid 3px ${darken(`${color}`, 0.5)}` }} >
                                 {title}
                             </span>
                             <div className="flex flex-row gap-2 mt-2  mb-2 items-center">
                                 <IconClock color="#404040" stroke={1} width={15} height={15} />
-                                <p className={classes.eventTime}> {`${'7:30'}-${'9:00'}`} </p>
+                                <p className={classes.eventTime}> {`${st?.slice(0, 5)}-${et?.slice(0, 5)}`} </p>
                             </div>
 
                             <Avatar.Group>
-                                <Avatar color="initials" size="sm" name="John Doe" src="https://bit.ly/dan-abramov" />
-                                <Avatar color="initials" size="sm" name="Jane Doe" src="https://bit.ly/kent-c-dodds" />
-                                <Avatar color="initials" size="sm" name="Jim Doe" src="https://bit.ly/jason-white" />
-                                <Avatar color="initials" size="sm">+3</Avatar>
+                                {
+                                    participant.slice(0, 3)?.map((p: { firstname: any; lastname: any; }) => (
+                                        <Avatar color="initials" size="sm" name= {`${p?.firstname} ${p?.lastname}`} src="" />
+                                    ) )
+                                }
+
+                                { participant?.length > 3 ?
+                                    <Avatar color="initials" size="sm">+3</Avatar> : null}
                             </Avatar.Group>
                         </div>
                     </Box>
