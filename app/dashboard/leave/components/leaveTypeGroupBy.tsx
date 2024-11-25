@@ -42,6 +42,8 @@ function LeaveTypesGroupAgg() {
             p={"md"}
             withBorder
             className="w-full md:w-1/2"
+            radius={'lg'}
+            mt={'md'}
         >
             <p className={classes.cardTitle}> Comsumed leave types </p>
             <div className="grid grid-cols-2 gap-x-4 items-center" >
@@ -66,8 +68,13 @@ function LeaveTypesGroupAgg() {
                         thickness={10}
                         roundCaps
                         sections={[
-                            {value: 40, color: 'blue.7'}
+                            {value: (dataAggB?.leaves_aggregate?.aggregate?.count + dataAggM?.leaves_aggregate?.aggregate?.count + dataAggS?.leaves_aggregate?.aggregate?.count + dataAggO?.leaves_aggregate?.aggregate?.count)/48, color: 'blue.7'}
                         ]}
+                        label={
+                            <Text c={'black'} fw={700} ta={'center'} >
+                                {dataAggB?.leaves_aggregate?.aggregate?.count + dataAggM?.leaves_aggregate?.aggregate?.count + dataAggS?.leaves_aggregate?.aggregate?.count + dataAggO?.leaves_aggregate?.aggregate?.count}
+                            </Text>
+                        }
                     />
                 </div>
             </div>
