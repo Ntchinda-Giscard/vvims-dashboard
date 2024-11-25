@@ -1,12 +1,12 @@
 "use client"
 import { ActionIcon, Table, Menu, rem, ScrollArea, Badge, Avatar } from '@mantine/core';
-import { IconTrash, IconEdit, IconDotsVertical, IconPlaylistAdd, IconUserX } from '@tabler/icons-react';
+import { IconTrash, IconEdit, IconDotsVertical, IconPlaylistAdd, IconUserX, IconEye } from '@tabler/icons-react';
 import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode, useState } from 'react';
 import cx from 'clsx';
 import classes from "@/app/dashboard/view-employees/table.module.css";
 
 
-export default function EventsTable({datas, onEdit, onAddTask, onDelete}:any) {
+export default function EventsTable({datas, onEdit, onAddTask, onDelete, onSee}:any) {
   function formatDate(dateStr: any) {
     const date = new Date(dateStr);
   
@@ -72,7 +72,7 @@ export default function EventsTable({datas, onEdit, onAddTask, onDelete}:any) {
                 </ActionIcon>
             </Menu.Target>
             <Menu.Dropdown>
-              <Menu.Item color="blue" onClick={() => onEdit(data)} leftSection={<IconEdit  style={{ width: rem(14), height: rem(14) }} />}> Edit </Menu.Item>
+              <Menu.Item color="blue" onClick={() => onSee(data)} leftSection={<IconEye  style={{ width: rem(14), height: rem(14) }} />}> Edit </Menu.Item>
                 <Menu.Item color="teal" onClick={() => onAddTask(data)} leftSection={<IconPlaylistAdd  style={{ width: rem(14), height: rem(14) }} />}> Add task </Menu.Item>
                 <Menu.Item color="red" onClick={() => onDelete(data)} leftSection={<IconTrash  style={{ width: rem(14), height: rem(14) }} />}> Delete </Menu.Item>
             </Menu.Dropdown>

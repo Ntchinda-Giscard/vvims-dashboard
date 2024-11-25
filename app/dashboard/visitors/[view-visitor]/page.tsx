@@ -10,7 +10,7 @@ function Pages() {
     const router = useRouter();
     const visitor = useSelector((state: any) => state.visitor.visitor);
     const dateConverter=(date: any) =>{
-        if(date  === null) return '--:--:--'
+        if(date  === null) return '--:--'
         const new_date = new Date(date).toLocaleTimeString('en-GB', {hour12: false})
         return new_date
       }
