@@ -130,14 +130,14 @@ function EventsPage() {
                                 />
                         }
                     </Tabs.Panel>
-                    <Tabs.Panel value="1">
+                    <Tabs.Panel value="2">
                         <EventsTable
                             datas={dataCompt?.events}
                             // onAddTask={(v: any) => handleAddTask(v)}
                             onSee={(v: any) => handleRoute(v)}
                         />
                     </Tabs.Panel>
-                    <Tabs.Panel value="1">
+                    <Tabs.Panel value="3">
                         <EventsTable
                             datas={dataPend?.events}
                             // onAddTask={(v: any) => handleAddTask(v)}
