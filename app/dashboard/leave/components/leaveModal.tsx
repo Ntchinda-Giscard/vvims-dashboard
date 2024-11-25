@@ -190,7 +190,7 @@ export default function LeaveModal({opened, close, leave}: any){
             {/* Modal content */}
             <Dialog position={{ top: 20, left: "30%"}} opened={openedDialog} withCloseButton onClose={closeDialog} size="lg" radius="md">
         <Text size="sm" mb="xs" fw={500}>
-          Reseans for refusal
+          Reason for refusal
         </Text>
 
         <Group align="flex-end">
