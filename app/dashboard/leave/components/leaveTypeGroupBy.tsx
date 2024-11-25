@@ -102,13 +102,13 @@ function LeaveProgressConsumed({text, consumed, total}: any){
           <Progress.Root>
             <Progress.Section
               className={classes.progressSection}
-              value={20}
+              value={consumed/12}
               color=""
             />
 
             <Progress.Section
             //   className={classes.progressSection}
-              value={100-20}
+              value={100 -(consumed/12)}
               color="gray.1"
             />
             </Progress.Root>
