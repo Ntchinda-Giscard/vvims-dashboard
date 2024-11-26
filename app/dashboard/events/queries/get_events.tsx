@@ -1,6 +1,22 @@
 import {gql, useSubscription} from "@apollo/client";
 
 
+export const GET_EVENT_PARTICIPANTS = gql`
+  query MyQuery($event_id: uuid!) {
+    event_participants(where: {event_id: {_eq: $event_id}}) {
+      status
+      id
+      employee {
+        email
+        firstname
+        lastname
+        id
+        phone_number
+      }
+    }
+  }
+`;
+
 export const GET_EVENT_AGG = gql`
   subscription MyQuery {
     events_aggregate {
