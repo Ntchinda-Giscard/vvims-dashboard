@@ -1,29 +1,12 @@
-import { Badge, Group, Paper, ThemeIcon, RingProgress, Text } from '@mantine/core'
-import Image from 'next/image'
-import { ReactElement, useEffect } from 'react'
+import { ThemeIcon, RingProgress, Text } from '@mantine/core'
+import {  useEffect } from 'react'
 import classes from "@/app/dashboard/components/css/dashboard.module.css";
 import { Poppins } from "next/font/google";
-import cx from 'clsx'
-import { IconInfoHexagon, IconCar, IconUserShare, IconUsersGroup } from "@tabler/icons-react";
+import {IconInfoHexagon, IconUserX, IconUserShare, IconUsersGroup, IconUserExclamation} from "@tabler/icons-react";
 import { useQuery, useSubscription } from '@apollo/client';
 import { GET_PERCENT, GET_TASK_COMPLETION, GET_TOT_LEAVE_EMPLOYEE } from '../query/get_percent';
 import { useSelector } from 'react-redux';
-import { GET_TOTAL_EMPLOYEE } from '../attendance/queries/get_total_empl';
-
-const font_heading = Poppins({ subsets: ["latin"], weight:["500"] });
-const font_amnt = Poppins({ subsets: ["latin"], weight:["700"] });
-const font_perc = Poppins({ subsets: ["latin"], weight:["400"] });
-
-interface dashboard_card{
-    title: string
-    amount: number
-    perc: number
-    bg_img: string
-    img: string
-}
-
-
-
+import {GET_ABSENT_EMPLOYEE, GET_PRESENT_EMPLOYEES, GET_TOTAL_EMPLOYEE} from '../attendance/queries/get_total_empl';
 
 
 function CardDashboard() {
@@ -35,6 +18,11 @@ function CardDashboard() {
             id: user?.employee?.id
         }
     });
+    const {loading: loadAbsent, data: dataPresent, error: errAbsent} = useSubscription(GET_PRESENT_EMPLOYEES,{
+        variables:{
+            company_id: user?.employee?.company_id
+        }
+    })
 
     const {loading: loadTotalEmpl, data: dataEmpl, error: errTotalEmpl} = useSubscription(GET_TOTAL_EMPLOYEE,{
         variables:{
@@ -50,60 +38,66 @@ function CardDashboard() {
     const data = [
       { icon: IconUsersGroup, title: "Total Employees", desc: "Tracking leave request", value: dataEmpl?.employees_aggregate?.aggregate?.count, color: "rgba(63, 36, 199, 0.18)" },
       { icon: IconUserShare, title: "On Leave", desc: "Tracking employees on leave in week", value: dataOnLeave ? dataOnLeave?.getTotalEmployeeOnLeave?.total : 0, color: "rgba(4, 32, 189, 0.19)"},
-      { icon: IconUsersGroup, title: "On leave", desc: "Tracking employees on leave", value: 0, color: "rgba(4, 189, 183, 0.45)" },
+      { icon: IconUserX, title: "Absent employee", desc: "Tracking absent employees", value: (dataEmpl?.employees_aggregate?.aggregate?.count - dataPresent?.employees_aggregate?.aggregate?.count), color: "rgba(4, 189, 183, 0.45)" },
       { icon: IconInfoHexagon, title: "Attendance Percentage", desc: "Tracking attendance", value: `${dataPerc?.getAttendancePercentage?.attendancePercentage? dataPerc?.getAttendancePercentage?.attendancePercentage : 0}%`, color: "rgba(22, 189, 4, 0.29)" },
   ];
-
+    const items = ["Item 1", "Item 2", "Item 3", "Item 4"];
 //   if (errTotalEmpl) return <div style={{color: "#404040"}}> {`${errTotalEmpl}`} </div>
-    return ( <>
-        <div className={'grid lg:grid-cols-3 gap-2'}>
-            <div className={'lg:col-span-2 grid-cols-2 '}>
-                {
-                    data.map((item, index) => (
-                        <div key={item?.desc} className={classes.card}>
-                            <div style={{marginBottom: 10}} className="flex flex-row justify-between mb-3 items-center">
-                                <ThemeIcon radius="xl" size={70} color={item?.color}>
-                                    <item.icon color="black" stroke={1} style={{width: '60%', height: '60%'}}/>
-                                </ThemeIcon>
-                                <span className={classes.value}> {item?.value} </span>
-                            </div>
-                            <div className="flex flex-col gap-1">
-                                <p className={classes.title}> {item?.title} </p>
-                                <p className={classes.desc}> {item?.desc} </p>
-                            </div>
-                        </div>
-                    ))
-                }
-            </div>
-            <div className={classes.card}>
-                <div className="flex flex-row w-full h-full items-center justify-between">
+    return (<>
 
-                    <RingProgress
-                        size={120}
-                        thickness={15}
-                        roundCaps
-                        sections={[
-                            {value: dataTaskPerc?.getPercentageTask?.percentage, color: 'blue'}
-                        ]}
-                        label={
-                            <Text className={`${classes.taskStat}`}
-                                  ta='center'> {dataTaskPerc?.getPercentageTask?.percentage}% </Text>
-                        }
-                    />
 
-                    <div className="flex flex-col gap-1">
-                        <p className={classes.title}> Task completion </p>
-                        <p className={classes.desc}> Traking task completion </p>
-                    </div>
+    <div className="grid md:grid-cols-3 gap-4 h-full grid-cols-1">
+        {/* First Column */}
+    <div className="col-span-1 h-full">
+        <div className={classes.card}>
+            <div className="flex flex-row w-full h-full items-center justify-between">
+
+                <RingProgress
+                    size={120}
+                    thickness={15}
+                    roundCaps
+                    sections={[
+                        {value: dataTaskPerc?.getPercentageTask?.percentage, color: 'blue'}
+                    ]}
+                    label={
+                        <Text className={`${classes.taskStat}`}
+                              ta='center'> {dataTaskPerc?.getPercentageTask?.percentage}% </Text>
+                    }
+                />
+
+                <div className="flex flex-col gap-1">
+                    <p className={classes.title}> Task completion </p>
+                    <p className={classes.desc}> Traking task completion </p>
                 </div>
             </div>
         </div>
-        {/*<div className=" col-span-2  flex flex-col lg:flex-row gap-2">*/}
+    </div>
 
+        {/* Second Column */}
+    <div className="col-span-2">
+        <div className="grid md:grid-cols-2 gap-4 grid-cols-1">
+            {
+                data.map((item, index) => (
+                    <div key={item?.desc} className={classes.card}>
+                        <div style={{marginBottom: 10}} className="flex flex-row justify-between mb-3 items-center">
+                            <ThemeIcon radius="xl" size={70} color={item?.color}>
+                                <item.icon color="black" stroke={1} style={{width: '60%', height: '60%'}}/>
+                            </ThemeIcon>
+                            <span className={classes.value}> {item?.value} </span>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                            <p className={classes.title}> {item?.title} </p>
+                            <p className={classes.desc}> {item?.desc} </p>
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+    </div>
 
-        {/*</div>*/}
-
-    </>);
+</>)
+    ;
 }
 
 export default CardDashboard;
