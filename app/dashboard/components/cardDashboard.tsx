@@ -50,53 +50,60 @@ function CardDashboard() {
     const data = [
       { icon: IconUsersGroup, title: "Total Employees", desc: "Tracking leave request", value: dataEmpl?.employees_aggregate?.aggregate?.count, color: "rgba(63, 36, 199, 0.18)" },
       { icon: IconUserShare, title: "On Leave", desc: "Tracking employees on leave in week", value: dataOnLeave ? dataOnLeave?.getTotalEmployeeOnLeave?.total : 0, color: "rgba(4, 32, 189, 0.19)"},
-    //   { icon: IconUsersGroup, title: "On leave", desc: "Tracking employees on leave", value: 0, color: "rgba(4, 189, 183, 0.45)" },
+      { icon: IconUsersGroup, title: "On leave", desc: "Tracking employees on leave", value: 0, color: "rgba(4, 189, 183, 0.45)" },
       { icon: IconInfoHexagon, title: "Attendance Percentage", desc: "Tracking attendance", value: `${dataPerc?.getAttendancePercentage?.attendancePercentage? dataPerc?.getAttendancePercentage?.attendancePercentage : 0}%`, color: "rgba(22, 189, 4, 0.29)" },
   ];
 
 //   if (errTotalEmpl) return <div style={{color: "#404040"}}> {`${errTotalEmpl}`} </div>
     return ( <>
-        <div className="flex flex-col lg:flex-row gap-2">
-        {
-            data.map((item, index) => (
-                <div key={item?.desc} className={classes.card}>
-                    <div style={{marginBottom: 10}} className="flex flex-row justify-between mb-3 items-center">
-                        <ThemeIcon radius="xl" size={70} color= {item?.color}>
-                            <item.icon color="black" stroke={1} style={{ width: '60%', height: '60%' }} />
-                        </ThemeIcon>
-                        <span className={classes.value}> {item?.value} </span>
-                    </div>
-                    <div className="flex flex-col gap-1">
-                        <p className={classes.title}> {item?.title} </p>
-                        <p className={classes.desc}> {item?.desc} </p>
-                    </div>
-                </div>
-            ))
-        }
-        <div className={classes.card}>
-            <div className="flex flex-row w-full h-full items-center justify-between">
+        <div className={'grid lg:grid-cols-3 gap-2'}>
+            <div className={'lg:col-span-2 grid-cols-2 '}>
+                {
+                    data.map((item, index) => (
+                        <div key={item?.desc} className={classes.card}>
+                            <div style={{marginBottom: 10}} className="flex flex-row justify-between mb-3 items-center">
+                                <ThemeIcon radius="xl" size={70} color={item?.color}>
+                                    <item.icon color="black" stroke={1} style={{width: '60%', height: '60%'}}/>
+                                </ThemeIcon>
+                                <span className={classes.value}> {item?.value} </span>
+                            </div>
+                            <div className="flex flex-col gap-1">
+                                <p className={classes.title}> {item?.title} </p>
+                                <p className={classes.desc}> {item?.desc} </p>
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+            <div className={classes.card}>
+                <div className="flex flex-row w-full h-full items-center justify-between">
 
-                <RingProgress 
-                    size={120}
-                    thickness={15}
-                    roundCaps
-                    sections={[
-                        {value: dataTaskPerc?.getPercentageTask?.percentage, color: 'blue'}
-                    ]}
-                    label={
-                        <Text className={`${classes.taskStat}`} ta='center'> {dataTaskPerc?.getPercentageTask?.percentage}% </Text>
-                    }
-                />
+                    <RingProgress
+                        size={120}
+                        thickness={15}
+                        roundCaps
+                        sections={[
+                            {value: dataTaskPerc?.getPercentageTask?.percentage, color: 'blue'}
+                        ]}
+                        label={
+                            <Text className={`${classes.taskStat}`}
+                                  ta='center'> {dataTaskPerc?.getPercentageTask?.percentage}% </Text>
+                        }
+                    />
 
                     <div className="flex flex-col gap-1">
                         <p className={classes.title}> Task completion </p>
                         <p className={classes.desc}> Traking task completion </p>
                     </div>
+                </div>
             </div>
         </div>
-    </div>
+        {/*<div className=" col-span-2  flex flex-col lg:flex-row gap-2">*/}
 
-    </> );
+
+        {/*</div>*/}
+
+    </>);
 }
 
 export default CardDashboard;

@@ -72,36 +72,35 @@ export default function Home() {
     console.log(dataPercent)
   },[dataAgg, dataPercent])
   return (
-    <main className="flex min-h-full flex-col gap-3">
-      <p className={cx([classes.heading, font_heading.className])}> Dashboard </p>
-      {/* <div className="flex flex-row justify-center gap-3"> */}
-      <CardDashboard />
+      <main className="flex min-h-full flex-col gap-3">
+        <p className={cx([classes.heading, font_heading.className])}> Dashboard </p>
+        {/* <div className="flex flex-row justify-center gap-3"> */}
+        <CardDashboard/>
+        {/* </div> */}
 
-      {/* </div> */}
-      
-      <div className="flex w-full justify-center flex-col lg:flex-row gap-3">
-        <div className="flex w-full lg:w-3/4">
-          <GraphSection />
-        </div>
-        <div className="flex w-full lg:w-2/4">
-          <Paper withBorder p={18} radius={"lg"} w="100%">
-            <NewEvents />
-          </Paper>
-        </div>
-      </div>
-
-      <div className="flex w-full gap-3 flex-col lg:flex-row">
-        <div className="lg:w-4/12 w-full">
-          <LoogedCars />
+        <div className="flex w-full justify-center flex-col lg:flex-row gap-3">
+          <div className="flex w-full lg:w-3/4">
+            <GraphSection/>
+          </div>
+          <div className="flex w-full lg:w-2/4">
+            <Paper withBorder p={18} radius={"lg"} w="100%">
+              <NewEvents/>
+            </Paper>
+          </div>
         </div>
 
-        <div className="lg:w-6/12 w-full">
-          <RecentAppointment />
+        <div className="flex w-full gap-3 flex-col lg:flex-row">
+          <div className="lg:w-4/12 w-full">
+            <LoogedCars/>
+          </div>
+
+          <div className="lg:w-6/12 w-full">
+            <RecentAppointment/>
+          </div>
+          <div className="lg:w-2/12 w-full">
+            <LeaDashOverview/>
+          </div>
         </div>
-        <div className="lg:w-2/12 w-full">
-          <LeaDashOverview />
-        </div>
-      </div>
-    </main>
+      </main>
   );
 }
