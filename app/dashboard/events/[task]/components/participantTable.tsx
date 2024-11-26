@@ -88,7 +88,9 @@ export default function ParticipantTable({datas, onEdit, onAddTask, onDelete, on
                 /> }
             </Table.Td>
             <Table.Td style={{ color: "#404044", textTransform: "capitalize"}} >
-                { <Badge variant={'light'} color={colors[data?.status]}> { status[data?.status] } </Badge> }
+                { <Badge variant={'light'}
+                         //@ts-ignore
+                         color={colors[`${data?.status}`]}> { status[`${data?.status}`] } </Badge> }
             </Table.Td>
             <Table.Td style={{ color: "#404044", textTransform: "capitalize"}}>
                 <Text fz="sm" fw={500} c='black'>{ data?.employee?.email }</Text>
