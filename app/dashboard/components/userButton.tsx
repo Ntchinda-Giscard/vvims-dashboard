@@ -2,16 +2,9 @@
 import { UnstyledButton, Group, Avatar, Text, rem, Menu, Indicator, ThemeIcon, Divider, Popover, Box, Button } from '@mantine/core';
 import {IconLogout,
   IconBell,
-    IconHeart,
-    IconStar,
-    IconMessage,
     IconSettings,
-    IconPlayerPause,
-    IconTrash,
-    IconSwitchHorizontal,
     IconChevronRight,
     IconCalendar,IconPhoto } from '@tabler/icons-react';
-// import classes from './UserButton.module.css';
 import {useRouter } from "next/navigation"
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '@/app/auth/login/slice/authSlice';
@@ -21,9 +14,14 @@ import { useEffect, useState } from 'react';
 import { useMutation, useSubscription } from '@apollo/client';
 import { GET_EVENT_NOTIF } from '../events/queries/event_notif';
 import { ACCEPT_EVENT, DECLINE_EVENTS } from '../events/mutation/insert_events';
-
+import Link from 'next/link'
 
 export function UserButton({name, url, email}: any) {
+  const notif_type = {
+    EVENT : 'EVENT',
+    MESSAGES : 'MESSAGES',
+    VISITS : 'VISITS',
+  }
   const userInfo = useSelector((state: any) => state.auth.userInfo)
     const dispatch = useDispatch();
     const router = useRouter();
@@ -124,7 +122,7 @@ export function UserButton({name, url, email}: any) {
             <p className={classes.notif}> Notifications </p>
             <Divider my={'sm'} />
               {
-                dataNotif?.employee_notifications?.map((n : any) =>(
+                dataNotif?.employee_notifications?.filter((n: { type: string; }) => n?.type !== 'MESSAGES')?.map((n : any) =>(
                   <Box py={10} px={20} key={n?.id} >
                     <div className="flex flex-row gap-5">
                       <ThemeIcon variant="light" radius="xl" size="lg">
@@ -204,6 +202,8 @@ export function UserButton({name, url, email}: any) {
           </Menu.Item>
           <Menu.Item
             leftSection={<IconSettings style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
+            component={Link}
+            href={'/dashboard/settings'}
             // onClick={handleLogout}
           >
             Settings

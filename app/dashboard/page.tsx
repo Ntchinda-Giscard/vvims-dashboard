@@ -1,21 +1,15 @@
 "use client"
-import Image from "next/image";
 import classes from "@/app/dashboard/components/css/dashboard.module.css"
 import cx from 'clsx'
 import { Poppins } from "next/font/google";
 import CardDashboard from "./components/cardDashboard";
 import GraphSection from "./components/graphSection";
 import LoogedCars from "./components/loogedCars";
-import RecentVisitoTable from "./components/recentVisitorTable";
 import { useEffect } from "react";
 import img_p from "@/public/assets/visit.svg";
 import img_c from "@/public/assets/cars.svg";
 import img_cf from "@/public/assets/flaged_cad.svg";
-import { IconSwimming,
-  IconBike,
-  IconRun,
-  IconChevronDown,
-  IconChevronUp, } from '@tabler/icons-react';
+import {IconBike} from '@tabler/icons-react';
 import bg_r from "@/public/assets/bg_card_r.svg";
 import bg_g from "@/public/assets/bg_card_g.svg";
 import bg_b from "@/public/assets/bg_card_b.svg";
