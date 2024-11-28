@@ -85,7 +85,7 @@ export function UserButton({name, url, email}: any) {
 
     function hasUnreadNotifications(employeeNotifications: any) {
       if(!employeeNotifications) return false
-      return employeeNotifications.some((notification: { is_read: boolean; }) => notification.is_read === false);
+      return employeeNotifications?.filter((n: { type: string; }) => n?.type !== 'MESSAGES').some((notification: { is_read: boolean; }) => notification.is_read === false);
     }
 
   return (
