@@ -51,14 +51,14 @@ subscription MyQuery2 {
 }`;
 
 
-export const UPCOMING_APPOINMENT =gql`
-subscription MyQuery2 {
-  appointments_aggregate(where: {date: {_gt: "now()"}}) {
-    aggregate {
-      count
-    }
-  }
-}`;
+export const UPCOMING_APPOINTMENT =gql`
+    subscription MyQuery2 {
+        appointments_aggregate(where: {start_time: {_gt: "now()"}}) {
+            aggregate {
+                count
+            }
+        }
+    }`;
 
 
 export const TODAYS_APP = gql`
