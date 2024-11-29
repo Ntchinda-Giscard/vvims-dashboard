@@ -37,11 +37,7 @@ export default function Home() {
   })
   const {data: dataPercent} = useSubscription(GET_PERCENTAGE_DIFF)
   
-  const card_info = [
-    {title: "Total visits", icon: IconBike, amount: dataAgg?.visits_aggregate?.aggregate?.count, perc: dataPercent?.get_visit_percentage_difference?.[0]?.percentage_change, bg_img: bg_b, img: img_p},
-    {title: "Total Vehicles", icon: IconBike, amount: 0, perc: 0, bg_img: bg_g, img: img_c},
-    {title: "Flagged Vehicles", icon: IconBike, amount: 0, perc: 0, bg_img: bg_r, img: img_cf},
-  ]
+
   useEffect(() =>{
       console.log(user)
     const askNotificationPermission = async () => {

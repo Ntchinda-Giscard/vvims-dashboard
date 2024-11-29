@@ -97,7 +97,8 @@ export default RecentAppointment;
 
 
 function AppoineeCard({visitor_name, reason, st, et}: any){
-    function removeSeconds(timeString:string) {
+    function removeSeconds(timeString:string | null) {
+        if (timeString === null) return "--:--";
         const [hours, minutes] = timeString.split(":");
         return `${hours}:${minutes}`;
       }
