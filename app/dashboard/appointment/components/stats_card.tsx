@@ -1,21 +1,28 @@
 import { Group, Paper, Text, ThemeIcon, SimpleGrid } from '@mantine/core';
 import { IconArrowUpRight, IconArrowDownRight } from '@tabler/icons-react';
 import classes from './StatsGridIcons.module.css';
-import { useSubscription } from '@apollo/client';
-import {TODAYS_APP, GET_COMPLETED_APP, UPCOMING_APPOINTMENT} from '../query/query';
+import {useQuery, useSubscription } from '@apollo/client';
+import {TODAYS_APP, GET_COMPLETED_APP, UPCOMING_APPOINTMENT, PERCENT_TTM} from '../query/query';
 import { useEffect } from 'react';
+import {useSelector} from "react-redux";
 
 
 export default function StatsGridIcons() {
+  const user = useSelector((state: any) => state.auth.userInfo);
   const {data: dataToday } = useSubscription(TODAYS_APP)
   const {data: dataCompleted} = useSubscription(GET_COMPLETED_APP)
   const {data: dataUpcoming} = useSubscription(UPCOMING_APPOINTMENT)
+  const {data: dataPercentTM} = useQuery(PERCENT_TTM, {
+    variables:{
+      id: user?.employee?.id
+    }
+  });
 
   useEffect(() =>{
 
   }, [dataToday, dataCompleted, dataUpcoming])
   const data = [
-    { title: 'Today Appointments', value: dataToday?.appointments_aggregate?.aggregate?.count, diff: 0 },
+    { title: 'Today Appointments', value: dataToday?.appointments_aggregate?.aggregate?.count, diff: dataPercentTM?.getAppointmentTodayPercent?.percent },
     { title: 'Completed ', value: dataCompleted?.appointments_aggregate?.aggregate?.count, diff: -0 },
     { title: 'Upcoming ', value: dataUpcoming?.appointments_aggregate?.aggregate?.count, diff: 0 },
   ];

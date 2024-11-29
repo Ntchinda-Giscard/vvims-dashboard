@@ -68,4 +68,14 @@ subscription MyQuery2 {
       count
     }
   }
-}`
+}`;
+
+
+export const PERCENT_TTM = gql`
+    query MyQuery($id: UUID!) {
+        getAppointmentTodayPercent(employee: {id: $id}) {
+            percent
+            todayCount
+            tomorrowCount
+        }
+    }`;

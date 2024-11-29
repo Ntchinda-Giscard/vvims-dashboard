@@ -44,6 +44,14 @@ export const GET_EVENT_CARD = gql`
     }`;
 
 
+export const GET_VISITS_DAY = gql`
+    subscription MyQuery {
+        visits_aggregate(where: {date: {_eq: "now()"}, status: {_eq: ACCEPTED}}) {
+            aggregate {
+                count
+            }
+        }
+    }`;
 
 export const GET_RECENT_APP_CARD = gql`
 query MyQuery($employee_id: uuid) {
