@@ -19,6 +19,7 @@ import { useDispatch } from "react-redux";
 import { addVisitor } from "./slices/visitorSlices";
 import { DELETE_VISITS } from "./mutation/delete_visits";
 import DeleteVisitorModal from "./components/deleteVisitModal";
+import TopVisitorCard from "@/app/dashboard/visitors/components/topVisitorCards";
 
 const poppins = Poppins({ subsets: ["latin"], weight:["400"] });
 
@@ -153,6 +154,7 @@ function Page() {
                 Add Visitor
             </Button>
         </div>
+        <TopVisitorCard />
         <Paper radius="md" shadow="md" p="md" mt="lg" >
             <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-between">
                 <TextInput

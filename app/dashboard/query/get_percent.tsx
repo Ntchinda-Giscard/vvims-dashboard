@@ -53,6 +53,24 @@ export const GET_VISITS_DAY = gql`
         }
     }`;
 
+export const TOTAL_VISITS = gql`
+    subscription MyQuery {
+        visits_aggregate {
+            aggregate {
+                count
+            }
+        }
+    }`;
+
+export const CLOCKOUT_VISITORS = gql`
+    subscription MyQuery {
+  visits_aggregate(where: {check_out_at: {_is_null: false}, date: {_eq: "now()"}}) {
+    aggregate {
+      count
+    }
+  }
+}`;
+
 export const GET_RECENT_APP_CARD = gql`
 query MyQuery($employee_id: uuid) {
   appointments(where: {employee_id: {_eq: $employee_id}, status: {_eq: PENDING}}, limit: 10, order_by: {created_at: desc}) {
