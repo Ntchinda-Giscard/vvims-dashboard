@@ -37,11 +37,12 @@ export default function Page(){
 
     const handleSubmit = (values: any) =>{
         console.log(values)
+        console.log(user)
         updatePassword({
             variables:{
                 currentPassword: values?.currentPassword,
                 newPassword: values?.newPassword,
-                phoneNumber: user?.employee?.phoneNumber
+                phoneNumber: user?.employee?.phone_number
             },
             onCompleted: () => {
                 toast.success("Password updated")
@@ -103,9 +104,7 @@ export default function Page(){
                                 <Button loading={loadingUpdate} disabled={loadingUpdate} radius={"md"} type="submit">Submit</Button>
                             </Group>
                         </form>
-
                     </Stack>
-
                 </Paper>
 
                 <Paper
