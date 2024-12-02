@@ -5,7 +5,8 @@ import classes from "@/app/dashboard/components/css/dashboard.module.css";
 import {Poppins} from "next/font/google";
 import { useDisclosure } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
-import {PasswordInput, Stack, Paper, Group, Button} from '@mantine/core';
+import {PasswordInput, Stack, Paper, Group, Button, Alert} from '@mantine/core';
+import { IconInfoCircle } from '@tabler/icons-react';
 import {UPDATE_EMPLOYEE_PASSWORD} from "@/app/dashboard/settings/query/query";
 import { useMutation } from "@apollo/client";
 import {useSelector} from "react-redux";
@@ -20,6 +21,7 @@ export default function Page(){
     const [visible, { toggle }] = useDisclosure(false);
     const [error, setError] = useState(false);
     const [errMsg, setErrMsg] = useState('');
+    const icon = <IconInfoCircle />;
     const form = useForm({
         mode: 'uncontrolled',
         initialValues: {
@@ -46,6 +48,7 @@ export default function Page(){
                 setError(false)
             },
             onError:(err)=>{
+                setErrMsg(`${err?.message}`)
                 setError(true)
             }
         })
@@ -60,6 +63,11 @@ export default function Page(){
                     p={'md'}
                     mx={'lg'}
                 >
+                    {error &&
+                        <Alert variant="light" color="red" title="Alert title" icon={icon}>
+                            {`${errMsg}`}
+                        </Alert>
+                    }
 
                     <Stack>
                         <form onSubmit={form.onSubmit((values) => console.log(values))}>
