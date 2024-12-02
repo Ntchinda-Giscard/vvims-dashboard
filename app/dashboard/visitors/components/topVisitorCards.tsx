@@ -14,8 +14,8 @@ export default function TopVisitorCard(){
 
     const data = [
         { icon: IconUsers, title: "Total Visits", desc: "Tracking total visits", value: dataTotalVisits?.visits_aggregate?.aggregate?.count },
-        { icon: IconDoorEnter, title: "Daily clockin", desc: "Tracking daily clockin", value: dataClockOut?.visits_aggregate?.aggregate?.count },
-        { icon: IconDoorExit, title: "Daily clockout", desc: "Tracking daily clockout", value: dataVisits?.visits_aggregate?.aggregate?.count },
+        { icon: IconDoorEnter, title: "Daily clockout", desc: "Tracking daily clockin", value: dataClockOut?.visits_aggregate?.aggregate?.count },
+        { icon: IconDoorExit, title: "Daily clockin", desc: "Tracking daily clockout", value: dataVisits?.visits_aggregate?.aggregate?.count },
     ];
 
 
