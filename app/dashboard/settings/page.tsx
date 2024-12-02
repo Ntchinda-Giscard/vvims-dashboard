@@ -36,6 +36,7 @@ export default function Page(){
     });
 
     const handleSubmit = (values: any) =>{
+        console.log(values)
         updatePassword({
             variables:{
                 currentPassword: values?.currentPassword,
@@ -64,16 +65,16 @@ export default function Page(){
                     mx={'lg'}
                 >
                     {error &&
-                        <Alert variant="light" color="red" title="Alert title" icon={icon}>
+                        <Alert variant="light" radius={"md"} color="red" title="Request error" icon={icon}>
                             {`${errMsg}`}
                         </Alert>
                     }
 
                     <Stack>
-                        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+                        <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
                             <PasswordInput
                                 label="Current password"
-                                radius={"lg"}
+                                radius={"md"}
                                 visible={visible}
                                 onVisibilityChange={toggle}
                                 key={form.key('currentPassword')}
@@ -86,7 +87,7 @@ export default function Page(){
                             />
                             <PasswordInput
                                 label="New password"
-                                radius={"lg"}
+                                radius={"md"}
                                 mt={"md"}
                                 visible={visible}
                                 onVisibilityChange={toggle}
@@ -99,7 +100,7 @@ export default function Page(){
                                 }}
                             />
                             <Group justify="flex-end" mt="md">
-                                <Button radius={"lg"} type="submit">Submit</Button>
+                                <Button loading={loadingUpdate} disabled={loadingUpdate} radius={"md"} type="submit">Submit</Button>
                             </Group>
                         </form>
 
