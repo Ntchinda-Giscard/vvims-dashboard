@@ -329,3 +329,13 @@
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
     outline: none;
 }
+
+.fileinputlabel{
+    color: black;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.fileinputlabel:hover {
+    color: #0056b3;
+}

@@ -67,6 +67,9 @@ const FileUpload = () => {
 
     return (
         <div className={classes.fileinputcontainer}>
+            <label htmlFor="fileInput" className={classes.fileinputlabel}>
+                Update Profile
+            </label>
             <input
                 type="file"
                 accept="image/*"

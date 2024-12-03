@@ -5,8 +5,8 @@ import classes from "@/app/dashboard/components/css/dashboard.module.css";
 import {Poppins} from "next/font/google";
 import { useDisclosure } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
-import {PasswordInput, Stack, Paper, Group, Button, Alert, Select} from '@mantine/core';
-import { IconInfoCircle } from '@tabler/icons-react';
+import {PasswordInput, Stack, Paper, Group, Button, Alert, Select, rem} from '@mantine/core';
+import { IconInfoCircle, IconLanguage } from '@tabler/icons-react';
 import {UPDATE_EMPLOYEE_PASSWORD} from "@/app/dashboard/settings/query/query";
 import { useMutation } from "@apollo/client";
 import {useSelector} from "react-redux";
@@ -120,7 +120,9 @@ export default function Page(){
                     <div className={'flex md:flex-row flex-col-reverse gap-3'}>
                         <FileUpload />
                         <Select 
-                            radius={'md'} 
+                            radius={'md'}
+                            leftSection={ <IconLanguage style={{width: rem(16), height: rem(16)}} /> }
+                            label={'language'}
                             defaultValue={'English'} 
                             data={['English']} 
                             styles={{
