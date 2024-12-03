@@ -294,3 +294,35 @@
     font-weight: 400;
     font-size: smaller;
 }
+
+/* Style the container */
+.fileinputcontainer {
+}
+
+/* Style the file input */
+.fileinput {
+    display: block;
+    padding: 5px;
+    border: 1px solid #007bff; /* Blue outline */
+    border-radius: 15px;
+    background-color: #f8f9fa;
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Add a hover effect */
+.fileinput:hover {
+    border-color: #0056b3;
+    background-color: #e9ecef;
+}
+
+/* Add focus styling */
+.fileinput:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+}

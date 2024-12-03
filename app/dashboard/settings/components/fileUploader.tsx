@@ -1,8 +1,11 @@
 import axios, { AxiosProgressEvent } from "axios";
 import React, { useState } from "react";
+import classes from "@/app/dashboard/components/css/dashboard.module.css";
+import axiosClient from "@/app/dashboard/settings/components/axiosClient";
 
 const FileUpload = () => {
     const [message, setMessage] = useState("");
+    const [preview, setPreview] = useState(null);
 
     const handleFileChange = async (event: any) => {
         const file = event.target.files[0];
@@ -11,9 +14,13 @@ const FileUpload = () => {
             setMessage("No file selected.");
             return;
         }
+        // Show preview
+        const objectUrl: string = URL.createObjectURL(file);
+        // @ts-ignore
+        setPreview(objectUrl);
 
         const formData = new FormData();
-        formData.append("file", file);
+        formData.append("face", file);
 
         // try {
         //     // Replace with your API endpoint
@@ -35,7 +42,7 @@ const FileUpload = () => {
 
 
         try {
-            const response = await axios.post("https://ntchinda-giscard-vvims-backend.hf.space/api/v1/upload-file", formData, {
+            const response = await axiosClient.post("/api/v1/profile", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -53,8 +60,14 @@ const FileUpload = () => {
     };
 
     return (
-        <div>
-            <input type="file" onChange={handleFileChange} />
+        <div className={classes.fileinputcontainer}>
+            <input
+                type="file"
+                accept="image/*"
+                className={classes.fileinput}
+                onChange={handleFileChange}
+            />
+            {preview && <img src={preview} alt="Preview" style={{ maxWidth: "100%", maxHeight: "200px", marginTop: "10px" }} />}
             {message && <p>{message}</p>}
         </div>
     );
