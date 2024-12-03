@@ -35,7 +35,7 @@ export const links = [
     ], icon: IconCalendar},
     {link: '/dashboard/vehicles', label: 'Vehicles', sub_links: [], icon: IconCar},
     {link: '/dashboard/attendance', label: 'Attendances', sub_links: [], icon: IconUserPin},
-    {link: '/dashboard/leave', label: 'Leaves', sub_links: [
+    {link: '#', label: 'Leaves', sub_links: [
         {link: '/dashboard/leave', label: "All Leaves"},
         {link: '/dashboard/leave-approvals', label: "Leave Approvals"}
     ], icon: IconDoorExit},
