@@ -13,6 +13,7 @@ import {useSelector} from "react-redux";
 import {useState} from "react";
 import toast from "react-hot-toast";
 import {UserCardImage} from "@/app/dashboard/settings/components/profileSectios";
+import FileUpload from "@/app/dashboard/settings/components/fileUploader";
 
 const font_heading = Poppins({ subsets: ["latin"], weight:["500"] });
 
@@ -56,6 +57,7 @@ export default function Page(){
             }
         })
     }
+
     return(
         <>
             <main className="flex min-h-full flex-col gap-3">
@@ -65,7 +67,7 @@ export default function Page(){
                     radius={'lg'}
                     shadow={'md'}
                     p={'md'}
-                    mx={'lg'}
+                    // mx={'lg'}
                 >
                     {error &&
                         <Alert variant="light" radius={"md"} color="red" title="Request error" icon={icon}>
@@ -113,10 +115,9 @@ export default function Page(){
                     radius={'lg'}
                     shadow={'md'}
                     p={'md'}
-                    mx={'lg'}
                     mt={'lg'}
                 >
-
+                    <FileUpload />
                 </Paper>
             </main>
 

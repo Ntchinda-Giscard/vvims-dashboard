@@ -26,3 +26,13 @@ export const EMPLOYEES_LEAVES = gql`
             }
         }
     }`;
+
+export const ATTENDANCE_OF_EMPLOYEE = gql`
+    query MyQuery($employee_id: uuid!) {
+        attendance_aggregate(where: {employee_id: {_eq: $employee_id}}) {
+            aggregate {
+                count
+            }
+        }
+    }
+`;

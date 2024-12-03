@@ -1,11 +1,11 @@
 "use client"
-import { Avatar, Button, Card, Group, Text } from '@mantine/core';
+import { Avatar, Button, Card, Group, Text, Badge } from '@mantine/core';
 import classes from './UserCardImage.module.css';
 import {useSelector} from "react-redux";
 import {useSubscription, useQuery} from "@apollo/client";
 import {GET_EMP} from "@/app/dashboard/query/notif";
 import {useEffect, useState } from 'react';
-import {EMPLOYEES_LEAVES, VISITS_OF_EMPLOYEE} from "@/app/dashboard/settings/query/query";
+import {ATTENDANCE_OF_EMPLOYEE, EMPLOYEES_LEAVES, VISITS_OF_EMPLOYEE} from "@/app/dashboard/settings/query/query";
 
 
 
@@ -27,15 +27,21 @@ export function UserCardImage() {
             employee_id: user?.employee?.id
         }
     })
+
+    const {data: dataAtt} = useQuery(ATTENDANCE_OF_EMPLOYEE,{
+        variables:{
+            employee_id: user?.employee?.id
+        }
+    })
     const stats = [
         { value: `${dataVisits?.visits_aggregate?.aggregate?.count}`, label: 'Visits' },
         { value: `${dataLeaves?.leaves_aggregate?.aggregate?.count}`, label: 'Leaves' },
-        { value: '1.6K', label: 'Presence' },
+        { value: `${dataAtt?.attendance_aggregate?.aggregate?.count}`, label: 'Presence' },
     ];
 
     useEffect(() =>{
         setPP(data?.employees_by_pk?.file?.file_url)
-        console.log("Profile image", pp)
+        console.log("Profile image", user)
     }, [data])
     const items = stats.map((stat) => (
         <div key={stat.label}>
@@ -71,15 +77,16 @@ export function UserCardImage() {
             <Text ta="center" tt={'capitalize'} fz="lg" fw={500} mt="sm">
                 {`${user?.employee?.firstname} ${user?.employee?.lastname}`}
             </Text>
-            <Text ta="center" fz="sm" c="dimmed">
+            <Text ta="center" tt={'capitalize'} fz="sm" c="dimmed">
                 {user?.employee?.function}
             </Text>
             <Group mt="md" justify="center" gap={30}>
                 {items}
             </Group>
-            <Button fullWidth radius="md" mt="xl" size="md" variant="default">
-                Follow
-            </Button>
+            <Badge fullWidth variant={'light'} radius="md" mt="xl" size="xl"> ACTIVE </Badge>
+            {/*<Button fullWidth  variant="default">*/}
+            {/*    Follow*/}
+            {/*</Button>*/}
         </Card>
     );
 }
