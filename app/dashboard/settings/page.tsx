@@ -117,9 +117,17 @@ export default function Page(){
                     p={'md'}
                     mt={'lg'}
                 >
-                    <div className={'flex md:flex-row flex-col-reverse items-center gap-3'}>
+                    <div className={'flex md:flex-row flex-col-reverse gap-3'}>
                         <FileUpload />
-                        <Select radius={'md'} defaultValue={'English'} data={['English']} />
+                        <Select 
+                            radius={'md'} 
+                            defaultValue={'English'} 
+                            data={['English']} 
+                            styles={{
+                               label:{color: "#404040"},
+                               options:{color: "#404040"}
+                            }}
+                        />
                     </div>
                 </Paper>
             </main>
