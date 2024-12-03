@@ -8,8 +8,10 @@ const FileUpload = () => {
     const [message, setMessage] = useState("");
     const [preview, setPreview] = useState(null);
     const [progress, setProgress] = useState(0);
+    const [enough, setEnough] = useState(true);
 
     const handleFileChange = async (event: any) => {
+        setEnough(true);
         const file = event.target.files[0];
 
         if (!file) {
@@ -57,6 +59,7 @@ const FileUpload = () => {
             });
 
             setMessage(`Upload successful: ${response.data.message}`);
+            setEnough(false);
         } catch (error: any) {
             setMessage(`Error: ${error.response?.data?.message || error.message}`);
         }
@@ -70,7 +73,7 @@ const FileUpload = () => {
                 className={classes.fileinput}
                 onChange={handleFileChange}
             />
-            {message &&
+            {(message && enough) &&
                 <Progress.Root size="xl" mt={10} >
                     <Progress.Section value={progress} animated color="cyan">
                         <Progress.Label>{message}</Progress.Label>
