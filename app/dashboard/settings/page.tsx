@@ -12,6 +12,7 @@ import { useMutation } from "@apollo/client";
 import {useSelector} from "react-redux";
 import {useState} from "react";
 import toast from "react-hot-toast";
+import {UserCardImage} from "@/app/dashboard/settings/components/profileSectios";
 
 const font_heading = Poppins({ subsets: ["latin"], weight:["500"] });
 
@@ -59,6 +60,7 @@ export default function Page(){
         <>
             <main className="flex min-h-full flex-col gap-3">
                 <p className={cx([classes.heading, font_heading.className])}> Settings </p>
+                <UserCardImage />
                 <Paper
                     radius={'lg'}
                     shadow={'md'}

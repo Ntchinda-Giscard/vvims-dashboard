@@ -8,3 +8,21 @@ export const UPDATE_EMPLOYEE_PASSWORD = gql`
             success
         }
     }`;
+
+export const VISITS_OF_EMPLOYEE = gql`
+    query MyQuery($host_employee: uuid!) {
+        visits_aggregate(where: {host_employee: {_eq: $host_employee}}) {
+            aggregate {
+                count
+            }
+        }
+    }`;
+
+export const EMPLOYEES_LEAVES = gql`
+    query MyQuery($employee_id: uuid!) {
+        leaves_aggregate(where: {status: {_eq: ACCEPTED}, employee_id: {_eq: $employee_id}}) {
+            aggregate {
+                count
+            }
+        }
+    }`;
