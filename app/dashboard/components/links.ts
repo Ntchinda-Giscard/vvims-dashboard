@@ -33,7 +33,7 @@ export const links = [
         {link: '/dashboard/events', label: 'events'},
         {link: '/dashboard/calendar', label: 'calendar'},
     ], icon: IconCalendar},
-    // {link: '/dashboard/vehicle', label: 'Vehicles', sub_links: [], icon: IconCar},
+    {link: '/dashboard/vehicle', label: 'Vehicles', sub_links: [], icon: IconCar},
     {link: '/dashboard/attendance', label: 'Attendances', sub_links: [], icon: IconUserPin},
     {link: '/dashboard/leave', label: 'Leaves', sub_links: [
         {link: '/dashboard/leave', label: "All Leaves"},
@@ -42,6 +42,6 @@ export const links = [
     
     // {link: '/dashboard/reports', label: 'Reports', sub_links: [], icon: IconFileReport},
     // {link: '/dashboard/analytics', label: 'Analytics', sub_links: [], icon: IconAnalyze},
-    // {link: '/dashboard/setting', label: 'Setting', sub_links: [], icon: IconSettings},
+    {link: '/dashboard/settings', label: 'Settings', sub_links: [], icon: IconSettings},
     
 ]
