@@ -2,10 +2,12 @@ import axios, { AxiosProgressEvent } from "axios";
 import React, { useState } from "react";
 import classes from "@/app/dashboard/components/css/dashboard.module.css";
 import axiosClient from "@/app/dashboard/settings/components/axiosClient";
+import { Progress } from "@mantine/core";
 
 const FileUpload = () => {
     const [message, setMessage] = useState("");
     const [preview, setPreview] = useState(null);
+    const [progress, setProgress] = useState(0);
 
     const handleFileChange = async (event: any) => {
         const file = event.target.files[0];
@@ -49,6 +51,7 @@ const FileUpload = () => {
                 onUploadProgress: (progressEvent: AxiosProgressEvent) => {
                     //@ts-ignore
                     const percentCompleted: number = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                    setProgress(percentCompleted)
                     setMessage(`Upload progress: ${percentCompleted}%`);
                 },
             });
@@ -67,7 +70,14 @@ const FileUpload = () => {
                 className={classes.fileinput}
                 onChange={handleFileChange}
             />
-            {preview && <img src={preview} alt="Preview" style={{ maxWidth: "100%", maxHeight: "200px", marginTop: "10px" }} />}
+            {message &&
+                <Progress.Root size="xl" mt={10} >
+                    <Progress.Section value={progress} animated color="cyan">
+                        <Progress.Label>{message}</Progress.Label>
+                    </Progress.Section>
+                </Progress.Root>
+            }
+            {preview && <img src={preview} alt="Preview" style={{ width: "300px%", maxHeight: "200px", marginTop: "10px" }} />}
             {message && <p>{message}</p>}
         </div>
     );
