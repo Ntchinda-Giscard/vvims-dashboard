@@ -80,7 +80,7 @@ const FileUpload = () => {
                     </Progress.Section>
                 </Progress.Root>
             }
-            {preview && <img src={preview} alt="Preview" style={{ width: "300px%", maxHeight: "200px", marginTop: "10px" }} />}
+            {preview && <img src={preview} alt="Preview" style={{ width: "300px", maxHeight: "200px", marginTop: "10px" }} />}
             {message && <p>{message}</p>}
         </div>
     );
