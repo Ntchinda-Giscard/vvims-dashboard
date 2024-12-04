@@ -8,6 +8,7 @@ import {useMutation, useSubscription} from "@apollo/client";
 import {GET_EVENT_NOTIF} from "@/app/dashboard/events/queries/event_notif";
 import {ACCEPT_EVENT, DECLINE_EVENTS} from "@/app/dashboard/events/mutation/insert_events";
 import {IconCalendar, IconUsers} from "@tabler/icons-react";
+import Link from 'next/link';
 
 
 const font_heading = Poppins({ subsets: ["latin"], weight:["500"] });
@@ -87,7 +88,16 @@ export default function Page(){
                                     </ThemeIcon>
                                     <div className="flex flex-col gap-1 w-full">
                                         <div className="flex flex-col">
-                                            <p className={classes.notif_title}> {`${n?.action}`} {`${n?.event?.employee?.firstname}`} <span className={classes.notif_desc}> added you to</span> {`${n?.title}`} </p>
+                                            { n?.type === 'EVENTS' ?
+                                                <p className={classes.notif_title}> {`${n?.action}`} {`${n?.event?.employee?.firstname}`}
+                                                    <span className={classes.notif_desc}> added you to</span> {`${n?.title}`}
+                                                </p> :
+                                                <p className={classes.notif_title}> {`${n?.action}`}
+                                                    <span className={classes.notif_desc}>
+                                                        <Link href={'/dashboard/visitors'}> {`${n?.message}`} </Link>
+                                                         </span>
+                                                </p>
+                                            }
                                         </div>
                                         <div className='flex flex-row'>
                                             <p className={classes.notif_time}> {formatTimestamp(n?.created_at)} </p>
