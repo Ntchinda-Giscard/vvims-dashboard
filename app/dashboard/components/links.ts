@@ -8,7 +8,7 @@ import {
     IconCar,
     IconUserPin,
     IconDoorExit,
-    IconFileReport,
+    IconBell,
     IconSettings,
  } 
     from '@tabler/icons-react';
@@ -41,7 +41,7 @@ export const links = [
     ], icon: IconDoorExit},
     
     // {link: '/dashboard/reports', label: 'Reports', sub_links: [], icon: IconFileReport},
-    // {link: '/dashboard/analytics', label: 'Analytics', sub_links: [], icon: IconAnalyze},
+    {link: '/dashboard/notifications', label: 'Notifications', sub_links: [], icon: IconBell},
     {link: '/dashboard/settings', label: 'Settings', sub_links: [], icon: IconSettings},
     
 ]

@@ -14,14 +14,15 @@ export default function Page(){
         <>
             <main className="flex min-h-full flex-col gap-3">
                 <p className={cx([classes.heading, font_heading.className])}> Vehicles </p>
+                <Paper
+                    shadow={'md'}
+                    radius={'md'}
+                >
+                    <VehicleTable />
+                </Paper>
             </main>
 
-            <Paper
-                shadow={'md'}
-                radius={'md'}
-            >
-                <VehicleTable />
-            </Paper>
+
         </>
     )
 }
