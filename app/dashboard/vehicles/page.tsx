@@ -8,7 +8,7 @@ import { Paper } from "@mantine/core";
 
 const font_heading = Poppins({ subsets: ["latin"], weight:["500"] });
 
-export default function (){
+export default function Page(){
 
     return(
         <>
