@@ -196,6 +196,8 @@ export function UserButton({name, url, email}: any) {
           <Menu.Divider />
           <Menu.Item
             leftSection={<IconBell style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
+            component={Link}
+            href={'/dashboard/notifications'}
             // onClick={handleLogout}
           >
             Notifications
