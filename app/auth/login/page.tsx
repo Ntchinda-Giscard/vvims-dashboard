@@ -73,10 +73,11 @@ function Login() {
     
     return ( <>
         <div className=" flex flex-row min-w-sreen min-h-screen">
-            <div className="flex w-2/4 hidden lg:block  min-h-full">
+            <div className="w-2/4 hidden lg:block  min-h-full">
                 <Image src={pic} alt="Car Rental" 
                     // layout="fill"
-                    //  objectFit="cover" 
+                     // objectFit="cover"
+                    style={{width: '100%', height: '100%'}}
                     priority
                 />
             </div>
