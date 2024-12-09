@@ -13,7 +13,7 @@ function Page() {
       <Tabs mt="xl" defaultValue="settings" styles={{ tabLabel:{color: "#404040"} }} >
         <Tabs.List grow justify="center" >
           <Tabs.Tab value="gallery" leftSection={<IconInfoCircle color="black" style={iconStyle} />}>
-            Company Information
+            Shift shedules
           </Tabs.Tab>
           <Tabs.Tab value="messages" leftSection={<IconMapPin color="black" style={iconStyle} />}>
             Location

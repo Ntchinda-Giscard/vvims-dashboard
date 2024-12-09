@@ -1,7 +1,7 @@
 "use client"
-import { ActionIcon, Table, Menu, rem, ScrollArea, Badge, Button } from '@mantine/core';
-import { IconTrash, IconEdit, IconPrinter, IconEye, IconUserX, IconCheck, IconX } from '@tabler/icons-react';
-import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode, useState, useRef } from 'react';
+import {Button, rem, ScrollArea, Table} from '@mantine/core';
+import {IconCheck, IconPrinter, IconX} from '@tabler/icons-react';
+import {Key, ReactNode, useRef, useState} from 'react';
 import cx from 'clsx';
 import classes from "@/app/dashboard/view-employees/table.module.css";
 
@@ -15,8 +15,7 @@ export default function AttendanceTable({ datas, onEdit, onDelete, onDeactivate 
     }
     const date = new Date(datetime);
     const options = { timezone: 'Africa/Douala', hour12: false };
-    const catTime = date.toLocaleTimeString('en-US', options);
-    return catTime;
+    return date.toLocaleTimeString('en-US', options);
   };
 
   const handlePrint = () => {

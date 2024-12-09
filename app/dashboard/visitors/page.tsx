@@ -144,7 +144,7 @@ function Page() {
             close={closeEdit}
             data={editValue}
         />
-        <div className="flex md:flex-row flex-col justify-between">
+        <div className="flex md:flex-row  mb-4 flex-col justify-between">
             <p style={{fontWeight: 800, fontSize: "large", color: "#404040"}}> Visitors </p>
             <Button
                 onClick={openVisitor}

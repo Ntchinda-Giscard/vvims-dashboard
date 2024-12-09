@@ -1,5 +1,5 @@
 "use client"
-import {Button, Group, NumberInput, Paper} from "@mantine/core"
+import {Button, Group, NumberInput, Paper, rem} from "@mantine/core"
 import StatsGrid from "@/app/dashboard/attendance/components/topCards";
 import AttendanceTable from "./components/attendanceTable";
 import { useMutation, useSubscription } from "@apollo/client";
@@ -16,6 +16,7 @@ import {usePathname} from 'next/navigation'
 import { CLOCK_IN, CLOCK_OUT } from "./mutation/clock_in";
 import toast from "react-hot-toast";
 import { DateInput } from "@mantine/dates";
+import { IconCalendar } from "@tabler/icons-react";
 
 const poppins = Poppins({ subsets: ["latin"], weight:["400"] });
 
@@ -118,7 +119,7 @@ function Page(){
                     <p style={{fontWeight: 800, fontSize: "large", color: "#404040"}}> Company Attendance </p>
                     <Group grow>
                         <Button
-                            disabled ={dataAttStatus?.attendance?.[0]?.clock_out_time || loadAttStatus ? true : false}
+                            disabled ={!!(dataAttStatus?.attendance?.[0]?.clock_out_time || loadAttStatus)}
                             loading={loadClockin || loadClockout} 
                             onClick={ dataAttStatus?.attendance?.[0]?.clock_in_time ? handleClockOut : getLocation} 
                             color={dataAttStatus?.attendance?.[0]?.clock_in_time ? 'red' : ''} >
@@ -131,7 +132,11 @@ function Page(){
                         </Button>
                     </Group>
                 </div>
-                <StatsGrid />
+                <StatsGrid
+                    time={dataAttStatus?.attendance?.[0]?.clock_in_time}
+                    date={dataAttStatus?.attendance?.[0]?.clock_in_date}
+                    is_late={dataAttStatus?.attendance?.[0]?.attendance_state?.is_late}
+                />
                 <div className={"flex flex-col md:flex-row min-w-full gap-3"}>
                     <div className={"flex md:w-3/5"}>
                         <Paper p="md" withBorder mt="lg" w="100%" radius="md">
@@ -148,10 +153,11 @@ function Page(){
                 </div>
                 <Paper mt="lg" shadow="md" radius="md" p="md">
                     <div>
-                    {/* <DateInput
+                    <DateInput
                       value={value}
                       w={300}
                       onChange={setValue}
+                      rightSection={<IconCalendar style={{width: rem(16), height: rem(16) }} />}
                       label="Date"
                       placeholder="Date input"
                       styles={{
@@ -165,7 +171,7 @@ function Page(){
                             color: "#000"
                         }
                     }}
-                    /> */}
+                    />
                     </div>
                     {
                         loadAtt || errAtt ? <FullWidthSkeletonStack /> :
