@@ -100,7 +100,7 @@ export default function ResponsiveSizes(
           }
         }}
       >
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 scroll-smooth overflow-y-auto ">
         {links.map((l , index) => (
           // <div className="flex flex-row">
               <NavLink 
@@ -114,8 +114,8 @@ export default function ResponsiveSizes(
                 }}
                 label= {l?.label} 
                 key={l?.label}
-                active= { l?.sub_links.length < 0 ? isActive(l?.link) : false} 
-                variant="subtle"
+                active= { l?.sub_links.length < 0 ? isActive(l?.link) : false}
+                variant="filled"
                 leftSection={<l.icon size={"1rem"} stroke={1} />}
                 component={Link}
               >

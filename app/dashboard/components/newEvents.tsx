@@ -82,13 +82,6 @@ function NewEvents() {
               fontWeight: 700,
             },
           };
-        // }
-      
-        // if (date.getMonth() === 5) {
-        //   return { disabled: true };
-        // }
-      
-        // return {};
       };
       
     useEffect(() =>{

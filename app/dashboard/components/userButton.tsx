@@ -4,7 +4,7 @@ import {IconLogout,
   IconBell,
     IconSettings,
     IconChevronRight,
-    IconCalendar,IconPhoto } from '@tabler/icons-react';
+    IconCalendar, IconChecks} from '@tabler/icons-react';
 import {useRouter } from "next/navigation"
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '@/app/auth/login/slice/authSlice';
@@ -119,9 +119,16 @@ export function UserButton({name, url, email}: any) {
               
             </Popover.Target>
             <Popover.Dropdown>
-            <p className={classes.notif}> Notifications </p>
-            <Divider my={'sm'} />
-              {
+                <div className={'flex w-full flex-row justify-between'}>
+                    <p className={classes.notif}> Notifications </p>
+                    <div className={'flex flex-row items-center'}>
+                        <IconChecks color={'#007fff'} style={{width: 16, height: 16}} />
+                        <Text fz={'xs'} td={'underline'} mr={'md'} style={{cursor: 'pointer'}} c={'blue'} > mark as read </Text>
+                    </div>
+
+                </div>
+                <Divider my={'sm'}/>
+                {
                 dataNotif?.employee_notifications?.filter((n: { type: string; }) => n?.type !== 'MESSAGES')?.map((n : any) =>(
                   <Box py={10} px={20} key={n?.id} >
                     <div className="flex flex-row gap-5">
@@ -149,19 +156,24 @@ export function UserButton({name, url, email}: any) {
                   </Box>
                 ))
               }
-              
+
+                <div className="flex flex-row items-center m-2 justify-end">
+                    <Link href={"/dashboard/notifications"} style={{fontSize: 12, color: "blue", fontWeight: 300}}> view all </Link>
+                    <IconChevronRight stroke={1} style={{width: 10, height: 10, color: "blue"}}/>
+                </div>
+
             </Popover.Dropdown>
           </Popover>
-            
-            <Avatar
-              src={url}
-              radius="xl"
-              name={name}
-              color={'initials'}
-              size={'sm'}
-            />
+
+              <Avatar
+                  src={url}
+                  radius="xl"
+                  name={name}
+                  color={'initials'}
+                  size={'sm'}
+              />
           </div>
-          <div style={{ flex: 1, display: matches ? 'block' : 'none' }}>
+            <div style={{ flex: 1, display: matches ? 'block' : 'none' }}>
             <Text tt={'capitalize'} c={'white'} size="sm" fw={500}>
                 {name}
             </Text>
