@@ -26,27 +26,11 @@ const FileUpload = () => {
         const formData = new FormData();
         formData.append("face", file);
 
-        // try {
-        //     // Replace with your API endpoint
-        //     const response = await fetch("https://ntchinda-giscard-vvims-backend.hf.space/api/v1/upload-file", {
-        //         method: "POST",
-        //         body: formData,
-        //     });
-        //
-        //     if (response.ok) {
-        //         const result = await response.json();
-        //         setMessage(`Upload successful: ${result.message}`);
-        //     } else {
-        //         const error = await response.json();
-        //         setMessage(`Upload failed: ${error.message}`);
-        //     }
-        // } catch (error: any) {
-        //     setMessage(`Error: ${error.message}`);
-        // }
+
 
 
         try {
-            const response = await axiosClient.post("/api/v1/profile?upload_type=local", formData, {
+            const response = await axiosClient.post("/api/v1/profile?upload_type=online", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
