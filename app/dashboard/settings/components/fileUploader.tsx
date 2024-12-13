@@ -46,7 +46,7 @@ const FileUpload = () => {
 
 
         try {
-            const response = await axiosClient.post("/api/v1/profile", formData, {
+            const response = await axiosClient.post("/api/v1/profile?upload_type=local", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
