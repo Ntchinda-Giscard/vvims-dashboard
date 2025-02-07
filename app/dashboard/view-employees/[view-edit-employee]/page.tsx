@@ -163,10 +163,11 @@ export default function Page({ params }: { params: { slug: string } }) {
                 department_id: value?.department
             },
             onCompleted: () =>{
-                toast.success(" Operation completed ")
+                toast.success(" Operation completed ");
+                router.back()
             },
             onError: ( ) =>{
-                toast.error("Oops 😳! An error occured!!!")
+                toast.error("Oops 😳! An error occured!!!");
             }
         })
     }
