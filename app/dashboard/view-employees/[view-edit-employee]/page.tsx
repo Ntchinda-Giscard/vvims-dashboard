@@ -1,14 +1,22 @@
 "use client"
 import { ActionIcon, Avatar, Box, Button, Divider, Group, Paper, PasswordInput, Select, Stack, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import {useRouter} from 'next/navigation';
+import {useRouter, usePathname} from 'next/navigation';
 import { IconArrowLeft } from "@tabler/icons-react";
+import { useQuery, useSubscription } from "@apollo/client";
+import { GET_SERV_BY_DEPT_ID } from "../../add-employee/query/get_services";
+import { GET_POSIOIONS } from "../../add-employee/query/get_positions";
+import { GET_ALL_DEPT } from "../../departments/queries/get_dept";
+import { GET_EMPLY } from "../../add-employee/query/get_all_empl";
+import { GET_ROLES } from "../../add-employee/query/get_roles";
+import { GET_EMPL_PK } from "../query/get_employee";
 
 export default function Page({ params }: { params: { slug: string } }) {
   const employeeToEdit = useSelector((state: any) => state.editEmpl.editEmpl);
-  const router = useRouter()
+  const router = useRouter();
+  const pathname = usePathname()
   const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
@@ -46,18 +54,98 @@ export default function Page({ params }: { params: { slug: string } }) {
     },
   });
 
+  const user = useSelector((state: any) => state.auth.userInfo);
+    const {data: dataService, error: errService, loading: loadService } = useQuery(GET_SERV_BY_DEPT_ID,{
+            variables:{
+            company_id: user?.employee?.company_id,
+            department_id: form.getValues().department
+        }}
+    );
+    const {data: dataPos, error: errPos, loading: loadPos} = useQuery(GET_POSIOIONS,{
+        variables:{
+            company_id: user?.employee?.company_id,
+        }
+    })
+    const {data: dataDept, loading: loadDept, error: errDept} = useQuery(GET_ALL_DEPT,{
+        variables:{
+          company_id: user?.employee?.company_id
+        }
+      });
+    const {data: dataAllEmpl, loading: loadAll, error: errAll} = useSubscription(GET_EMPLY,{
+        variables:{
+            company_id: user?.employee?.company_id
+        }
+    })
+    const {data: dataRoles, loading: loadRoles, error: errRoels} = useQuery(GET_ROLES);
+    const {data: dataEmployeePk, loading: loadingEmplPk, error: errEmplPk} = useQuery(GET_EMPL_PK, {
+        variables:{
+            id: pathname.toString().split("/").filter(Boolean).pop()
+        }
+    });
+
+    const [deptArr, setDept] = useState([]);
+    const [servArr, setServ] = useState([]);
+    const [posArr, setPos] = useState([]);
+    const [roleArr, setRole] = useState([]);
+    const [allArr, setAll] = useState([]);
+
   useEffect(() =>{
     form.setFieldValue('firstname', employeeToEdit?.firstname)
-    console.log('email', employeeToEdit)
+    form.setFieldValue('email', employeeToEdit?.firstname)
+    form.setFieldValue('lastname', employeeToEdit?.firstname)
+    form.setFieldValue('region', employeeToEdit?.firstname)
+    form.setFieldValue('address', employeeToEdit?.firstname)
+    form.setFieldValue('phone_number', employeeToEdit?.firstname)
+    form.setFieldValue('service', employeeToEdit?.service?.id)
+    form.setFieldValue('department', employeeToEdit?.department?.id)
+    form.setFieldValue('position', employeeToEdit?.position?.id)
+    form.setFieldValue('functions', employeeToEdit?.firstname)
+    form.setFieldValue('license', employeeToEdit?.firstname)
+    form.setFieldValue('supervisor_id', employeeToEdit?.firstname)
+    form.setFieldValue('password', "123456")
+    form.setFieldValue('role', employeeToEdit?.firstname)
+    console.log('employee', employeeToEdit)
   }, [employeeToEdit])
+
+  useEffect(() =>{
+    const deptOptions = dataDept?.departments?.map((d: { id: any; text_content: { content: any; }; }) =>({
+        value: d?.id,
+        label: d?.text_content?.content
+    }))
+    const servOptions = dataService?.services?.map((d: { id: any; text_content: { content: any; }; }) =>({
+        value: d?.id,
+        label: d?.text_content?.content
+    }))
+    const posOptions = dataPos?.positions?.map((d: { id: any; text_content: { content: any; }; }) =>({
+        value: d?.id,
+        label: d?.text_content?.content
+    }))
+    const roleOptions = dataRoles?.roles?.map((d: { id: any; role_name: any }) =>({
+        value: d?.id,
+        label: d?.role_name
+    }))
+    const allOptions = dataAllEmpl?.employees?.map((d: { id: any; firstname: any, lastname:any }) =>({
+        value: d?.id,
+        label: `${d?.firstname}` + " "+ `${d?.lastname}`,
+    }))
+
+    setDept(deptOptions)
+    setServ(servOptions)
+    setPos(posOptions)
+    setRole(roleOptions)
+    setAll(allOptions)
+
+    console.log("Dept id", dataAllEmpl)
+},[dataPos, dataDept, dataService, dataRoles, form.getValues().department, dataAllEmpl])
     return (
     <>
+    <div> { pathname.toString().split("/").filter(Boolean).pop() } </div>
       <main className="flex min-h-full flex-col gap-3">
         <Group mt={25}>
-        <ActionIcon onClick={() => router.back()} variant="transparent" color="black" aria-label="Settings">
-                <IconArrowLeft style={{ width: '70%', height: '70%' }}  stroke={1.5} />
-                </ActionIcon>
-                <h3 style={{color: "#404040"}}> Employee Details </h3>
+            <ActionIcon onClick={() => router.back()} variant="transparent" color="black" aria-label="Settings">
+                    <IconArrowLeft style={{ width: '70%', height: '70%' }}  stroke={1.5} />
+            </ActionIcon>
+            <h3 style={{color: "#404040"}}> Employee Details </h3>
         </Group>
         
 
@@ -151,12 +239,12 @@ export default function Page({ params }: { params: { slug: string } }) {
 
             <h3 style={{color: "#386BF6", marginTop: 25}}> Company Profile </h3>
             <Divider my={5} />
-            {/* <Stack gap="md" mt="md" mb="xs">
+            <Stack gap="md" mt="md" mb="xs">
                 <Group justify="space-between" grow gap="md">
                     <Select
                         label={"Department"}
                         placeholder="Pick department"
-                        // data={deptArr}
+                        data={deptArr}
                         clearable
                         searchable
                         allowDeselect
@@ -167,6 +255,9 @@ export default function Page({ params }: { params: { slug: string } }) {
                         styles={{
                             label:{
                                 color: "#404040"
+                            },
+                            option:{
+                                color: "#404040"
                             }
                         }}
                     />
@@ -176,7 +267,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                         allowDeselect
                     //@ts-ignore
                         disabled={errService || loadService}
-                        // data={servArr}
+                        data={servArr}
                         clearable
                         searchable
                         key={form.key('service')}
@@ -185,6 +276,9 @@ export default function Page({ params }: { params: { slug: string } }) {
                         withAsterisk
                         styles={{
                             label:{
+                                color: "#404040"
+                            },
+                            option:{
                                 color: "#404040"
                             }
                         }}
@@ -207,7 +301,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                     <Select
                         label={ "Position" }
                         placeholder="Pick position"
-                        // data={posArr}
+                        data={posArr}
                         clearable
                         searchable
                         key={form.key('position')}
@@ -216,6 +310,9 @@ export default function Page({ params }: { params: { slug: string } }) {
                         withAsterisk
                         styles={{
                             label:{
+                                color: "#404040"
+                            },
+                            option:{
                                 color: "#404040"
                             }
                         }}
@@ -235,24 +332,27 @@ export default function Page({ params }: { params: { slug: string } }) {
                     <Select
                         label={"Supervisor"}
                         placeholder="Pick supervisor"
-                        // data={allArr}
+                        data={allArr}
                         clearable
                         searchable
                         key={form.key('supervisor_id')}
                         {...form.getInputProps('supervisor_id')}
                         nothingFoundMessage="Nothing found..."
                         styles={{
-                            label:{
-                                color: "#404040"
-                            }
-                        }}
+                        label:{
+                            color: "#404040"
+                        },
+                        option:{
+                            color: "#404040"
+                        }
+                    }}
                     />
                 </Group>
-            </Stack> */}
+            </Stack>
 
             <h3 style={{color: "#386BF6", marginTop: 25}}> Account Details </h3>
             <Divider my={5} />
-            {/* <Group justify="space-between" grow gap="md" mt="md">
+            <Group justify="space-between" grow gap="md" mt="md">
                 <PasswordInput
                     label={"Password"}
                     placeholder="******"
@@ -269,16 +369,20 @@ export default function Page({ params }: { params: { slug: string } }) {
                     label={"Role"}
                     placeholder="Pick role"
                     data={['EMPLOYEE', 'ADMIN']}
+                    defaultValue={'EMPLOYEE'}
                     key={form.key('role')}
                     {...form.getInputProps('role')}
                     withAsterisk
                     styles={{
                         label:{
                             color: "#404040"
+                        },
+                        option:{
+                            color: "#404040"
                         }
                     }}
                 />
-            </Group> */}
+            </Group>
             <Group justify="center" mt="xl" >
                 <Button type="submit" 
                 // loading={loading} 
