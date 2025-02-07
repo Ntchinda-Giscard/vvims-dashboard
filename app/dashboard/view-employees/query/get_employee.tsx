@@ -51,5 +51,11 @@ query GetEmployeeInfo($id: uuid!) @cached {
     status
     supervisor_id
     updated_at
+    email
+    department_id
+    service_id
+    function
+    firstname
+    address
   }
 }`;

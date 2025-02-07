@@ -5,13 +5,15 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {useRouter, usePathname} from 'next/navigation';
 import { IconArrowLeft } from "@tabler/icons-react";
-import { useQuery, useSubscription } from "@apollo/client";
+import { useMutation, useQuery, useSubscription } from "@apollo/client";
 import { GET_SERV_BY_DEPT_ID } from "../../add-employee/query/get_services";
 import { GET_POSIOIONS } from "../../add-employee/query/get_positions";
 import { GET_ALL_DEPT } from "../../departments/queries/get_dept";
 import { GET_EMPLY } from "../../add-employee/query/get_all_empl";
 import { GET_ROLES } from "../../add-employee/query/get_roles";
 import { GET_EMPL_PK } from "../query/get_employee";
+import { UPDATE_EPLY } from "../mutations/edit_employee";
+import toast from "react-hot-toast";
 
 export default function Page({ params }: { params: { slug: string } }) {
   const employeeToEdit = useSelector((state: any) => state.editEmpl.editEmpl);
@@ -82,6 +84,7 @@ export default function Page({ params }: { params: { slug: string } }) {
             id: pathname.toString().split("/").filter(Boolean).pop()
         }
     });
+    const [updateEmployee, {loading: loadUpdte}] = useMutation(UPDATE_EPLY);
 
     const [deptArr, setDept] = useState([]);
     const [servArr, setServ] = useState([]);
@@ -90,22 +93,26 @@ export default function Page({ params }: { params: { slug: string } }) {
     const [allArr, setAll] = useState([]);
 
   useEffect(() =>{
-    form.setFieldValue('firstname', employeeToEdit?.firstname)
-    form.setFieldValue('email', employeeToEdit?.firstname)
-    form.setFieldValue('lastname', employeeToEdit?.firstname)
-    form.setFieldValue('region', employeeToEdit?.firstname)
-    form.setFieldValue('address', employeeToEdit?.firstname)
-    form.setFieldValue('phone_number', employeeToEdit?.firstname)
-    form.setFieldValue('service', employeeToEdit?.service?.id)
-    form.setFieldValue('department', employeeToEdit?.department?.id)
-    form.setFieldValue('position', employeeToEdit?.position?.id)
-    form.setFieldValue('functions', employeeToEdit?.firstname)
-    form.setFieldValue('license', employeeToEdit?.firstname)
-    form.setFieldValue('supervisor_id', employeeToEdit?.firstname)
-    form.setFieldValue('password', "123456")
-    form.setFieldValue('role', employeeToEdit?.firstname)
+    console.log("peoples data:", dataEmployeePk);
+    if(dataEmployeePk?.employees_by_pk){
+        form.setFieldValue('firstname', dataEmployeePk?.employees_by_pk?.firstname)
+        form.setFieldValue('email', dataEmployeePk?.employees_by_pk?.email)
+        form.setFieldValue('lastname', dataEmployeePk?.employees_by_pk?.lastname)
+        form.setFieldValue('region', dataEmployeePk?.employees_by_pk?.region)
+        form.setFieldValue('address', dataEmployeePk?.employees_by_pk?.address)
+        form.setFieldValue('phone_number', dataEmployeePk?.employees_by_pk?.phone_number)
+        form.setFieldValue('service', dataEmployeePk?.employees_by_pk?.service_id)
+        form.setFieldValue('department', dataEmployeePk?.employees_by_pk?.department_id)
+        form.setFieldValue('position', dataEmployeePk?.employees_by_pk?.position_id)
+        form.setFieldValue('functions', dataEmployeePk?.employees_by_pk?.function)
+        form.setFieldValue('license', dataEmployeePk?.employees_by_pk?.license)
+        form.setFieldValue('supervisor_id', dataEmployeePk?.employees_by_pk?.supervisor_id)
+        form.setFieldValue('password', "123456")
+        form.setFieldValue('role', "EMPLOYEE")
+    }
+    
     console.log('employee', employeeToEdit)
-  }, [employeeToEdit])
+  }, [employeeToEdit, dataEmployeePk])
 
   useEffect(() =>{
     const deptOptions = dataDept?.departments?.map((d: { id: any; text_content: { content: any; }; }) =>({
@@ -137,6 +144,32 @@ export default function Page({ params }: { params: { slug: string } }) {
 
     console.log("Dept id", dataAllEmpl)
 },[dataPos, dataDept, dataService, dataRoles, form.getValues().department, dataAllEmpl])
+
+    function handleSubmit(value: any){
+        updateEmployee({
+            variables:{
+                id: pathname.toString().split("/").filter(Boolean).pop(),
+                address: value?.address,
+                email: value?.email,
+                firstname: value?.firstname,
+                function: value?.functions,
+                lastname: value?.lastname,
+                license: value?.license,
+                phone_number: value?.phone_number,
+                position_id: value?.position,
+                region: value?.region,
+                service_id: value?.service,
+                supervisor_id: value?.supervisor_id,
+                department_id: value?.department
+            },
+            onCompleted: () =>{
+                toast.success(" Operation completed ")
+            },
+            onError: ( ) =>{
+                toast.error("Oops 😳! An error occured!!!")
+            }
+        })
+    }
     return (
     <>
     <div> { pathname.toString().split("/").filter(Boolean).pop() } </div>
@@ -154,7 +187,7 @@ export default function Page({ params }: { params: { slug: string } }) {
         <Avatar variant='filled' my="lg" radius={100} size={300} src="" />
       </Group>
         <Paper shadow="md" radius="md" p="md">
-        <form onSubmit={form.onSubmit((values: any) => console.log(values))}>
+        <form onSubmit={form.onSubmit((values: any) => handleSubmit(values))}>
             <h3 style={{color: "#386BF6", marginTop: 25}}> Personal Details </h3>
             <Divider my={5} />
             <Stack gap="md" mt="md" mb="xs">
@@ -365,28 +398,12 @@ export default function Page({ params }: { params: { slug: string } }) {
                         }
                     }}
                 />
-                <Select
-                    label={"Role"}
-                    placeholder="Pick role"
-                    data={['EMPLOYEE', 'ADMIN']}
-                    defaultValue={'EMPLOYEE'}
-                    key={form.key('role')}
-                    {...form.getInputProps('role')}
-                    withAsterisk
-                    styles={{
-                        label:{
-                            color: "#404040"
-                        },
-                        option:{
-                            color: "#404040"
-                        }
-                    }}
-                />
+
             </Group>
             <Group justify="center" mt="xl" >
                 <Button type="submit" 
-                // loading={loading} 
-                color={"#16DBCC"}>Add Employee</Button>
+                loading={loadUpdte} 
+                color={"#16DBCC"}>Edit Employee</Button>
             </Group>
         </form>
     </Paper>
