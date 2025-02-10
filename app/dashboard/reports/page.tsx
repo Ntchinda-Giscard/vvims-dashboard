@@ -3,13 +3,28 @@ import {Paper, Button, Checkbox, Group, TextInput, Select, rem} from "@mantine/c
 import { useForm } from '@mantine/form';
 import { IconCalendar, IconPdf, IconFileTypePdf } from '@tabler/icons-react';
 import {DateInput} from "@mantine/dates";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ReportsTable } from "./components/reports-table";
+import { useQuery } from "@apollo/client";
+import { GET_REPORT } from "./query/query";
 
 
 
 export default function Page(){
     const [checked, setChecked] = useState(false);
+    const [activePage, setPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(10);
+    const {data: dataReport, loading: loadReport, error: errReport} = useQuery(GET_REPORT, {
+        variables:{
+            limit: itemsPerPage,
+            offset: (activePage-1) * itemsPerPage,
+        }
+    });
+
+    useEffect(() =>{
+        console.log( "Exactly", dataReport)
+    },[dataReport])
+    
     const form = useForm({
         mode: 'uncontrolled',
         initialValues: {
@@ -123,8 +138,9 @@ export default function Page(){
                 mt={'md'}
                 p={'md'}
             >
-
-                <ReportsTable />
+                <ReportsTable 
+                    // datas={dataReport?.reports} 
+                /> 
             </Paper>
         </>
     )

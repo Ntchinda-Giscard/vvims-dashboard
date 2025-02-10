@@ -1,6 +1,7 @@
 import { IconPencil, IconTrash, IconDownload } from '@tabler/icons-react';
 import { ActionIcon, Anchor, Avatar, Badge, Group, Table, Text } from '@mantine/core';
 import Link from "next/link"
+import { ReactElement, JSXElementConstructor, ReactNode, AwaitedReactNode, Key, ReactPortal } from 'react';
 
 const data = [
   {
@@ -51,28 +52,30 @@ const jobColors: Record<string, string> = {
   designer: 'pink',
 };
 
-export function ReportsTable() {
-  const rows = data.map((item) => (
-    <Table.Tr key={item.name}>
+export function ReportsTable({datas}: any) {
+  const rows = data.map((item: { name: uuid | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | Promise<AwaitedReactNode> | Key | null | undefined; avatar: string | null | undefined; job: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | Promise<AwaitedReactNode> | null | undefined; email: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; phone: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }) => (
+    <Table.Tr key={item?.name}>
       <Table.Td>
         <Group gap="sm">
-          <Avatar size={30} src={item.avatar} radius={30} />
+          <Avatar size={30} src={item?.avatar} radius={30} />
           <Text fz="sm" fw={500}>
-            {item.name}
+            {item?.name}
           </Text>
         </Group>
       </Table.Td>
 
       <Table.Td>
-        <Badge color={jobColors[item.job.toLowerCase()]} variant="light">
-          {item.job}
+        <Badge color={jobColors[item?.job.toLowerCase()]} variant="light">
+          {item?.job}
         </Badge>
       </Table.Td>
       <Table.Td>
-        <Text fz="sm">{item.email}</Text>
+        <Anchor component="button" size="sm">
+          {item?.email}
+        </Anchor>
       </Table.Td>
       <Table.Td>
-        <Text fz="sm">{item.phone}</Text>
+        <Text fz="sm">{item?.phone}</Text>
       </Table.Td>
       <Table.Td>
         <Group gap={0} justify="flex-end">
@@ -93,7 +96,7 @@ export function ReportsTable() {
         <Table.Thead>
           <Table.Tr>
             <Table.Th>Report</Table.Th>
-            <Table.Th>Report type</Table.Th>
+            <Table.Th>Job title</Table.Th>
             <Table.Th>From</Table.Th>
             <Table.Th>To</Table.Th>
             <Table.Th />
