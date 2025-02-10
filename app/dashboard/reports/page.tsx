@@ -4,6 +4,7 @@ import { useForm } from '@mantine/form';
 import { IconCalendar, IconPdf, IconFileTypePdf } from '@tabler/icons-react';
 import {DateInput} from "@mantine/dates";
 import { useState } from "react";
+import { ReportsTable } from "./components/reports-table";
 
 
 
@@ -20,8 +21,8 @@ export default function Page(){
 
         validate: {
             type: (value) => ( value?.length > 0 ? null : 'Invalid choice'),
-            // from: (value) => ( value !== null ? null : 'Invalid date'),
-            // to: (value) => ( value !== null ? null : 'Invalid date'),
+            from: (value) => ( value !== null ? null : 'Invalid date'),
+            to: (value) => ( value !== null ? null : 'Invalid date'),
         },
     });
     return(
@@ -45,8 +46,8 @@ export default function Page(){
                         data={['Visits', 'Attendance']}
                         label="Reports type"
                         placeholder="select"
-                        key={form.key('email')}
-                        {...form.getInputProps('email')}
+                        key={form.key('type')}
+                        {...form.getInputProps('type')}
                         styles={{
                             label:{color: "#404040"},
                             option:{color: "#404040"}
@@ -115,6 +116,15 @@ export default function Page(){
                         <Button type="submit" leftSection={<IconFileTypePdf style={{width: rem(16), height: rem(16)}} />} >Generate report</Button>
                     </Group>
                 </form>
+            </Paper>
+            <Paper
+                radius={'md'}
+                shadow={'md'}
+                mt={'md'}
+                p={'md'}
+            >
+
+                <ReportsTable />
             </Paper>
         </>
     )

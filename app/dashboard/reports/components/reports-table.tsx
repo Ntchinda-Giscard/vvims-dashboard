@@ -1,5 +1,6 @@
-import { IconPencil, IconTrash } from '@tabler/icons-react';
+import { IconPencil, IconTrash, IconDownload } from '@tabler/icons-react';
 import { ActionIcon, Anchor, Avatar, Badge, Group, Table, Text } from '@mantine/core';
+import Link from "next/link"
 
 const data = [
   {
@@ -50,7 +51,7 @@ const jobColors: Record<string, string> = {
   designer: 'pink',
 };
 
-export function UsersTable() {
+export function ReportsTable() {
   const rows = data.map((item) => (
     <Table.Tr key={item.name}>
       <Table.Td>
@@ -68,17 +69,15 @@ export function UsersTable() {
         </Badge>
       </Table.Td>
       <Table.Td>
-        <Anchor component="button" size="sm">
-          {item.email}
-        </Anchor>
+        <Text fz="sm">{item.email}</Text>
       </Table.Td>
       <Table.Td>
         <Text fz="sm">{item.phone}</Text>
       </Table.Td>
       <Table.Td>
         <Group gap={0} justify="flex-end">
-          <ActionIcon variant="subtle" color="gray">
-            <IconPencil size={16} stroke={1.5} />
+          <ActionIcon component={Link} href="#" variant="subtle" color="gray">
+            <IconDownload size={16} stroke={1.5} />
           </ActionIcon>
           <ActionIcon variant="subtle" color="red">
             <IconTrash size={16} stroke={1.5} />
@@ -93,10 +92,10 @@ export function UsersTable() {
       <Table verticalSpacing="sm">
         <Table.Thead>
           <Table.Tr>
-            <Table.Th>Employee</Table.Th>
-            <Table.Th>Job title</Table.Th>
-            <Table.Th>Email</Table.Th>
-            <Table.Th>Phone</Table.Th>
+            <Table.Th>Report</Table.Th>
+            <Table.Th>Report type</Table.Th>
+            <Table.Th>From</Table.Th>
+            <Table.Th>To</Table.Th>
             <Table.Th />
           </Table.Tr>
         </Table.Thead>
