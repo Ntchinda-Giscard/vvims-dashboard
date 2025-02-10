@@ -1,7 +1,7 @@
 "use client"
 import {Paper, Button, Checkbox, Group, TextInput, Select, rem} from "@mantine/core";
 import { useForm } from '@mantine/form';
-import { IconCalendar } from '@tabler/icons-react';
+import { IconCalendar, IconPdf, IconFileTypePdf } from '@tabler/icons-react';
 import {DateInput} from "@mantine/dates";
 import { useState } from "react";
 
@@ -12,14 +12,14 @@ export default function Page(){
     const form = useForm({
         mode: 'uncontrolled',
         initialValues: {
-            email: '',
+            type: [],
             termsOfService: false,
             from: null,
             to: null
         },
 
         validate: {
-            email: (value) => ( value?.length > 0 ? null : 'Invalid choice'),
+            type: (value) => ( value?.length > 0 ? null : 'Invalid choice'),
             // from: (value) => ( value !== null ? null : 'Invalid date'),
             // to: (value) => ( value !== null ? null : 'Invalid date'),
         },
@@ -112,7 +112,7 @@ export default function Page(){
 
                     <Group justify="flex-end" mt="md">
                         <Button variant={'outline'} onClick={() => form.reset()}>Clear</Button>
-                        <Button type="submit">Generate report</Button>
+                        <Button type="submit" leftSection={<IconFileTypePdf style={{width: rem(16), height: rem(16)}} />} >Generate report</Button>
                     </Group>
                 </form>
             </Paper>
