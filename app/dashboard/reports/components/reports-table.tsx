@@ -1,7 +1,7 @@
 import { IconPencil, IconTrash, IconDownload } from '@tabler/icons-react';
 import { ActionIcon, Anchor, Avatar, Badge, Group, Table, Text } from '@mantine/core';
 import Link from "next/link"
-import { ReactElement, JSXElementConstructor, ReactNode, AwaitedReactNode, Key, ReactPortal } from 'react';
+import { ReactElement, JSXElementConstructor, ReactNode, AwaitedReactNode, Key, ReactPortal, useEffect } from 'react';
 
 const data = [
   {
@@ -47,14 +47,23 @@ const data = [
 ];
 
 const jobColors: Record<string, string> = {
-  engineer: 'blue',
-  manager: 'cyan',
-  designer: 'pink',
+  attendance: 'blue',
+  visits: 'cyan',
+  task: 'pink',
 };
 
 export function ReportsTable({datas}: any) {
-  const rows = data.map((item: { name: uuid | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | Promise<AwaitedReactNode> | Key | null | undefined; avatar: string | null | undefined; job: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | Promise<AwaitedReactNode> | null | undefined; email: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; phone: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }) => (
-    <Table.Tr key={item?.name}>
+
+  useEffect(() =>{
+    console.log( "Console data ====>", datas)
+  }, [datas])
+  const rows = datas.map((item: {
+    types: any;
+    report_link: any;
+    to_date: ReactNode;
+    id: Key | null | undefined; name: boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | Promise<AwaitedReactNode> | Key | null | undefined; avatar: string | null | undefined; job: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | Promise<AwaitedReactNode> | null | undefined; from_date: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; phone: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; 
+}) => (
+    <Table.Tr key={item?.id}>
       <Table.Td>
         <Group gap="sm">
           <Avatar size={30} src={item?.avatar} radius={30} />
@@ -65,21 +74,19 @@ export function ReportsTable({datas}: any) {
       </Table.Td>
 
       <Table.Td>
-        <Badge color={jobColors[item?.job.toLowerCase()]} variant="light">
-          {item?.job}
+        <Badge color={jobColors[item?.types.toLowerCase()]} variant="light">
+          {item?.types}
         </Badge>
       </Table.Td>
       <Table.Td>
-        <Anchor component="button" size="sm">
-          {item?.email}
-        </Anchor>
+        <Text fz='sm'>{item?.from_date}</Text>
       </Table.Td>
       <Table.Td>
-        <Text fz="sm">{item?.phone}</Text>
+        <Text fz="sm">{item?.to_date}</Text>
       </Table.Td>
       <Table.Td>
         <Group gap={0} justify="flex-end">
-          <ActionIcon component={Link} href="#" variant="subtle" color="gray">
+          <ActionIcon component={Link} href={`${item?.report_link}`} variant="subtle" color="gray">
             <IconDownload size={16} stroke={1.5} />
           </ActionIcon>
           <ActionIcon variant="subtle" color="red">

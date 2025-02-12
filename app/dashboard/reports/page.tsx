@@ -138,9 +138,16 @@ export default function Page(){
                 mt={'md'}
                 p={'md'}
             >
-                <ReportsTable 
-                    // datas={dataReport?.reports} 
-                /> 
+                {
+                    loadReport && <p>Loading...</p>
+                }
+                {
+                    errReport && <p>Error</p>
+                }
+                {
+                    dataReport && <ReportsTable datas={dataReport?.reports} />
+                }
+                
             </Paper>
         </>
     )
