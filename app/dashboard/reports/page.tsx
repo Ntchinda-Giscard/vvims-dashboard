@@ -5,8 +5,10 @@ import { IconCalendar, IconPdf, IconFileTypePdf } from '@tabler/icons-react';
 import {DateInput} from "@mantine/dates";
 import { useEffect, useState } from "react";
 import { ReportsTable } from "./components/reports-table";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { GET_REPORT } from "./query/query";
+import { getFirstAndLastDayOfMonth } from "./utils";
+import { INSERT_REPORT } from "./mutations/mutations";
 
 
 
@@ -20,6 +22,8 @@ export default function Page(){
             offset: (activePage-1) * itemsPerPage,
         }
     });
+
+    const [insertReport, {data: dataInsert, loading: loadInsert, error: errInsert}] = useMutation(INSERT_REPORT);
 
     useEffect(() =>{
         console.log( "Exactly", dataReport)
@@ -36,10 +40,20 @@ export default function Page(){
 
         validate: {
             type: (value) => ( value?.length > 0 ? null : 'Invalid choice'),
-            from: (value) => ( value !== null ? null : 'Invalid date'),
-            to: (value) => ( value !== null ? null : 'Invalid date'),
+            // from: (value) => ( value !== null ? null : 'Invalid date'),
+            // to: (value) => ( value !== null ? null : 'Invalid date'),
         },
     });
+
+    function handleSubmit(values: any){
+        insertReport({
+                variables:{
+                    from_date: values.from,
+                    to_date: values.to,
+                    types: values.type
+                }
+            })
+    }
     return(
         <>
             <main className={"flex flex-col min-w-full min-h-full"}>
@@ -59,6 +73,7 @@ export default function Page(){
                         withAsterisk
                         radius={'md'}
                         data={['Visits', 'Attendance']}
+                        defaultValue={'Visits'}
                         label="Reports type"
                         placeholder="select"
                         key={form.key('type')}
