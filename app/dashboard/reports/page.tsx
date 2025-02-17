@@ -172,14 +172,14 @@ export default function Page(){
                     loadReport && <p>Loading...</p>
                 }
                 {
-                    errReport && <p>Error</p>
+                    errReport && <p>{`${errReport}`}</p>
                 }
                 {
                     dataReport && <ReportsTable datas={dataReport?.reports} />
                 }
                 <FootPage 
-                    activePage={activePage + 1}
-                    onPage={(v: any) => setPage(v)}
+                   activePage={activePage}
+                   onPage={(v: any) => setPage(v)}
                     total={Math.ceil(dataAgg?.reports_aggregate?.aggregate?.count/itemsPerPage)}
                 />
                 
