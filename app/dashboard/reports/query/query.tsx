@@ -13,3 +13,11 @@ query GetReports($limit: Int = 10, $offset: Int = 0) {
 }`;
 
 
+export const REPORT_AGG = gql`
+query MyQuery {
+  reports_aggregate {
+    aggregate {
+      count
+    }
+  }
+}`;

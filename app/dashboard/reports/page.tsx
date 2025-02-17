@@ -6,9 +6,12 @@ import {DateInput} from "@mantine/dates";
 import { useEffect, useState } from "react";
 import { ReportsTable } from "./components/reports-table";
 import { useMutation, useQuery } from "@apollo/client";
-import { GET_REPORT } from "./query/query";
+import { GET_REPORT, REPORT_AGG } from "./query/query";
 import { getFirstAndLastDayOfMonth } from "./utils";
 import { INSERT_REPORT } from "./mutations/mutations";
+import axiosClient from "../settings/components/axiosClient";
+import toast from "react-hot-toast";
+import FootPage from "../components/fotter";
 
 
 
@@ -22,8 +25,11 @@ export default function Page(){
             offset: (activePage-1) * itemsPerPage,
         }
     });
+    const [pdf_url, setPdfUrl] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
 
-    const [insertReport, {data: dataInsert, loading: loadInsert, error: errInsert}] = useMutation(INSERT_REPORT);
+
+    const {loading: loadAgg, error: errAgg, data: dataAgg} = useQuery(REPORT_AGG);
 
     useEffect(() =>{
         console.log( "Exactly", dataReport)
@@ -45,14 +51,23 @@ export default function Page(){
         },
     });
 
-    function handleSubmit(values: any){
-        insertReport({
-                variables:{
-                    from_date: values.from,
-                    to_date: values.to,
-                    types: values.type
-                }
+    async function handleSubmit(values: any){
+        setLoading(true);
+        console.log(values)
+        console.log(values.type?.toLowerCase());
+
+        try{
+            const response = await axiosClient.get("/api/v1/get-report", {
+                params: {report_type: values.type?.toLowerCase()}
             })
+            setPdfUrl(response.data.pdf_url)
+            console.log(response.data.pdf_url);
+            toast.success("Operation successful")
+        }catch (err){
+            toast.error(`${err}`)
+        }finally{
+            setLoading(false);
+        }
     }
     return(
         <>
@@ -67,7 +82,7 @@ export default function Page(){
                 p={'md'}
             >
                 <p style={{fontWeight: 800, fontSize: "large", color: "#404040"}}> Generate Reports </p>
-                <form onSubmit={form.onSubmit((values: any) => console.log(values))}>
+                <form onSubmit={form.onSubmit((values: any) => handleSubmit(values))}>
                     <Select
                         mt={'lg'}
                         withAsterisk
@@ -143,7 +158,7 @@ export default function Page(){
 
                     <Group justify="flex-end" mt="md">
                         <Button variant={'outline'} onClick={() => form.reset()}>Clear</Button>
-                        <Button type="submit" leftSection={<IconFileTypePdf style={{width: rem(16), height: rem(16)}} />} >Generate report</Button>
+                        <Button type="submit" loading={loading} leftSection={<IconFileTypePdf style={{width: rem(16), height: rem(16)}} />} >Generate report</Button>
                     </Group>
                 </form>
             </Paper>
@@ -162,6 +177,11 @@ export default function Page(){
                 {
                     dataReport && <ReportsTable datas={dataReport?.reports} />
                 }
+                <FootPage 
+                    activePage={activePage + 1}
+                    onPage={(v: any) => setPage(v)}
+                    total={Math.ceil(dataAgg?.reports_aggregate?.aggregate?.count/itemsPerPage)}
+                />
                 
             </Paper>
         </>
