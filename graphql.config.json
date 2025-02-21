@@ -1,0 +1,18 @@
+{
+    "name": "Remote Schema",
+    "schema": "https://faithful-lynx-39.hasura.app/v1/graphql",
+    "extensions": {
+      "endpoints": {
+        "Remote GraphQL Endpoint": {
+          "url": "https://faithful-lynx-39.hasura.app/v1/graphql",
+          "headers": {
+            "x-hasura-admin-secret": "cBUCi2wfVzpC5j16ede1stHx4nEajfTnWk0V43TRz3gVk0tGrXQ5VcILCqRJ0dkt",
+            "user-agent": "JS GraphQL"
+          },
+          "introspect": true
+        }
+      }
+    }
+  }
+  
+

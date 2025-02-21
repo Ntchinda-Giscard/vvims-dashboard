@@ -5,17 +5,22 @@ import { IconCalendar, IconPdf, IconFileTypePdf } from '@tabler/icons-react';
 import {DateInput} from "@mantine/dates";
 import { useEffect, useState } from "react";
 import { ReportsTable } from "./components/reports-table";
-import { useMutation, useQuery } from "@apollo/client";
-import { GET_REPORT, REPORT_AGG } from "./query/query";
+import { useMutation, useQuery, useSubscription } from "@apollo/client";
+import { GET_EMPLOYEES_QUERY, GET_REPORT, REPORT_AGG } from "./query/query";
 import { getFirstAndLastDayOfMonth } from "./utils";
 import { INSERT_REPORT } from "./mutations/mutations";
 import axiosClient from "../settings/components/axiosClient";
 import toast from "react-hot-toast";
 import FootPage from "../components/fotter";
+import { GET_ALL_SERVICES } from "../visitors/query/get_all_services";
+import { GET_ALL_DEPT } from "../departments/queries/get_dept";
+import { GET_EMPLY } from "../add-employee/query/get_all_empl";
+import { useSelector } from "react-redux";
 
 
 
 export default function Page(){
+    const user = useSelector((state: any) => state.auth.userInfo);
     const [checked, setChecked] = useState(false);
     const [activePage, setPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -25,23 +30,68 @@ export default function Page(){
             offset: (activePage-1) * itemsPerPage,
         }
     });
+    const {data: dataService, error: errService, loading: loadService } = useQuery(GET_ALL_SERVICES,{
+        variables:{
+        company_id: user?.employee?.company_id,
+    }}
+    );
+
+    const {data: dataDept, loading: loadDept, error: errDept} = useQuery(GET_ALL_DEPT,{
+    variables:{
+    company_id: user?.employee?.company_id
+    }
+    });
+    const {data: dataAllEmpl, loading: loadAll, error: errAll} = useQuery(GET_EMPLOYEES_QUERY,{
+    variables:{
+        company_id: user?.employee?.company_id
+    }
+    })
     const [pdf_url, setPdfUrl] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
+    const [about, setAbout] = useState<string | null>(null);
+    const [deptArr, setDept] = useState([]);
+    const [servArr, setServ] = useState([]);
+    const [allArr, setAll] = useState([]);
 
 
     const {loading: loadAgg, error: errAgg, data: dataAgg} = useQuery(REPORT_AGG);
 
     useEffect(() =>{
         console.log( "Exactly", dataReport)
-    },[dataReport])
+        const deptOptions = dataDept?.departments?.map((d: { id: any; text_content: { content: any; }; }) =>({
+            value: d?.id,
+            label: d?.text_content?.content
+        }))
+        const servOptions = dataService?.services?.map((d: { id: any; text_content: { content: any; }; }) =>({
+            value: d?.id,
+            label: d?.text_content?.content
+        }))
+        const allOptions = dataAllEmpl?.employees?.map((d: {
+            service: any;
+            department: any; id: any; firstname: any, lastname:any 
+}) =>({
+            value: d?.id,
+            label: `${d?.firstname}` + " "+ `${d?.lastname}` + " | " + d?.department?.text_content?.content + " | " + d?.service?.text_content?.content ,
+            department: d?.department?.text_content?.content
+        }))
+        
+        setDept(deptOptions)
+        setServ(servOptions)
+        setAll(allOptions)
+        console.log("Employees", dataAllEmpl)
+    },[dataReport, dataDept, dataService, dataAllEmpl])
     
     const form = useForm({
         mode: 'uncontrolled',
         initialValues: {
-            type: [],
+            type: "Visits",
+            about: "",
             termsOfService: false,
             from: null,
-            to: null
+            to: null,
+            department: "",
+            service: "",
+            employee: "",
         },
 
         validate: {
@@ -51,23 +101,28 @@ export default function Page(){
         },
     });
 
+    form.watch('about', ({ previousValue, value, touched, dirty }) => {
+        console.log({ previousValue, value, touched, dirty });
+        setAbout(value);
+    });
+
     async function handleSubmit(values: any){
-        setLoading(true);
+        // setLoading(true);
         console.log(values)
         console.log(values.type?.toLowerCase());
 
-        try{
-            const response = await axiosClient.get("/api/v1/get-report", {
-                params: {report_type: values.type?.toLowerCase()}
-            })
-            setPdfUrl(response.data.pdf_url)
-            console.log(response.data.pdf_url);
-            toast.success("Operation successful")
-        }catch (err){
-            toast.error(`${err}`)
-        }finally{
-            setLoading(false);
-        }
+        // try{
+        //     const response = await axiosClient.get("/api/v1/get-report", {
+        //         params: {report_type: values.type?.toLowerCase()}
+        //     })
+        //     setPdfUrl(response.data.pdf_url)
+        //     console.log(response.data.pdf_url);
+        //     toast.success("Operation successful")
+        // }catch (err){
+        //     toast.error(`${err}`)
+        // }finally{
+        //     setLoading(false);
+        // }
     }
     return(
         <>
@@ -79,6 +134,7 @@ export default function Page(){
                 radius={'md'}
                 shadow={'md'}
                 mt={'md'}
+                mb={'md'}
                 p={'md'}
             >
                 <p style={{fontWeight: 800, fontSize: "large", color: "#404040"}}> Generate Reports </p>
@@ -98,6 +154,43 @@ export default function Page(){
                             option:{color: "#404040"}
                         }}
                     />
+
+                    <Select
+                        mt={'lg'}
+                        withAsterisk
+                        radius={'md'}
+                        data={['Employee', 'Service', 'Department']}
+                        defaultValue={'Employee'}
+                        label="Reports about"
+                        placeholder="select"
+                        key={form.key('about')}
+                        {...form.getInputProps('about')}
+                        styles={{
+                            label:{color: "#404040"},
+                            option:{color: "#404040"}
+                        }}
+                    />
+                    {
+                        about === 'Employee' ? <Select label="Employees" data={allArr} styles={{
+                            label:{color: "#404040"},
+                            option:{color: "#404040"}
+                        }} /> : null
+                    }
+
+                    {
+                        about === 'Service' ? <Select label="Services" data={servArr} styles={{
+                            label:{color: "#404040"},
+                            option:{color: "#404040"}
+                        }} /> : null
+                    }
+
+
+                    {
+                        about === 'Department' ? <Select label="Departments" data={deptArr} styles={{
+                            label:{color: "#404040"},
+                            option:{color: "#404040"}
+                        }} /> : null
+                    }
 
 
                     <Checkbox
@@ -162,6 +255,7 @@ export default function Page(){
                     </Group>
                 </form>
             </Paper>
+            <p style={{fontWeight: 800, fontSize: "large", color: "#404040"}}> Reports history </p>
             <Paper
                 radius={'md'}
                 shadow={'md'}

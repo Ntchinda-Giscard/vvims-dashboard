@@ -21,3 +21,25 @@ query MyQuery {
     }
   }
 }`;
+
+
+export const GET_EMPLOYEES_QUERY = gql`
+query GetAllEmployee($company_id: uuid! ) {
+  employees(where: {company_id: {_eq: $company_id}}) {
+    id
+    firstname
+    lastname
+    # department{
+    #   id
+    #   text_content{
+    #     content
+    #   }
+    # }
+    # service{
+    #   id
+    #   text_content{
+    #     content
+    #   }
+    # }
+  }
+}`
