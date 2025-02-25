@@ -48,7 +48,8 @@ function Login() {
             body: JSON.stringify({ phone_number: value?.email, password: value?.password, firebase_token: null }),
           });
           if (!response.ok) {
-            throw new Error(`${response.detail}`);
+            const errorData = await response.json(); // Convert response to JSON
+            throw new Error(errorData.detail); // Extract "detail" from FastAPI error
           }
       
           const data = await response.json();
