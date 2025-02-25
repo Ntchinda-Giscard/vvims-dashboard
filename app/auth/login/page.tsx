@@ -48,7 +48,7 @@ function Login() {
             body: JSON.stringify({ phone_number: value?.email, password: value?.password, firebase_token: null }),
           });
           if (!response.ok) {
-            throw new Error(`Response status: ${response.status}`);
+            throw new Error(`${response.detail}`);
           }
       
           const data = await response.json();
