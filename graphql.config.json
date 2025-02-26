@@ -1,18 +1,16 @@
 {
-    "name": "Remote Schema",
-    "schema": "https://faithful-lynx-39.hasura.app/v1/graphql",
-    "extensions": {
-      "endpoints": {
-        "Remote GraphQL Endpoint": {
-          "url": "https://faithful-lynx-39.hasura.app/v1/graphql",
-          "headers": {
-            "x-hasura-admin-secret": "cBUCi2wfVzpC5j16ede1stHx4nEajfTnWk0V43TRz3gVk0tGrXQ5VcILCqRJ0dkt",
-            "user-agent": "JS GraphQL"
-          },
-          "introspect": true
-        }
+  "schema": "./schema.gql",
+  "extensions": {
+    "endpoints": {
+      "default": {
+        "url": "https://faithful-lynx-39.hasura.app/v1/graphql",
+        "headers": {
+          "x-hasura-admin-secret": "cBUCi2wfVzpC5j16ede1stHx4nEajfTnWk0V43TRz3gVk0tGrXQ5VcILCqRJ0dkt",
+          "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1NWI0ZTM4ZC02ZDM1LTRhMTAtOTgxZS01YTBjMTNkNjAxZGYiLCJuYW1lIjoiZ3V5IFJvc3RhbmQgIGNzcCIsImlhdCI6MTc0MDU2NDIwNywiYWRtaW4iOnRydWUsImh0dHBzOi8vaGFzdXJhLmlvL2p3dC9jbGFpbXMiOnsieC1oYXN1cmEtYWxsb3dlZC1yb2xlcyI6WyJlbXBsb3llZSIsImFkbWluIl0sIngtaGFzdXJhLXJvbGUiOiJhZG1pbiIsIngtaGFzdXJhLWRlZmF1bHQtcm9sZSI6ImFkbWluIiwieC1oYXN1cmEtdXNlci1pZCI6IjU1YjRlMzhkLTZkMzUtNGExMC05ODFlLTVhMGMxM2Q2MDFkZiIsIngtaGFzdXJhLWVtcGxveWVlLWxldmVsIjoiMTAifX0.EYldwJVwfTf-nTJujOLeBnuBgr5q3Zw6nUukc4I2USM",
+          "user-agent": "JS GraphQL"
+        },
+        "introspect": true
       }
     }
   }
-  
-
+}
