@@ -11,7 +11,7 @@ function AuthState() {
 
     useEffect(() =>{
         if(user === null || user === undefined){
-            router.push("/auth/login")
+            // router.push("/auth/login")
         }
     }, [pathname, router])
     return ( <>Loading...</> );
