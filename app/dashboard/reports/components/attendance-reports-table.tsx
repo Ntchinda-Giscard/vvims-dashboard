@@ -5,28 +5,17 @@ import { ReactElement, JSXElementConstructor, ReactNode, AwaitedReactNode, Key, 
 
 
 const attendanceState: Record<string, string> = {
-  accepted: 'teal',
-  rejected: 'red',
-  pending: 'blue'
+  present: 'blue',
+  absent: 'cyan',
 };
 
 
-export function VisitsReportsTable({datas}: any) {
+export function AttendanceReportsTable({datas}: any) {
 
   useEffect(() =>{
     console.log( "Console data ====>", datas)
   }, [datas])
-
-  function extractTime(isoString: string): string {
-    const date = new Date(isoString);
-    const hours: string = date.getHours().toString().padStart(2, '0');
-    const minutes: string = date.getMinutes().toString().padStart(2, '0');
-    return `${hours}:${minutes}`;
-  }
   const rows = datas.map((item: {
-      checkOut: string;
-      checkIn: string;
-      visitorName: string | undefined;
       status: any;
       reason: ReactNode;
       late: boolean | undefined;
@@ -42,9 +31,9 @@ export function VisitsReportsTable({datas}: any) {
     <Table.Tr key={item?.id}>
       <Table.Td>
         <Group gap="sm">
-          <Avatar size={30} src={item?.visitorName}  name={item?.visitorName} color='initials' radius={30} />
+          <Avatar size={30} src={item?.avatar} radius={30} />
           <Text fz="sm" fw={500}>
-            {item?.visitorName}
+            {item?.employee}
           </Text>
         </Group>
       </Table.Td>
@@ -53,10 +42,10 @@ export function VisitsReportsTable({datas}: any) {
         <Text fz='sm'>{item?.date}</Text>
       </Table.Td>
       <Table.Td>
-        <Text fz='sm'>{extractTime(item?.checkIn)}</Text>
+        <Text fz='sm'>{item?.arrival}</Text>
       </Table.Td>
       <Table.Td>
-        <Text fz='sm'>{extractTime(item?.checkOut)}</Text>
+        <Text fz='sm'>{item?.departure}</Text>
       </Table.Td>
 
       <Table.Td>
@@ -69,6 +58,12 @@ export function VisitsReportsTable({datas}: any) {
         </Badge>
       </Table.Td>
       
+      
+      <Table.Td>
+        <Badge color={ item?.late ? "red" : "blue" } variant="light">
+          {item?.types}
+        </Badge>
+      </Table.Td>
     </Table.Tr>
   ));
 
@@ -77,12 +72,13 @@ export function VisitsReportsTable({datas}: any) {
       <Table verticalSpacing="sm">
         <Table.Thead>
           <Table.Tr>
-            <Table.Th>Visitor</Table.Th>
+            <Table.Th>Employee</Table.Th>
             <Table.Th>Date</Table.Th>
-            <Table.Th>checkIn</Table.Th>
-            <Table.Th>checkOut</Table.Th>
+            <Table.Th>Arrival</Table.Th>
+            <Table.Th>Departure</Table.Th>
             <Table.Th>Reason</Table.Th>
             <Table.Th>Status</Table.Th>
+            <Table.Th />
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>

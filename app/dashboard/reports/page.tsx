@@ -4,18 +4,14 @@ import { useForm } from '@mantine/form';
 import { IconCalendar, IconPdf, IconFileTypePdf } from '@tabler/icons-react';
 import {DateInput} from "@mantine/dates";
 import { useEffect, useState } from "react";
-import { ReportsTable } from "./components/reports-table";
 import { useMutation, useQuery, useSubscription } from "@apollo/client";
 import { GET_EMPLOYEES_QUERY, GET_REPORT, REPORT_AGG } from "./query/query";
-import { getFirstAndLastDayOfMonth } from "./utils";
 import { INSERT_REPORT } from "./mutations/mutations";
-import axiosClient from "../settings/components/axiosClient";
 import toast from "react-hot-toast";
-import FootPage from "../components/fotter";
 import { GET_ALL_SERVICES } from "../visitors/query/get_all_services";
 import { GET_ALL_DEPT } from "../departments/queries/get_dept";
-import { GET_EMPLY } from "../add-employee/query/get_all_empl";
 import { useSelector } from "react-redux";
+import { VisitsReportsTable } from "./components/visit-reports-table";
 
 
 
@@ -46,15 +42,15 @@ export default function Page(){
         company_id: user?.employee?.company_id
     }
     })
+
+    const [inserReport, {loading: loadInsert, data: dataGetReport}] = useMutation(INSERT_REPORT);
+
     const [pdf_url, setPdfUrl] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [about, setAbout] = useState<string | null>(null);
     const [deptArr, setDept] = useState([]);
     const [servArr, setServ] = useState([]);
     const [allArr, setAll] = useState([]);
-
-
-    const {loading: loadAgg, error: errAgg, data: dataAgg} = useQuery(REPORT_AGG);
 
     useEffect(() =>{
         console.log( "Exactly", dataReport)
@@ -71,7 +67,7 @@ export default function Page(){
             department: any; id: any; firstname: any, lastname:any 
 }) =>({
             value: d?.id,
-            label: `${d?.firstname}` + " "+ `${d?.lastname}` + " | " + d?.department?.text_content?.content + " | " + d?.service?.text_content?.content ,
+            label: `${d?.firstname}` + " "+ `${d?.lastname}`,
             department: d?.department?.text_content?.content
         }))
         
@@ -87,7 +83,7 @@ export default function Page(){
             type: "Visits",
             about: "",
             termsOfService: false,
-            from: null,
+            from: new Date(),
             to: null,
             department: "",
             service: "",
@@ -111,18 +107,23 @@ export default function Page(){
         console.log(values)
         console.log(values.type?.toLowerCase());
 
-        // try{
-        //     const response = await axiosClient.get("/api/v1/get-report", {
-        //         params: {report_type: values.type?.toLowerCase()}
-        //     })
-        //     setPdfUrl(response.data.pdf_url)
-        //     console.log(response.data.pdf_url);
-        //     toast.success("Operation successful")
-        // }catch (err){
-        //     toast.error(`${err}`)
-        // }finally{
-        //     setLoading(false);
-        // }
+        inserReport({
+            variables:{
+                categoryId: about === 'Employee' ? values?.employee : about === "Service" ? values?.service : values?.department,
+                category1: values?.about?.toUpperCase(),
+                reportType: values?.type?.toUpperCase(),
+                fromDate: values?.from?.toISOString().split('T')[0],
+                toDate: values?.to?.toISOString().split('T')[0],
+            },
+            onCompleted: (data) =>{
+                console.log("report data", data);
+                toast.success("Operation successful")
+            }, onError: (error) => {
+                console.log("Error", error)
+                toast.error(`${error.message}`)
+            }
+        })
+
     }
     return(
         <>
@@ -171,14 +172,16 @@ export default function Page(){
                         }}
                     />
                     {
-                        about === 'Employee' ? <Select label="Employees" data={allArr} styles={{
+                        about === 'Employee' ? <Select label="Employees" key={form.key('employee')}
+                        {...form.getInputProps('employee')} data={allArr}  styles={{
                             label:{color: "#404040"},
                             option:{color: "#404040"}
                         }} /> : null
                     }
 
                     {
-                        about === 'Service' ? <Select label="Services" data={servArr} styles={{
+                        about === 'Service' ? <Select label="Services" key={form.key('service')}
+                        {...form.getInputProps('service')} data={servArr} styles={{
                             label:{color: "#404040"},
                             option:{color: "#404040"}
                         }} /> : null
@@ -186,7 +189,8 @@ export default function Page(){
 
 
                     {
-                        about === 'Department' ? <Select label="Departments" data={deptArr} styles={{
+                        about === 'Department' ? <Select label="Departments" key={form.key('department')}
+                        {...form.getInputProps('department')} data={deptArr} styles={{
                             label:{color: "#404040"},
                             option:{color: "#404040"}
                         }} /> : null
@@ -251,7 +255,7 @@ export default function Page(){
 
                     <Group justify="flex-end" mt="md">
                         <Button variant={'outline'} onClick={() => form.reset()}>Clear</Button>
-                        <Button type="submit" loading={loading} leftSection={<IconFileTypePdf style={{width: rem(16), height: rem(16)}} />} >Generate report</Button>
+                        <Button type="submit" loading={loadInsert} leftSection={<IconFileTypePdf style={{width: rem(16), height: rem(16)}} />} >Generate report</Button>
                     </Group>
                 </form>
             </Paper>
@@ -262,20 +266,11 @@ export default function Page(){
                 mt={'md'}
                 p={'md'}
             >
-                {
-                    loadReport && <p>Loading...</p>
-                }
-                {
-                    errReport && <p>{`${errReport}`}</p>
-                }
-                {
-                    dataReport && <ReportsTable datas={dataReport?.reports} />
-                }
-                <FootPage 
-                   activePage={activePage}
-                   onPage={(v: any) => setPage(v)}
-                    total={Math.ceil(dataAgg?.reports_aggregate?.aggregate?.count/itemsPerPage)}
-                />
+            {
+
+                    dataGetReport?.generateCsvReport?.type === "visits" ? <VisitsReportsTable datas={dataGetReport?.generateCsvReport?.visitData} /> : <div> Attendance </div>
+  
+            }    
                 
             </Paper>
         </>
