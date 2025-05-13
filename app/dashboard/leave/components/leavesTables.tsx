@@ -6,8 +6,23 @@ import cx from 'clsx';
 import classes from "@/app/dashboard/view-employees/table.module.css";
 
 export default function LeavesTables({datas, onEdit, onDelete, onDeactivate}:any) {
-  const [scrolled, setScrolled] = useState(false)
+  const [scrolled, setScrolled] = useState(false);
+  function getDaysBetweenDates(date1Str: string | number | Date, date2Str: string | number | Date) {
+    const date1 = new Date(date1Str);
+    const date2 = new Date(date2Str);
+  
+    // Calculate the difference in milliseconds
+    //@ts-ignore
+    const diffInMs = date2 - date1;
+  
+    // Convert milliseconds to days
+    const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+  
+    return diffInDays;
+  }
   const rows = datas?.map((data: {
+    comment: ReactNode;
+    license: ReactNode;
     status: ReactNode;
     start_date: ReactNode;
     end_date: ReactNode;
@@ -28,8 +43,15 @@ export default function LeavesTables({datas, onEdit, onDelete, onDeactivate}:any
           lastname={data?.employee?.lastname}
         />
       </Table.Td>
+      <Table.Td style={{ color: "#404044" }}>{data?.employee?.license}</Table.Td>
+      <Table.Td style={{ color: "#404044" }}>{data?.employee?.department?.text_content?.content}</Table.Td>
+      <Table.Td style={{ color: "#404044" }}>{data?.employee?.service?.text_content?.content}</Table.Td>
       <Table.Td style={{ color: "#404044" }}>{data?.leave_type}</Table.Td>
-      <Table.Td style={{ color: "#404044" }}>{data?.start_date}</Table.Td>
+      <Table.Td style={{ color: "#404044" }}>{data?.comment}</Table.Td>
+      
+      <Table.Td style={{ color: "#404044" }}>{
+        //@ts-ignore
+      getDaysBetweenDates(data?.start_date, data?.end_date)}</Table.Td>
       <Table.Td style={{ color: "#404044" }}>{data?.end_date}</Table.Td>
       <Table.Td style={{ color: "#404044" }}>
       <Badge variant="light" color={data?.status === "PENDING" ? "blue" : data?.status === "ACCEPTED" ? "teal" : "red" } >
@@ -45,17 +67,9 @@ export default function LeavesTables({datas, onEdit, onDelete, onDeactivate}:any
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Item color="green" onClick={() => onEdit(data)} leftSection={<IconEye  style={{ width: rem(14), height: rem(14) }} /> }> View </Menu.Item>
-              {/* <Menu.Item color="orange" onClick={() => onDeactivate(data)} leftSection={<IconUserX  style={{ width: rem(14), height: rem(14) }} />}> Deactivate </Menu.Item> */}
               <Menu.Item color="red" onClick={() => onDelete(data)} leftSection={<IconTrash  style={{ width: rem(14), height: rem(14) }} /> }> Delete </Menu.Item>
             </Menu.Dropdown>
         </Menu>
-        
-        {/* <ActionIcon onClick={() => onEdit(data)} variant="transparent" color="green" aria-label="Settings">
-          <IconEdit style={{ width: '70%', height: '70%' }}  stroke={1.5} />
-        </ActionIcon>
-        <ActionIcon  onClick={() => onDelete(data)} variant="transparent" color="red" aria-label="Settings">
-          <IconTrash style={{ width: '70%', height: '70%' }}  stroke={1.5} />
-        </ActionIcon> */}
         
       </Table.Td>
     </Table.Tr>
@@ -69,8 +83,12 @@ export default function LeavesTables({datas, onEdit, onDelete, onDeactivate}:any
       <Table.Thead className={cx(classes.header, {[classes.scrolled]: scrolled})}>
         <Table.Tr>
           <Table.Th style={{ color: "#404044" }}> Employee </Table.Th>
-          <Table.Th style={{ color: "#404044" }}>Leave type</Table.Th>
-          <Table.Th style={{ color: "#404044" }}> From </Table.Th>
+          <Table.Th style={{ color: "#404044" }}> Registration number</Table.Th>
+          <Table.Th style={{ color: "#404044" }}>Department</Table.Th>
+          <Table.Th style={{ color: "#404044" }}>Service</Table.Th>
+          <Table.Th style={{ color: "#404044" }}>Reason</Table.Th>
+          <Table.Th style={{ color: "#404044" }}>Description</Table.Th>
+          <Table.Th style={{ color: "#404044" }}> Delais </Table.Th>
           <Table.Th style={{ color: "#404044" }}>To</Table.Th>
           <Table.Th style={{ color: "#404044" }}>Status</Table.Th>
           <Table.Th style={{ color: "#404044" }}></Table.Th>

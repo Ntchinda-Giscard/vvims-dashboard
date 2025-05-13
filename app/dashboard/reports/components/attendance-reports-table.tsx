@@ -4,18 +4,36 @@ import Link from "next/link"
 import { ReactElement, JSXElementConstructor, ReactNode, AwaitedReactNode, Key, ReactPortal, useEffect } from 'react';
 
 
-const jobColors: Record<string, string> = {
-  attendance: 'blue',
-  visits: 'cyan',
-  task: 'pink',
+const attendanceState: Record<string, string> = {
+  accepted: 'teal',
+  rejected: 'red',
+  pending: 'blue'
 };
 
-export function ReportsTable({datas}: any) {
+
+export function VisitsReportsTable({datas}: any) {
 
   useEffect(() =>{
     console.log( "Console data ====>", datas)
   }, [datas])
+
+  function extractTime(isoString: string): string {
+    const date = new Date(isoString);
+    const hours: string = date.getHours().toString().padStart(2, '0');
+    const minutes: string = date.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+  }
   const rows = datas.map((item: {
+      checkOut: string;
+      checkIn: string;
+      visitorName: string | undefined;
+      status: any;
+      reason: ReactNode;
+      late: boolean | undefined;
+      departure: ReactNode;
+      arrival: ReactNode;
+      date: ReactNode;
+      employee: ReactNode;
     types: any;
     report_link: any;
     to_date: ReactNode;
@@ -24,34 +42,33 @@ export function ReportsTable({datas}: any) {
     <Table.Tr key={item?.id}>
       <Table.Td>
         <Group gap="sm">
-          <Avatar size={30} src={item?.avatar} radius={30} />
+          <Avatar size={30} src={item?.visitorName}  name={item?.visitorName} color='initials' radius={30} />
           <Text fz="sm" fw={500}>
-            {item?.name}
+            {item?.visitorName}
           </Text>
         </Group>
       </Table.Td>
 
       <Table.Td>
-        <Badge color={jobColors[item?.types.toLowerCase()]} variant="light">
+        <Text fz='sm'>{item?.date}</Text>
+      </Table.Td>
+      <Table.Td>
+        <Text fz='sm'>{extractTime(item?.checkIn)}</Text>
+      </Table.Td>
+      <Table.Td>
+        <Text fz='sm'>{extractTime(item?.checkOut)}</Text>
+      </Table.Td>
+
+      <Table.Td>
+        <Text fz="sm">{item?.reason}</Text>
+      </Table.Td>
+
+      <Table.Td>
+        <Badge color={attendanceState[item?.status?.toLowerCase()]} variant="light">
           {item?.types}
         </Badge>
       </Table.Td>
-      <Table.Td>
-        <Text fz='sm'>{item?.from_date}</Text>
-      </Table.Td>
-      <Table.Td>
-        <Text fz="sm">{item?.to_date}</Text>
-      </Table.Td>
-      <Table.Td>
-        <Group gap={0} justify="flex-end">
-          <ActionIcon component={Link} href={`${item?.report_link}`} variant="subtle" color="gray">
-            <IconDownload size={16} stroke={1.5} />
-          </ActionIcon>
-          <ActionIcon variant="subtle" color="red">
-            <IconTrash size={16} stroke={1.5} />
-          </ActionIcon>
-        </Group>
-      </Table.Td>
+      
     </Table.Tr>
   ));
 
@@ -60,11 +77,12 @@ export function ReportsTable({datas}: any) {
       <Table verticalSpacing="sm">
         <Table.Thead>
           <Table.Tr>
-            <Table.Th>Report</Table.Th>
-            <Table.Th>Job title</Table.Th>
-            <Table.Th>From</Table.Th>
-            <Table.Th>To</Table.Th>
-            <Table.Th />
+            <Table.Th>Visitor</Table.Th>
+            <Table.Th>Date</Table.Th>
+            <Table.Th>checkIn</Table.Th>
+            <Table.Th>checkOut</Table.Th>
+            <Table.Th>Reason</Table.Th>
+            <Table.Th>Status</Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>

@@ -4,18 +4,25 @@ import Link from "next/link"
 import { ReactElement, JSXElementConstructor, ReactNode, AwaitedReactNode, Key, ReactPortal, useEffect } from 'react';
 
 
-const jobColors: Record<string, string> = {
-  attendance: 'blue',
-  visits: 'cyan',
-  task: 'pink',
+const attendanceState: Record<string, string> = {
+  present: 'blue',
+  absent: 'cyan',
 };
 
-export function ReportsTable({datas}: any) {
+
+export function AttendanceReportsTable({datas}: any) {
 
   useEffect(() =>{
     console.log( "Console data ====>", datas)
   }, [datas])
   const rows = datas.map((item: {
+      status: any;
+      reason: ReactNode;
+      late: boolean | undefined;
+      departure: ReactNode;
+      arrival: ReactNode;
+      date: ReactNode;
+      employee: ReactNode;
     types: any;
     report_link: any;
     to_date: ReactNode;
@@ -26,31 +33,36 @@ export function ReportsTable({datas}: any) {
         <Group gap="sm">
           <Avatar size={30} src={item?.avatar} radius={30} />
           <Text fz="sm" fw={500}>
-            {item?.name}
+            {item?.employee}
           </Text>
         </Group>
       </Table.Td>
 
       <Table.Td>
-        <Badge color={jobColors[item?.types.toLowerCase()]} variant="light">
+        <Text fz='sm'>{item?.date}</Text>
+      </Table.Td>
+      <Table.Td>
+        <Text fz='sm'>{item?.arrival}</Text>
+      </Table.Td>
+      <Table.Td>
+        <Text fz='sm'>{item?.departure}</Text>
+      </Table.Td>
+
+      <Table.Td>
+        <Text fz="sm">{item?.reason}</Text>
+      </Table.Td>
+
+      <Table.Td>
+        <Badge color={attendanceState[item?.status?.toLowerCase()]} variant="light">
           {item?.types}
         </Badge>
       </Table.Td>
+      
+      
       <Table.Td>
-        <Text fz='sm'>{item?.from_date}</Text>
-      </Table.Td>
-      <Table.Td>
-        <Text fz="sm">{item?.to_date}</Text>
-      </Table.Td>
-      <Table.Td>
-        <Group gap={0} justify="flex-end">
-          <ActionIcon component={Link} href={`${item?.report_link}`} variant="subtle" color="gray">
-            <IconDownload size={16} stroke={1.5} />
-          </ActionIcon>
-          <ActionIcon variant="subtle" color="red">
-            <IconTrash size={16} stroke={1.5} />
-          </ActionIcon>
-        </Group>
+        <Badge color={ item?.late ? "red" : "blue" } variant="light">
+          {item?.types}
+        </Badge>
       </Table.Td>
     </Table.Tr>
   ));
@@ -60,10 +72,12 @@ export function ReportsTable({datas}: any) {
       <Table verticalSpacing="sm">
         <Table.Thead>
           <Table.Tr>
-            <Table.Th>Report</Table.Th>
-            <Table.Th>Job title</Table.Th>
-            <Table.Th>From</Table.Th>
-            <Table.Th>To</Table.Th>
+            <Table.Th>Employee</Table.Th>
+            <Table.Th>Date</Table.Th>
+            <Table.Th>Arrival</Table.Th>
+            <Table.Th>Departure</Table.Th>
+            <Table.Th>Reason</Table.Th>
+            <Table.Th>Status</Table.Th>
             <Table.Th />
           </Table.Tr>
         </Table.Thead>

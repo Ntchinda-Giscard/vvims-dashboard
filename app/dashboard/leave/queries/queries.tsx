@@ -27,12 +27,23 @@ subscription GetLeaves($limit: Int!, $offset: Int!) {
     comment
     employee {
       id
+      license
       lastname
       firstname
       function
       file {
         id
         file_url
+      }
+      department{
+        text_content{
+          content
+        }
+      }
+      service{
+        text_content{
+          content
+        }
       }
     }
   }
