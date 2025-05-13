@@ -12,6 +12,7 @@ import { GET_ALL_SERVICES } from "../visitors/query/get_all_services";
 import { GET_ALL_DEPT } from "../departments/queries/get_dept";
 import { useSelector } from "react-redux";
 import { VisitsReportsTable } from "./components/visit-reports-table";
+import { AttendanceReportsTable } from "./components/attendance-reports-table";
 
 
 
@@ -172,7 +173,7 @@ export default function Page(){
                         }}
                     />
                     {
-                        about === 'Employee' ? <Select label="Employees" key={form.key('employee')}
+                        about === 'Employee' ? <Select label="Employees" searchable key={form.key('employee')}
                         {...form.getInputProps('employee')} data={allArr}  styles={{
                             label:{color: "#404040"},
                             option:{color: "#404040"}
@@ -180,7 +181,7 @@ export default function Page(){
                     }
 
                     {
-                        about === 'Service' ? <Select label="Services" key={form.key('service')}
+                        about === 'Service' ? <Select label="Services" searchable key={form.key('service')}
                         {...form.getInputProps('service')} data={servArr} styles={{
                             label:{color: "#404040"},
                             option:{color: "#404040"}
@@ -189,7 +190,7 @@ export default function Page(){
 
 
                     {
-                        about === 'Department' ? <Select label="Departments" key={form.key('department')}
+                        about === 'Department' ? <Select label="Departments" searchable key={form.key('department')}
                         {...form.getInputProps('department')} data={deptArr} styles={{
                             label:{color: "#404040"},
                             option:{color: "#404040"}
@@ -268,7 +269,10 @@ export default function Page(){
             >
             {
 
-                    dataGetReport?.generateCsvReport?.type === "visits" ? <VisitsReportsTable datas={dataGetReport?.generateCsvReport?.visitData} /> : <div> Attendance </div>
+                    dataGetReport?.generateCsvReport?.type === "visits" ? <VisitsReportsTable datas={dataGetReport?.generateCsvReport?.visitData} /> : 
+                    dataGetReport?.generateCsvReport?.type === "attendance" ?
+                    <AttendanceReportsTable datas={dataGetReport?.generateCsvReport?.attendanceData} /> : <div> Reports </div>
+                    // <div> Attendance </div>
   
             }    
                 

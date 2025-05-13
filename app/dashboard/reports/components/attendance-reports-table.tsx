@@ -22,7 +22,7 @@ export function AttendanceReportsTable({datas}: any) {
       departure: ReactNode;
       arrival: ReactNode;
       date: ReactNode;
-      employee: ReactNode;
+      employee: string;
     types: any;
     report_link: any;
     to_date: ReactNode;
@@ -31,7 +31,7 @@ export function AttendanceReportsTable({datas}: any) {
     <Table.Tr key={item?.id}>
       <Table.Td>
         <Group gap="sm">
-          <Avatar size={30} src={item?.avatar} radius={30} />
+          <Avatar size={30} name={item?.employee} color='initials' radius={30} />
           <Text fz="sm" fw={500}>
             {item?.employee}
           </Text>
@@ -54,14 +54,14 @@ export function AttendanceReportsTable({datas}: any) {
 
       <Table.Td>
         <Badge color={attendanceState[item?.status?.toLowerCase()]} variant="light">
-          {item?.types}
+          {item?.status}
         </Badge>
       </Table.Td>
       
       
       <Table.Td>
         <Badge color={ item?.late ? "red" : "blue" } variant="light">
-          {item?.types}
+          {item?.late ? "Late" : "On time"}
         </Badge>
       </Table.Td>
     </Table.Tr>
